@@ -1,12 +1,11 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام الاختبارات الذكي - AI Powered PDF Reader</title>
+    <title>نظام الاختبارات الذكي - AI Powered PDF/Image Reader</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         :root {
             --primary: #1A5F7A;
@@ -427,6 +426,20 @@
         .remove-file-btn:hover {
             background: rgba(220, 38, 38, 0.2);
             transform: translateY(-2px);
+        }
+
+        /* Image Preview */
+        .image-preview-container {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin-top: 10px;
         }
 
         /* Method Selector */
@@ -1397,6 +1410,83 @@
             margin-bottom: 10px;
         }
 
+        /* Image Upload Section */
+        .image-upload-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 2px dashed var(--border);
+        }
+
+        .image-upload-section h4 {
+            color: var(--text);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Question Type Selector */
+        .question-type-selector {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .question-type-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .question-type-option {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .question-type-option:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .question-type-option.active {
+            background: rgba(26, 95, 122, 0.3);
+            border-color: var(--accent);
+            box-shadow: 0 0 15px rgba(21, 152, 149, 0.3);
+        }
+
+        .question-type-option input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .question-type-icon {
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+
+        .question-type-name {
+            font-weight: 600;
+            color: var(--text);
+            font-size: 1rem;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             body {
@@ -1466,6 +1556,14 @@
             .language-option {
                 min-width: 100%;
             }
+
+            .question-type-options {
+                flex-direction: column;
+            }
+            
+            .question-type-option {
+                min-width: 100%;
+            }
         }
     </style>
 </head>
@@ -1511,6 +1609,13 @@
                         <div class="method-title" id="manual-title">إدخال يدوي</div>
                         <div class="method-desc" id="manual-desc">أدخل عنوان وموضوع الاختبار</div>
                     </div>
+                    <div class="method-tab" onclick="selectMethod('image')" id="image-tab">
+                        <div class="method-icon">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        <div class="method-title" id="image-title">رفع صورة</div>
+                        <div class="method-desc" id="image-desc">تحميل صورة وتوليد أسئلة باستخدام الذكاء الاصطناعي</div>
+                    </div>
                     <div class="method-tab" onclick="selectMethod('pdf')" id="pdf-tab">
                         <div class="method-icon">
                             <i class="fas fa-file-pdf"></i>
@@ -1525,12 +1630,7 @@
                     <div class="input-group">
                         <label><i class="fas fa-globe"></i> <span id="language-label">اختر لغة الاختبار</span></label>
                         <div class="language-selector">
-                            <div class="language-option active" onclick="selectQuizLanguage('auto')" id="auto-language">
-                                <div class="language-flag">🌐</div>
-                                <div class="language-name" id="auto-language-name">تلقائي</div>
-                                <div class="language-desc" id="auto-language-desc">(يتعرف على لغة الملف)</div>
-                            </div>
-                            <div class="language-option" onclick="selectQuizLanguage('ar')" id="arabic-language">
+                            <div class="language-option active" onclick="selectQuizLanguage('ar')" id="arabic-language">
                                 <div class="language-flag">🇸🇦</div>
                                 <div class="language-name" id="arabic-language-name">العربية</div>
                                 <div class="language-desc" id="arabic-language-desc">أسئلة باللغة العربية</div>
@@ -1571,6 +1671,39 @@
                     </div>
                 </div>
 
+                <!-- قسم اختيار نوع الأسئلة -->
+                <div class="question-type-selector">
+                    <div class="input-group">
+                        <label><i class="fas fa-list-check"></i> <span id="question-type-label-main">اختر نوع الأسئلة المطلوبة</span></label>
+                        <div class="question-type-options">
+                            <div class="question-type-option active" onclick="toggleQuestionType('multipleChoice')" id="multiple-choice-option">
+                                <input type="checkbox" id="multipleChoiceCheckbox" checked>
+                                <div class="question-type-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="question-type-name" id="multiple-choice-text">أسئلة اختيار متعدد</div>
+                            </div>
+                            <div class="question-type-option active" onclick="toggleQuestionType('trueFalse')" id="true-false-option">
+                                <input type="checkbox" id="trueFalseCheckbox" checked>
+                                <div class="question-type-icon">
+                                    <i class="fas fa-balance-scale"></i>
+                                </div>
+                                <div class="question-type-name" id="true-false-text">أسئلة (صح/ خطأ)</div>
+                            </div>
+                            <div class="question-type-option active" onclick="toggleQuestionType('fillBlank')" id="fill-blank-option">
+                                <input type="checkbox" id="fillBlankCheckbox" checked>
+                                <div class="question-type-icon">
+                                    <i class="fas fa-pen-to-square"></i>
+                                </div>
+                                <div class="question-type-name" id="fill-blank-text">املأ الفراغ</div>
+                            </div>
+                        </div>
+                        <p style="margin-top: 15px; color: var(--light-text); font-size: 0.9rem; text-align: center;" id="question-type-desc">
+                            يمكنك اختيار جميع أنواع الأسئلة أو اختيار نوع واحد فقط
+                        </p>
+                    </div>
+                </div>
+
                 <!-- قسم الإدخال اليدوي -->
                 <div id="manual-section">
                     <div class="input-group">
@@ -1580,14 +1713,61 @@
                     </div>
 
                     <div class="input-group">
-                        <label for="quiz-topic"><i class="fas fa-book"></i> <span id="quiz-topic-label">تفاصيل الموضوع (اختياري)</span></label>
+                        <label for="quiz-topic"><i class="fas fa-book"></i> <span id="quiz-topic-label">تفاصيل الموضوع</span></label>
                         <textarea id="quiz-topic" class="input-field" rows="3" 
-                                  placeholder="يمكنك إضافة تفاصيل إضافية عن الموضوع الذي تريد اختباره..."></textarea>
+                                  placeholder="اكتب تفاصيل الموضوع الذي تريد اختباره..."></textarea>
                     </div>
 
                     <div class="input-group">
                         <label for="num-questions-manual"><i class="fas fa-question-circle"></i> <span id="num-questions-label-manual">عدد الأسئلة المطلوبة</span></label>
                         <select id="num-questions-manual" class="input-field">
+                            <option value="5">5 أسئلة</option>
+                            <option value="10" selected>10 أسئلة</option>
+                            <option value="15">15 أسئلة</option>
+                            <option value="20">20 أسئلة</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- قسم رفع صورة -->
+                <div id="image-section" style="display: none;">
+                    <div class="file-upload-container">
+                        <label for="image-file" class="file-upload-label">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h4 id="image-upload-title">انقر لرفع صورة</h4>
+                            <p id="image-upload-subtitle">أو اسحب وأفلت الصورة هنا</p>
+                            <p style="font-size: 0.8rem; color: var(--light-text); margin-top: 10px;" id="image-upload-size">
+                                الأنواع المسموحة: JPG, PNG, GIF, WEBP
+                            </p>
+                        </label>
+                        <input type="file" id="image-file" class="file-input" accept=".jpg,.jpeg,.png,.gif,.webp" onchange="handleImageUpload(event)">
+                        
+                        <div class="file-preview" id="image-preview">
+                            <div class="file-info">
+                                <div class="file-icon">
+                                    <i class="fas fa-image"></i>
+                                </div>
+                                <div class="file-details">
+                                    <h5 id="image-filename"></h5>
+                                    <p id="image-filesize"></p>
+                                </div>
+                            </div>
+                            <div class="analysis-status" id="image-analysis-status">
+                                <i class="fas fa-robot"></i>
+                                <p id="image-analysis-status-text">سيقوم الذكاء الاصطناعي بتحليل الصورة وتوليد الأسئلة</p>
+                            </div>
+                            <div id="image-preview-container" class="image-preview-container">
+                                <img id="preview-image" class="image-preview" alt="معاينة الصورة">
+                            </div>
+                            <button class="remove-file-btn" onclick="removeImage()" id="remove-image-btn">
+                                <i class="fas fa-trash"></i> <span id="remove-image-text">إزالة الصورة</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="num-questions-image"><i class="fas fa-question-circle"></i> <span id="num-questions-label-image">عدد الأسئلة المطلوبة</span></label>
+                        <select id="num-questions-image" class="input-field">
                             <option value="5">5 أسئلة</option>
                             <option value="10" selected>10 أسئلة</option>
                             <option value="15">15 أسئلة</option>
@@ -1636,16 +1816,6 @@
                             <option value="10" selected>10 أسئلة</option>
                             <option value="15">15 أسئلة</option>
                             <option value="20">20 أسئلة</option>
-                        </select>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="question-type"><i class="fas fa-filter"></i> <span id="question-type-label">نوع الأسئلة</span></label>
-                        <select id="question-type" class="input-field">
-                            <option value="mixed">مختلطة (معلومات + تطبيقات)</option>
-                            <option value="concepts">مفاهيم أساسية</option>
-                            <option value="applications">أسئلة تطبيقية</option>
-                            <option value="analysis">أسئلة تحليلية</option>
                         </select>
                     </div>
                 </div>
@@ -1700,20 +1870,6 @@
                     </button>
                 </div>
             </div>
-
-            <!-- قسم إضافة المزيد من الأسئلة -->
-            <div class="add-more-section" id="add-more-section" style="display: none;">
-                <h4><i class="fas fa-plus-circle"></i> <span id="add-more-title">هل تريد المزيد من الأسئلة؟</span></h4>
-                <p style="color: var(--light-text); margin-bottom: 15px;" id="add-more-desc">
-                    يمكنك إضافة المزيد من الأسئلة باستخدام الذكاء الاصطناعي
-                </p>
-                <button class="btn btn-warning" onclick="addMoreQuestions()" id="add-more-questions-btn">
-                    <i class="fas fa-plus"></i> <span id="add-more-questions-text">إضافة 5 أسئلة أخرى</span>
-                </button>
-                <p style="font-size: 0.8rem; color: var(--light-text); margin-top: 10px;">
-                    <i class="fas fa-lightbulb"></i> <span id="ai-model-text">يستخدم نظام الذكاء الاصطناعي:</span> <strong>Gemini 2.5 Flash Lite</strong>
-                </p>
-            </div>
         </section>
 
         <!-- Final Results -->
@@ -1730,23 +1886,17 @@
                 <!-- قسم النصائح الذكية -->
                 <div class="smart-suggestions" id="smart-suggestions"></div>
 
-                <!-- قسم تحميل PDF -->
-                <div class="share-results">
+                <!-- قسم العودة للقائمة الرئيسية -->
+                <div class="share-results" style="margin-top: 30px;">
                     <h4 style="color: var(--text); margin-bottom: 20px;">
-                        <i class="fas fa-file-pdf"></i> <span id="report-title">تقرير النتائج</span>
+                        <i class="fas fa-home"></i> <span id="return-title">العودة للقائمة الرئيسية</span>
                     </h4>
                     <div class="share-buttons" style="display: flex; gap: 15px; flex-wrap: wrap;">
-                        <button class="btn btn-success" onclick="generatePDF()" id="download-report-btn">
-                            <i class="fas fa-file-pdf"></i> <span id="download-report-text">تحميل تقرير PDF</span>
+                        <button class="btn btn-success" onclick="backToSetup()" id="return-main-btn">
+                            <i class="fas fa-home"></i> <span id="return-main-text">العودة للقائمة الرئيسية</span>
                         </button>
                         <button class="btn btn-secondary" onclick="restartQuiz()" id="restart-quiz-btn">
                             <i class="fas fa-redo"></i> <span id="restart-quiz-text">إعادة الاختبار</span>
-                        </button>
-                        <button class="btn btn-primary" onclick="backToSetup()" id="new-quiz-btn">
-                            <i class="fas fa-plus"></i> <span id="new-quiz-text">إنشاء اختبار جديد</span>
-                        </button>
-                        <button class="btn btn-warning" onclick="addMoreQuestionsAfterTest()" id="add-more-after-btn">
-                            <i class="fas fa-plus-circle"></i> <span id="add-more-after-text">إضافة المزيد من الأسئلة</span>
                         </button>
                     </div>
                 </div>
@@ -1807,14 +1957,22 @@
         let currentQuizTitle = "";
         let apiKey = "";
         let pdfFile = null;
+        let imageFile = null;
         let currentMethod = "manual";
         let existingQuestions = [];
         let currentBatch = 1;
         let totalQuestionsGenerated = 0;
         let currentLanguage = "ar";
         let isAPIKeyValid = false;
-        let quizLanguage = "auto"; // اللغة المختارة للاختبار
+        let quizLanguage = "ar";
         
+        // أنواع الأسئلة المختارة
+        let selectedQuestionTypes = {
+            multipleChoice: true,
+            trueFalse: true,
+            fillBlank: true
+        };
+
         // تحديد نموذج Gemini المستخدم
         const GEMINI_MODEL = "gemini-2.5-flash-lite";
         const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent";
@@ -1825,6 +1983,8 @@
             "hero-subtitle": "أنشئ اختبارات مخصصة في أي مجال باستخدام الذكاء الاصطناعي",
             "manual-title": "إدخال يدوي",
             "manual-desc": "أدخل عنوان وموضوع الاختبار",
+            "image-title": "رفع صورة",
+            "image-desc": "تحميل صورة وتوليد أسئلة باستخدام الذكاء الاصطناعي",
             "pdf-title": "رفع ملف PDF",
             "pdf-desc": "تحميل ملف وتوليد أسئلة باستخدام الذكاء الاصطناعي",
             "api-key-label": "مفتاح Google Gemini API",
@@ -1832,36 +1992,39 @@
             "api-info-text": "للحصول على مفتاح API:",
             "api-model-text": "يستخدم النظام نموذج:",
             "quiz-title-label": "عنوان الاختبار",
-            "quiz-topic-label": "تفاصيل الموضوع (اختياري)",
+            "quiz-topic-label": "تفاصيل الموضوع",
+            "image-upload-title": "انقر لرفع صورة",
+            "image-upload-subtitle": "أو اسحب وأفلت الصورة هنا",
+            "image-upload-size": "الأنواع المسموحة: JPG, PNG, GIF, WEBP",
+            "remove-image-text": "إزالة الصورة",
             "upload-title": "انقر لرفع ملف PDF",
             "upload-subtitle": "أو اسحب وأفلت الملف هنا",
             "upload-size": "الحد الأقصى لحجم الملف: 10MB",
             "remove-file-text": "إزالة الملف",
             "num-questions-label-manual": "عدد الأسئلة المطلوبة",
+            "num-questions-label-image": "عدد الأسئلة المطلوبة",
             "num-questions-label-pdf": "عدد الأسئلة المطلوبة",
-            "question-type-label": "نوع الأسئلة",
+            "question-type-label-main": "اختر نوع الأسئلة المطلوبة",
+            "multiple-choice-text": "أسئلة اختيار متعدد",
+            "true-false-text": "أسئلة (صح/ خطأ)",
+            "fill-blank-text": "املأ الفراغ",
+            "question-type-desc": "يمكنك اختيار جميع أنواع الأسئلة أو اختيار نوع واحد فقط",
             "generate-text": "توليد اختبار باستخدام الذكاء الاصطناعي",
             "loading-text": "جارٍ توليد الأسئلة باستخدام الذكاء الاصطناعي...",
             "questions-list-text": "قائمة الأسئلة",
             "mark-review-text": "وضع علامة للمراجعة",
             "finish-quiz-text": "إنهاء الاختبار",
             "current-score-text": "الدرجات الحالية",
-            "add-more-title": "هل تريد المزيد من الأسئلة؟",
-            "add-more-desc": "يمكنك إضافة المزيد من الأسئلة باستخدام الذكاء الاصطناعي",
-            "add-more-questions-text": "إضافة 5 أسئلة أخرى",
-            "ai-model-text": "يستخدم نظام الذكاء الاصطناعي:",
             "report-title": "تقرير النتائج",
-            "download-report-text": "تحميل تقرير PDF",
             "restart-quiz-text": "إعادة الاختبار",
-            "new-quiz-text": "إنشاء اختبار جديد",
-            "add-more-after-text": "إضافة المزيد من الأسئلة",
+            "return-title": "العودة للقائمة الرئيسية",
+            "return-main-text": "العودة للقائمة الرئيسية",
             "current-score-modal-title": "الدرجات الحالية",
             "questions-modal-title": "قائمة الأسئلة",
             "close-questions-text": "إغلاق القائمة",
             "analysis-status-text": "سيقوم الذكاء الاصطناعي بتحليل الملف وتوليد الأسئلة",
+            "image-analysis-status-text": "سيقوم الذكاء الاصطناعي بتحليل الصورة وتوليد الأسئلة",
             "language-label": "اختر لغة الاختبار",
-            "auto-language-name": "تلقائي",
-            "auto-language-desc": "(يتعرف على لغة الملف)",
             "arabic-language-name": "العربية",
             "arabic-language-desc": "أسئلة باللغة العربية",
             "english-language-name": "English",
@@ -1874,6 +2037,8 @@
             "hero-subtitle": "Create customized quizzes in any field using AI",
             "manual-title": "Manual Input",
             "manual-desc": "Enter quiz title and topic",
+            "image-title": "Upload Image",
+            "image-desc": "Upload image and generate questions using AI",
             "pdf-title": "Upload PDF File",
             "pdf-desc": "Upload file and generate questions using AI",
             "api-key-label": "Google Gemini API Key",
@@ -1881,36 +2046,39 @@
             "api-info-text": "To get API key:",
             "api-model-text": "System uses model:",
             "quiz-title-label": "Quiz Title",
-            "quiz-topic-label": "Topic Details (Optional)",
+            "quiz-topic-label": "Topic Details",
+            "image-upload-title": "Click to Upload Image",
+            "image-upload-subtitle": "or drag and drop image here",
+            "image-upload-size": "Allowed types: JPG, PNG, GIF, WEBP",
+            "remove-image-text": "Remove Image",
             "upload-title": "Click to Upload PDF",
             "upload-subtitle": "or drag and drop file here",
             "upload-size": "Max file size: 10MB",
             "remove-file-text": "Remove File",
             "num-questions-label-manual": "Number of Questions",
+            "num-questions-label-image": "Number of Questions",
             "num-questions-label-pdf": "Number of Questions",
-            "question-type-label": "Question Type",
+            "question-type-label-main": "Select Question Types",
+            "multiple-choice-text": "Multiple Choice Questions",
+            "true-false-text": "True/False Questions",
+            "fill-blank-text": "Fill in the Blank",
+            "question-type-desc": "You can select all question types or only one type",
             "generate-text": "Generate Quiz with AI",
             "loading-text": "Generating questions using AI...",
             "questions-list-text": "Questions List",
             "mark-review-text": "Mark for Review",
             "finish-quiz-text": "Finish Quiz",
             "current-score-text": "Current Score",
-            "add-more-title": "Want More Questions?",
-            "add-more-desc": "You can add more questions using AI",
-            "add-more-questions-text": "Add 5 More Questions",
-            "ai-model-text": "AI system uses:",
             "report-title": "Results Report",
-            "download-report-text": "Download PDF Report",
             "restart-quiz-text": "Restart Quiz",
-            "new-quiz-text": "Create New Quiz",
-            "add-more-after-text": "Add More Questions",
+            "return-title": "Return to Main Menu",
+            "return-main-text": "Return to Main Menu",
             "current-score-modal-title": "Current Score",
             "questions-modal-title": "Questions List",
             "close-questions-text": "Close List",
             "analysis-status-text": "AI will analyze the file and generate questions",
+            "image-analysis-status-text": "AI will analyze the image and generate questions",
             "language-label": "Choose Quiz Language",
-            "auto-language-name": "Auto",
-            "auto-language-desc": "(Detects file language)",
             "arabic-language-name": "Arabic",
             "arabic-language-desc": "Questions in Arabic",
             "english-language-name": "English",
@@ -1960,6 +2128,9 @@
                     element.textContent = value;
                 }
             }
+            
+            // تحديث خيارات القائمة المنسدلة
+            updateDropdownOptions(lang);
         }
 
         // تحديث النصوص التوضيحية
@@ -1974,33 +2145,8 @@
                 `;
                 
                 document.getElementById('quiz-title').placeholder = "Example: Islamic Jurisprudence - Prayer Rules";
-                document.getElementById('quiz-topic').placeholder = "You can add additional details about the topic you want to test...";
+                document.getElementById('quiz-topic').placeholder = "Write details about the topic you want to test...";
                 document.getElementById('api-key').placeholder = "Enter your API key here";
-                
-                // تحديث خيارات القائمة المنسدلة
-                const questionTypeSelect = document.getElementById('question-type');
-                questionTypeSelect.innerHTML = `
-                    <option value="mixed">Mixed (Knowledge + Application)</option>
-                    <option value="concepts">Basic Concepts</option>
-                    <option value="applications">Application Questions</option>
-                    <option value="analysis">Analytical Questions</option>
-                `;
-                
-                const numQuestionsManual = document.getElementById('num-questions-manual');
-                numQuestionsManual.innerHTML = `
-                    <option value="5">5 questions</option>
-                    <option value="10" selected>10 questions</option>
-                    <option value="15">15 questions</option>
-                    <option value="20">20 questions</option>
-                `;
-                
-                const numQuestionsPdf = document.getElementById('num-questions-pdf');
-                numQuestionsPdf.innerHTML = `
-                    <option value="5">5 questions</option>
-                    <option value="10" selected>10 questions</option>
-                    <option value="15">15 questions</option>
-                    <option value="20">20 questions</option>
-                `;
             } else {
                 apiSteps.innerHTML = `
                     <li>اذهب إلى <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a></li>
@@ -2010,28 +2156,50 @@
                 `;
                 
                 document.getElementById('quiz-title').placeholder = "مثال: الفقه الإسلامي - أحكام الصلاة";
-                document.getElementById('quiz-topic').placeholder = "يمكنك إضافة تفاصيل إضافية عن الموضوع الذي تريد اختباره...";
+                document.getElementById('quiz-topic').placeholder = "اكتب تفاصيل الموضوع الذي تريد اختباره...";
                 document.getElementById('api-key').placeholder = "أدخل مفتاح API الخاص بك هنا";
-                
-                // تحديث خيارات القائمة المنسدلة
-                const questionTypeSelect = document.getElementById('question-type');
-                questionTypeSelect.innerHTML = `
-                    <option value="mixed">مختلطة (معلومات + تطبيقات)</option>
-                    <option value="concepts">مفاهيم أساسية</option>
-                    <option value="applications">أسئلة تطبيقية</option>
-                    <option value="analysis">أسئلة تحليلية</option>
+            }
+        }
+
+        // تحديث خيارات القوائم المنسدلة
+        function updateDropdownOptions(lang) {
+            if (lang === 'en') {
+                document.getElementById('num-questions-manual').innerHTML = `
+                    <option value="5">5 questions</option>
+                    <option value="10" selected>10 questions</option>
+                    <option value="15">15 questions</option>
+                    <option value="20">20 questions</option>
                 `;
                 
-                const numQuestionsManual = document.getElementById('num-questions-manual');
-                numQuestionsManual.innerHTML = `
+                document.getElementById('num-questions-image').innerHTML = `
+                    <option value="5">5 questions</option>
+                    <option value="10" selected>10 questions</option>
+                    <option value="15">15 questions</option>
+                    <option value="20">20 questions</option>
+                `;
+                
+                document.getElementById('num-questions-pdf').innerHTML = `
+                    <option value="5">5 questions</option>
+                    <option value="10" selected>10 questions</option>
+                    <option value="15">15 questions</option>
+                    <option value="20">20 questions</option>
+                `;
+            } else {
+                document.getElementById('num-questions-manual').innerHTML = `
                     <option value="5">5 أسئلة</option>
                     <option value="10" selected>10 أسئلة</option>
                     <option value="15">15 أسئلة</option>
                     <option value="20">20 أسئلة</option>
                 `;
                 
-                const numQuestionsPdf = document.getElementById('num-questions-pdf');
-                numQuestionsPdf.innerHTML = `
+                document.getElementById('num-questions-image').innerHTML = `
+                    <option value="5">5 أسئلة</option>
+                    <option value="10" selected>10 أسئلة</option>
+                    <option value="15">15 أسئلة</option>
+                    <option value="20">20 أسئلة</option>
+                `;
+                
+                document.getElementById('num-questions-pdf').innerHTML = `
                     <option value="5">5 أسئلة</option>
                     <option value="10" selected>10 أسئلة</option>
                     <option value="15">15 أسئلة</option>
@@ -2045,10 +2213,12 @@
             currentMethod = method;
             
             document.getElementById('manual-tab').classList.remove('active');
+            document.getElementById('image-tab').classList.remove('active');
             document.getElementById('pdf-tab').classList.remove('active');
             document.getElementById(`${method}-tab`).classList.add('active');
             
             document.getElementById('manual-section').style.display = method === 'manual' ? 'block' : 'none';
+            document.getElementById('image-section').style.display = method === 'image' ? 'block' : 'none';
             document.getElementById('pdf-section').style.display = method === 'pdf' ? 'block' : 'none';
         }
 
@@ -2056,12 +2226,37 @@
         function selectQuizLanguage(lang) {
             quizLanguage = lang;
             
-            // تحديد الأزرار النشطة
-            document.getElementById('auto-language').classList.remove('active');
             document.getElementById('arabic-language').classList.remove('active');
             document.getElementById('english-language').classList.remove('active');
             
             document.getElementById(`${lang}-language`).classList.add('active');
+        }
+
+        // تبديل نوع السؤال
+        function toggleQuestionType(type) {
+            selectedQuestionTypes[type] = !selectedQuestionTypes[type];
+            const checkbox = document.getElementById(`${type}Checkbox`);
+            const option = document.getElementById(`${type.replace(/([A-Z])/g, '-$1').toLowerCase()}-option`);
+            
+            checkbox.checked = selectedQuestionTypes[type];
+            
+            if (selectedQuestionTypes[type]) {
+                option.classList.add('active');
+            } else {
+                option.classList.remove('active');
+            }
+            
+            // التأكد من اختيار نوع واحد على الأقل
+            const hasSelectedType = Object.values(selectedQuestionTypes).some(value => value);
+            if (!hasSelectedType) {
+                selectedQuestionTypes[type] = true;
+                checkbox.checked = true;
+                option.classList.add('active');
+                
+                showError(currentLanguage === 'ar' ? 
+                    'يجب اختيار نوع واحد على الأقل من الأسئلة' : 
+                    'You must select at least one question type');
+            }
         }
 
         // التحقق من تفضيل الوضع الداكن
@@ -2115,7 +2310,6 @@
             verifyBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${currentLanguage === 'ar' ? 'جارٍ التحقق...' : 'Verifying...'}`;
 
             try {
-                // اختبار بسيط للتحقق من صحة المفتاح
                 const response = await fetch(`${GEMINI_API_URL}?key=${apiKeyInput}`, {
                     method: 'POST',
                     headers: {
@@ -2157,6 +2351,53 @@
             }
         }
 
+        // التعامل مع رفع صورة
+        async function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+            if (!validTypes.includes(file.type)) {
+                showError(currentLanguage === 'ar' ? 'الرجاء رفع صورة صالحة (JPG, PNG, GIF, WEBP)' : 'Please upload valid image (JPG, PNG, GIF, WEBP)');
+                return;
+            }
+
+            if (file.size > 10 * 1024 * 1024) {
+                showError(currentLanguage === 'ar' ? 'حجم الصورة كبير جداً. الحد الأقصى 10MB' : 'Image too large. Maximum size: 10MB');
+                return;
+            }
+
+            imageFile = file;
+
+            // عرض معلومات الصورة
+            document.getElementById('image-filename').textContent = file.name;
+            document.getElementById('image-filesize').textContent = currentLanguage === 'ar' ? 
+                `الحجم: ${(file.size / 1024 / 1024).toFixed(2)} MB` : 
+                `Size: ${(file.size / 1024 / 1024).toFixed(2)} MB`;
+            
+            document.getElementById('image-preview').classList.add('active');
+            
+            // عرض معاينة الصورة
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('preview-image').src = e.target.result;
+                document.getElementById('image-preview-container').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+            
+            showSuccessMessage(currentLanguage === 'ar' ? 
+                'تم رفع الصورة بنجاح! قم بتوليد الأسئلة الآن.' : 
+                'Image uploaded successfully! Generate questions now.');
+        }
+
+        // إزالة الصورة
+        function removeImage() {
+            imageFile = null;
+            document.getElementById('image-file').value = "";
+            document.getElementById('image-preview').classList.remove('active');
+            document.getElementById('image-preview-container').style.display = 'none';
+        }
+
         // التعامل مع رفع ملف PDF
         async function handlePDFUpload(event) {
             const file = event.target.files[0];
@@ -2174,7 +2415,6 @@
 
             pdfFile = file;
 
-            // عرض معلومات الملف
             document.getElementById('pdf-filename').textContent = file.name;
             document.getElementById('pdf-filesize').textContent = currentLanguage === 'ar' ? 
                 `الحجم: ${(file.size / 1024 / 1024).toFixed(2)} MB` : 
@@ -2223,45 +2463,17 @@
         }
 
         // الحصول على التوجيهات بناءً على اللغة المختارة
-        function getLanguageInstructions(targetLanguage, fileName = '') {
-            let detectedLanguage = 'ar';
-            
-            // محاولة اكتشاف لغة الملف من اسمه
-            if (fileName) {
-                const fileNameLower = fileName.toLowerCase();
-                if (fileNameLower.includes('english') || fileNameLower.includes('eng') || 
-                    (fileNameLower.match(/[a-z]/g) && fileNameLower.match(/[a-z]/g).length > fileNameLower.match(/[اأإء-ي]/g)?.length || 0)) {
-                    detectedLanguage = 'en';
-                }
-            }
-            
-            if (targetLanguage === 'auto') {
-                // إذا كان تلقائي، نكتشف لغة الملف
-                if (detectedLanguage === 'en') {
-                    return {
-                        promptPrefix: "Please generate questions in English based on this PDF file.",
-                        formatInstructions: "All questions, options, and explanations must be in English.",
-                        responseLanguage: "English",
-                        languageCode: "en"
-                    };
-                } else {
-                    return {
-                        promptPrefix: "يرجى إنشاء أسئلة باللغة العربية بناءً على ملف PDF هذا.",
-                        formatInstructions: "يجب أن تكون جميع الأسئلة والخيارات والشروح باللغة العربية.",
-                        responseLanguage: "Arabic",
-                        languageCode: "ar"
-                    };
-                }
-            } else if (targetLanguage === 'en') {
+        function getLanguageInstructions(targetLanguage) {
+            if (targetLanguage === 'en') {
                 return {
-                    promptPrefix: "Please generate questions in English based on this PDF file.",
+                    promptPrefix: "Please generate questions in English based on the provided content.",
                     formatInstructions: "All questions, options, and explanations must be in English.",
                     responseLanguage: "English",
                     languageCode: "en"
                 };
             } else {
                 return {
-                    promptPrefix: "يرجى إنشاء أسئلة باللغة العربية بناءً على ملف PDF هذا.",
+                    promptPrefix: "يرجى إنشاء أسئلة باللغة العربية بناءً على المحتوى المقدم.",
                     formatInstructions: "يجب أن تكون جميع الأسئلة والخيارات والشروح باللغة العربية.",
                     responseLanguage: "Arabic",
                     languageCode: "ar"
@@ -2269,30 +2481,128 @@
             }
         }
 
-        // الحصول على اسم نوع السؤال باللغة المناسبة
-        function getQuestionTypeName(type, languageCode = 'ar') {
-            if (languageCode === 'en') {
-                const typesEn = {
-                    'mixed': 'Mixed (Knowledge + Application)',
-                    'concepts': 'Basic Concepts',
-                    'applications': 'Application Questions',
-                    'analysis': 'Analytical Questions'
-                };
-                return typesEn[type] || type;
-            } else {
-                const typesAr = {
-                    'mixed': 'مختلطة (معلومات + تطبيقات)',
-                    'concepts': 'مفاهيم أساسية',
-                    'applications': 'أسئلة تطبيقية',
-                    'analysis': 'أسئلة تحليلية'
-                };
-                return typesAr[type] || type;
+        // تحويل الملفات إلى Base64
+        async function convertFileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result.split(',')[1]);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // الحصول على أنواع الأسئلة المختارة كنص
+        function getSelectedQuestionTypesText(languageCode) {
+            const selectedTypes = [];
+            
+            if (selectedQuestionTypes.multipleChoice) {
+                selectedTypes.push(languageCode === 'en' ? 'multiple choice' : 'اختيار متعدد');
             }
+            if (selectedQuestionTypes.trueFalse) {
+                selectedTypes.push(languageCode === 'en' ? 'true/false' : 'صح/خطأ');
+            }
+            if (selectedQuestionTypes.fillBlank) {
+                selectedTypes.push(languageCode === 'en' ? 'fill in the blank' : 'املأ الفراغ');
+            }
+            
+            if (languageCode === 'en') {
+                return selectedTypes.join(', ');
+            } else {
+                return selectedTypes.join('، ');
+            }
+        }
+
+        // الحصول على نموذج JSON بناءً على أنواع الأسئلة المختارة
+        function getQuestionFormats(languageCode) {
+            const formats = [];
+            
+            if (selectedQuestionTypes.multipleChoice) {
+                if (languageCode === 'en') {
+                    formats.push(`{
+      "id": 1,
+      "type": "multiple_choice",
+      "q": "Question text here",
+      "options": ["Option 1", "Option 2", "Option 3", "Option 4"],
+      "answer": 0,
+      "explanations": {
+        "correct": "Explanation of correct answer",
+        "wrong1": "Explanation of first wrong answer",
+        "wrong2": "Explanation of second wrong answer",
+        "wrong3": "Explanation of third wrong answer"
+      }
+    }`);
+                } else {
+                    formats.push(`{
+      "id": 1,
+      "type": "multiple_choice",
+      "q": "نص السؤال هنا",
+      "options": ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"],
+      "answer": 0,
+      "explanations": {
+        "correct": "شرح الإجابة الصحيحة",
+        "wrong1": "شرح الخطأ الأول",
+        "wrong2": "شرح الخطأ الثاني",
+        "wrong3": "شرح الخطأ الثالث"
+      }
+    }`);
+                }
+            }
+            
+            if (selectedQuestionTypes.trueFalse) {
+                if (languageCode === 'en') {
+                    formats.push(`{
+      "id": 2,
+      "type": "true_false",
+      "q": "Statement here",
+      "options": ["True", "False"],
+      "answer": 0,
+      "explanations": {
+        "correct": "Explanation why it's true/false"
+      }
+    }`);
+                } else {
+                    formats.push(`{
+      "id": 2,
+      "type": "true_false",
+      "q": "الجملة هنا",
+      "options": ["صح", "خطأ"],
+      "answer": 0,
+      "explanations": {
+        "correct": "شرح لماذا هي صح/خطأ"
+      }
+    }`);
+                }
+            }
+            
+            if (selectedQuestionTypes.fillBlank) {
+                if (languageCode === 'en') {
+                    formats.push(`{
+      "id": 3,
+      "type": "fill_blank",
+      "q": "Complete the sentence: The capital of France is _____",
+      "answer": "Paris",
+      "explanations": {
+        "correct": "Paris is the capital of France"
+      }
+    }`);
+                } else {
+                    formats.push(`{
+      "id": 3,
+      "type": "fill_blank",
+      "q": "أكمل الجملة: عاصمة فرنسا هي _____",
+      "answer": "باريس",
+      "explanations": {
+        "correct": "باريس هي عاصمة فرنسا"
+      }
+    }`);
+                }
+            }
+            
+            return formats;
         }
 
         // توليد الاختبار باستخدام الذكاء الاصطناعي
         async function generateQuiz() {
-            // التحقق من صحة مفتاح API
             if (!isAPIKeyValid) {
                 showError(currentLanguage === 'ar' ? 
                     'الرجاء التحقق من صحة مفتاح API أولاً' : 
@@ -2302,6 +2612,10 @@
 
             let prompt = '';
             let title = '';
+            let requestBody = {};
+            const languageInstructions = getLanguageInstructions(quizLanguage);
+            const selectedTypesText = getSelectedQuestionTypesText(languageInstructions.languageCode);
+            const questionFormats = getQuestionFormats(languageInstructions.languageCode);
 
             if (currentMethod === 'manual') {
                 const quizTitleInput = document.getElementById('quiz-title').value.trim();
@@ -2313,66 +2627,134 @@
                     return;
                 }
 
+                if (!quizTopicInput) {
+                    showError(currentLanguage === 'ar' ? 'الرجاء إدخال تفاصيل الموضوع' : 'Please enter topic details');
+                    return;
+                }
+
                 title = quizTitleInput;
                 
-                // استخدام لغة الواجهة للإدخال اليدوي
-                const targetLanguage = currentLanguage === 'en' ? 'en' : 'ar';
-                
-                if (targetLanguage === 'en') {
-                    prompt = `Create an educational quiz on the following topic:
+                if (languageInstructions.languageCode === 'en') {
+                    prompt = `${languageInstructions.promptPrefix}
 
-Title: ${quizTitleInput}
-${quizTopicInput ? `Details: ${quizTopicInput}` : ''}
+Topic: ${quizTitleInput}
+Details: ${quizTopicInput}
 
-I want a quiz with ${numQuestions} questions with 4 options each.
-All questions, options, and explanations must be in English.
+I want a quiz with ${numQuestions} questions of the following types: ${selectedTypesText}.
 
-Please follow this format:
+IMPORTANT: Generate a mix of the selected question types. For example, if multiple types are selected, include questions from each type.
+
+${languageInstructions.formatInstructions}
+
+Please follow this JSON format:
 
 {
   "questions": [
-    {
-      "id": 1,
-      "q": "Question text here",
-      "options": ["Option 1", "Option 2", "Option 3", "Option 4"],
-      "answer": 0,
-      "explanations": {
-        "correct": "Explanation of correct answer",
-        "wrong1": "Explanation of first wrong answer",
-        "wrong2": "Explanation of second wrong answer",
-        "wrong3": "Explanation of third wrong answer"
-      }
-    }
+${questionFormats.join(',\n')}
   ]
 }`;
                 } else {
-                    prompt = `أنشئ اختباراً تعليمياً حول الموضوع التالي:
+                    prompt = `${languageInstructions.promptPrefix}
 
-العنوان: ${quizTitleInput}
-${quizTopicInput ? `التفاصيل: ${quizTopicInput}` : ''}
+الموضوع: ${quizTitleInput}
+التفاصيل: ${quizTopicInput}
 
-أرغب في اختبار مكون من ${numQuestions} أسئلة مع 4 خيارات لكل سؤال.
-يجب أن تكون جميع الأسئلة والخيارات والشروح باللغة العربية.
+أرغب في اختبار مكون من ${numQuestions} أسئلة من الأنواع التالية: ${selectedTypesText}.
 
-الرجاء الالتزام بالتنسيق التالي:
+مهم: قم بإنشاء مزيج من أنواع الأسئلة المختارة. على سبيل المثال، إذا تم اختيار أنواع متعددة، قم بتضمين أسئلة من كل نوع.
+
+${languageInstructions.formatInstructions}
+
+الرجاء الالتزام بتنسيق JSON التالي:
 
 {
   "questions": [
-    {
-      "id": 1,
-      "q": "نص السؤال هنا",
-      "options": ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"],
-      "answer": 0,
-      "explanations": {
-        "correct": "شرح الإجابة الصحيحة",
-        "wrong1": "شرح الخطأ الأول",
-        "wrong2": "شرح الخطأ الثاني",
-        "wrong3": "شرح الخطأ الثالث"
-      }
-    }
+${questionFormats.join(',\n')}
   ]
 }`;
                 }
+
+                requestBody = {
+                    contents: [{
+                        parts: [{ text: prompt }]
+                    }],
+                    generationConfig: {
+                        temperature: 0.7,
+                        topK: 40,
+                        topP: 0.95,
+                        maxOutputTokens: 4096,
+                    }
+                };
+
+            } else if (currentMethod === 'image') {
+                if (!imageFile) {
+                    showError(currentLanguage === 'ar' ? 'الرجاء رفع صورة أولاً' : 'Please upload image first');
+                    return;
+                }
+
+                const numQuestions = document.getElementById('num-questions-image').value;
+                title = `${imageFile.name.replace(/\.[^/.]+$/, '')} - ${currentLanguage === 'ar' ? 'اختبار' : 'Quiz'}`;
+                
+                if (languageInstructions.languageCode === 'en') {
+                    prompt = `${languageInstructions.promptPrefix}
+
+I need ${numQuestions} questions based on the text in the provided image.
+
+Question types to include: ${selectedTypesText}
+
+IMPORTANT: Analyze the text in the image and generate questions based on the content. Generate a mix of the selected question types.
+
+${languageInstructions.formatInstructions}
+
+Required JSON format:
+
+{
+  "questions": [
+${questionFormats.join(',\n')}
+  ]
+}`;
+                } else {
+                    prompt = `${languageInstructions.promptPrefix}
+
+أحتاج إلى ${numQuestions} أسئلة بناءً على النص في الصورة المرفوعة.
+
+أنواع الأسئلة المطلوبة: ${selectedTypesText}
+
+مهم: قم بتحليل النص في الصورة وإنشاء أسئلة بناءً على المحتوى. قم بإنشاء مزيج من أنواع الأسئلة المختارة.
+
+${languageInstructions.formatInstructions}
+
+تنسيق JSON المطلوب:
+
+{
+  "questions": [
+${questionFormats.join(',\n')}
+  ]
+}`;
+                }
+
+                // تحويل الصورة إلى Base64
+                const imageBase64 = await convertFileToBase64(imageFile);
+
+                requestBody = {
+                    contents: [{
+                        parts: [
+                            { text: prompt },
+                            {
+                                inline_data: {
+                                    mime_type: imageFile.type,
+                                    data: imageBase64
+                                }
+                            }
+                        ]
+                    }],
+                    generationConfig: {
+                        temperature: 0.7,
+                        topK: 40,
+                        topP: 0.95,
+                        maxOutputTokens: 4096,
+                    }
+                };
 
             } else if (currentMethod === 'pdf') {
                 if (!pdfFile) {
@@ -2381,79 +2763,68 @@ ${quizTopicInput ? `التفاصيل: ${quizTopicInput}` : ''}
                 }
 
                 const numQuestions = document.getElementById('num-questions-pdf').value;
-                const questionType = document.getElementById('question-type').value;
-                
                 title = `${pdfFile.name.replace('.pdf', '')} - ${currentLanguage === 'ar' ? 'اختبار' : 'Quiz'}`;
-                
-                // الحصول على إرشادات اللغة
-                const languageInstructions = getLanguageInstructions(quizLanguage, pdfFile.name);
-                const questionTypeName = getQuestionTypeName(questionType, languageInstructions.languageCode);
                 
                 if (languageInstructions.languageCode === 'en') {
                     prompt = `${languageInstructions.promptPrefix}
 
-I need ${numQuestions} questions of type: ${questionTypeName}.
+I need ${numQuestions} questions based on the content of the PDF file.
 
-Question requirements:
-1. Based on the PDF content
-2. 4 options per question
-3. Clearly indicate the correct answer
-4. Write explanations for each answer
-5. Reference the source in text
-6. ${languageInstructions.formatInstructions}
+Question types to include: ${selectedTypesText}
 
-Required format:
+IMPORTANT: Analyze the PDF content and generate questions based on the text. Generate a mix of the selected question types.
+
+${languageInstructions.formatInstructions}
+
+Required JSON format:
+
 {
   "questions": [
-    {
-      "id": 1,
-      "q": "Question text here",
-      "options": ["Option 1", "Option 2", "Option 3", "Option 4"],
-      "answer": 0,
-      "explanations": {
-        "correct": "Explanation of correct answer",
-        "wrong1": "Explanation of first wrong answer",
-        "wrong2": "Explanation of second wrong answer",
-        "wrong3": "Explanation of third wrong answer"
-      },
-      "source": "Source in text",
-      "questionType": "${questionTypeName}"
-    }
+${questionFormats.join(',\n')}
   ]
 }`;
                 } else {
                     prompt = `${languageInstructions.promptPrefix}
 
-أحتاج إلى ${numQuestions} أسئلة من النوع: ${questionTypeName}.
+أحتاج إلى ${numQuestions} أسئلة بناءً على محتوى ملف PDF.
 
-متطلبات الأسئلة:
-1. الاستناد إلى محتوى PDF
-2. 4 خيارات لكل سؤال
-3. تحديد الإجابة الصحيحة بوضوح
-4. كتابة شرح لكل إجابة
-5. الإشارة إلى المصدر في النص
-6. ${languageInstructions.formatInstructions}
+أنواع الأسئلة المطلوبة: ${selectedTypesText}
 
-التنسيق المطلوب:
+مهم: قم بتحليل محتوى PDF وإنشاء أسئلة بناءً على النص. قم بإنشاء مزيج من أنواع الأسئلة المختارة.
+
+${languageInstructions.formatInstructions}
+
+تنسيق JSON المطلوب:
+
 {
   "questions": [
-    {
-      "id": 1,
-      "q": "نص السؤال هنا",
-      "options": ["خيار 1", "خيار 2", "خيار 3", "خيار 4"],
-      "answer": 0,
-      "explanations": {
-        "correct": "شرح الإجابة الصحيحة",
-        "wrong1": "شرح الخطأ الأول",
-        "wrong2": "شرح الخطأ الثاني",
-        "wrong3": "شرح الخطأ الثالث"
-      },
-      "source": "المصدر في النص",
-      "questionType": "${questionTypeName}"
-    }
+${questionFormats.join(',\n')}
   ]
 }`;
                 }
+
+                // تحويل PDF إلى Base64
+                const pdfBase64 = await convertFileToBase64(pdfFile);
+
+                requestBody = {
+                    contents: [{
+                        parts: [
+                            { text: prompt },
+                            {
+                                inline_data: {
+                                    mime_type: "application/pdf",
+                                    data: pdfBase64
+                                }
+                            }
+                        ]
+                    }],
+                    generationConfig: {
+                        temperature: 0.7,
+                        topK: 40,
+                        topP: 0.95,
+                        maxOutputTokens: 4096,
+                    }
+                };
             }
 
             currentQuizTitle = title;
@@ -2465,61 +2836,15 @@ Required format:
             
             const numQuestions = currentMethod === 'manual' 
                 ? document.getElementById('num-questions-manual').value 
+                : currentMethod === 'image'
+                ? document.getElementById('num-questions-image').value
                 : document.getElementById('num-questions-pdf').value;
             
             document.getElementById('loading-details').textContent = currentLanguage === 'ar' ?
-                `جارٍ توليد ${numQuestions} أسئلة باستخدام الذكاء الاصطناعي...` :
+                `جارٍ توليد ${numQuestions} سؤالاً باستخدام الذكاء الاصطناعي...` :
                 `Generating ${numQuestions} questions using AI...`;
 
             try {
-                let requestBody;
-                
-                if (currentMethod === 'manual') {
-                    requestBody = {
-                        contents: [{
-                            parts: [{
-                                text: prompt
-                            }]
-                        }],
-                        generationConfig: {
-                            temperature: 0.7,
-                            topK: 40,
-                            topP: 0.95,
-                            maxOutputTokens: 4096,
-                        }
-                    };
-                } else {
-                    // تحويل PDF إلى Base64
-                    const base64Data = await new Promise((resolve, reject) => {
-                        const reader = new FileReader();
-                        reader.onload = () => resolve(reader.result.split(',')[1]);
-                        reader.onerror = reject;
-                        reader.readAsDataURL(pdfFile);
-                    });
-                    
-                    requestBody = {
-                        contents: [{
-                            parts: [
-                                {
-                                    text: prompt
-                                },
-                                {
-                                    inline_data: {
-                                        mime_type: "application/pdf",
-                                        data: base64Data
-                                    }
-                                }
-                            ]
-                        }],
-                        generationConfig: {
-                            temperature: 0.7,
-                            topK: 40,
-                            topP: 0.95,
-                            maxOutputTokens: 4096,
-                        }
-                    };
-                }
-
                 const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
                     method: 'POST',
                     headers: {
@@ -2566,12 +2891,10 @@ Required format:
                         'No questions found in response');
                 }
 
-                // إضافة الأسئلة الجديدة
                 questions = quizData.questions;
                 existingQuestions = questions;
                 totalQuestionsGenerated = questions.length;
                 
-                // تهيئة المتغيرات
                 userAnswers = Array(questions.length).fill(null);
                 answerLocked = Array(questions.length).fill(false);
                 shuffledQuestions = questions.map(q => shuffleOptions(q));
@@ -2581,7 +2904,6 @@ Required format:
 
                 document.getElementById('setup-section').style.display = 'none';
                 document.getElementById('quiz-section').style.display = 'block';
-                document.getElementById('add-more-section').style.display = 'block';
 
                 clearInterval(timerInterval);
                 startTimer();
@@ -2603,6 +2925,10 @@ Required format:
 
         // دالة لترتيب الخيارات بشكل عشوائي
         function shuffleOptions(question) {
+            if (question.type === 'fill_blank') {
+                return question; // لا تحتاج أسئلة املأ الفراغ إلى خلط
+            }
+            
             const options = [...question.options];
             const answer = question.answer;
             
@@ -2649,19 +2975,6 @@ Required format:
             }
         }
 
-        // اكتشاف لغة النص
-        function detectTextLanguage(text) {
-            if (!text) return 'ar';
-            
-            const arabicChars = text.match(/[؀-ۿ]/g) || [];
-            const englishChars = text.match(/[a-zA-Z]/g) || [];
-            
-            if (englishChars.length > arabicChars.length) {
-                return 'en';
-            }
-            return 'ar';
-        }
-
         // تحميل الاختبار
         function loadQuiz() {
             const quizDiv = document.getElementById("quiz");
@@ -2673,10 +2986,8 @@ Required format:
             const question = shuffledQuestions[currentQuestionIndex];
             const isLocked = answerLocked[currentQuestionIndex];
 
-            // اكتشاف لغة السؤال
             const questionLanguage = detectTextLanguage(question.q);
             
-            // بناء HTML بناءً على لغة السؤال
             let questionNumberText = questionLanguage === 'en' 
                 ? `Question ${currentQuestionIndex + 1} of ${questions.length}`
                 : `السؤال ${currentQuestionIndex + 1} من ${questions.length}`;
@@ -2687,15 +2998,15 @@ Required format:
             let totalQuestionsText = questionLanguage === 'en' ? 'Total Questions' : 'إجمالي الأسئلة';
             let answeredText = questionLanguage === 'en' ? 'Answered' : 'تم الإجابة';
             let flaggedText = questionLanguage === 'en' ? 'Flagged' : 'معلمة';
-            
-            let sourceText = questionLanguage === 'en' ? 'Source' : 'المصدر';
 
             let html = `
             <div class="question-box">
                 <div class="question-number">
                     <i class="fas fa-question-circle"></i>
                     ${questionNumberText}
-                    ${question.questionType ? `<span class="category-badge">${question.questionType}</span>` : ''}
+                    ${question.type === 'multiple_choice' ? `<span class="category-badge">${questionLanguage === 'en' ? 'Multiple Choice' : 'اختيار متعدد'}</span>` : ''}
+                    ${question.type === 'true_false' ? `<span class="category-badge">${questionLanguage === 'en' ? 'True/False' : 'صح/خطأ'}</span>` : ''}
+                    ${question.type === 'fill_blank' ? `<span class="category-badge">${questionLanguage === 'en' ? 'Fill in Blank' : 'املأ الفراغ'}</span>` : ''}
                     ${isLocked ? `<span style="color: var(--accent); margin-right: 10px;"><i class="fas fa-lock"></i> ${lockedText}</span>` : ''}
                     ${markedQuestions.includes(currentQuestionIndex) ? `<span style="background: var(--tertiary-gradient); color: white; padding: 5px 10px; border-radius: 10px; font-size: 0.8rem; margin-right: 10px;"><i class="fas fa-flag"></i> ${markedText}</span>` : ''}
                 </div>
@@ -2707,38 +3018,53 @@ Required format:
                 </div>
                 
                 <div class="question-text">${question.q}</div>
-                
-                ${question.source ? `<div class="source-info"><i class="fas fa-map-marker-alt"></i> ${sourceText}: ${question.source}</div>` : ''}
-                
-                <div class="options">
             `;
 
-            question.options.forEach((opt, i) => {
-                const isChecked = userAnswers[currentQuestionIndex] === i;
-                const isDisabled = isLocked;
-                let labelClass = '';
+            if (question.type !== 'fill_blank') {
+                html += `<div class="options">`;
+                
+                question.options.forEach((opt, i) => {
+                    const isChecked = userAnswers[currentQuestionIndex] === i;
+                    const isDisabled = isLocked;
+                    let labelClass = '';
 
-                if (isLocked) {
-                    labelClass = 'locked';
-                    if (isChecked) {
-                        labelClass += userAnswers[currentQuestionIndex] === question.answer ? ' correct-answer' : ' wrong-answer';
-                    } else if (i === question.answer) {
-                        labelClass += ' correct-answer';
+                    if (isLocked) {
+                        labelClass = 'locked';
+                        if (isChecked) {
+                            labelClass += userAnswers[currentQuestionIndex] === question.answer ? ' correct-answer' : ' wrong-answer';
+                        } else if (i === question.answer) {
+                            labelClass += ' correct-answer';
+                        }
+                    } else if (isChecked) {
+                        labelClass = 'selected';
                     }
-                } else if (isChecked) {
-                    labelClass = 'selected';
-                }
 
+                    html += `
+                    <label class="${labelClass}">
+                        <input type="radio" name="q${currentQuestionIndex}" value="${i}" ${isChecked ? 'checked' : ''} ${isDisabled ? 'disabled' : ''} onchange="selectAnswer(${i})">
+                        ${opt}
+                        ${isLocked && i === question.answer ? ' <i class="fas fa-check" style="color: var(--secondary);"></i>' : ''}
+                    </label>
+                    `;
+                });
+                
+                html += `</div>`;
+            } else {
+                // سؤال املأ الفراغ
                 html += `
-                <label class="${labelClass}">
-                    <input type="radio" name="q${currentQuestionIndex}" value="${i}" ${isChecked ? 'checked' : ''} ${isDisabled ? 'disabled' : ''} onchange="selectAnswer(${i})">
-                    ${opt}
-                    ${isLocked && i === question.answer ? ' <i class="fas fa-check" style="color: var(--secondary);"></i>' : ''}
-                </label>
+                <div class="options">
+                    <label style="flex-direction: column; align-items: flex-start;">
+                        <span style="margin-bottom: 10px; font-weight: bold;">${questionLanguage === 'en' ? 'Your Answer:' : 'إجابتك:'}</span>
+                        <input type="text" id="fillBlankAnswer" class="input-field" style="width: 100%;" 
+                               placeholder="${questionLanguage === 'en' ? 'Type your answer here...' : 'اكتب إجابتك هنا...'}" 
+                               ${isLocked ? 'disabled' : ''}
+                               value="${userAnswers[currentQuestionIndex] || ''}"
+                               onchange="selectFillBlankAnswer(this.value)">
+                    </label>
+                </div>
                 `;
-            });
+            }
 
-            // تحديد نصوص الأزرار بناءً على لغة السؤال
             let previousText, nextText, previousIcon, nextIcon;
             
             if (questionLanguage === 'en') {
@@ -2754,7 +3080,6 @@ Required format:
             }
 
             html += `
-                </div>
                 <div id="explanation" class="explanation"></div>
             </div>
             <div class="navigation">
@@ -2809,19 +3134,29 @@ Required format:
             userAnswers[currentQuestionIndex] = answerIndex;
             answerLocked[currentQuestionIndex] = true;
 
-            // تعطيل جميع خيارات الراديو في السؤال الحالي
             const radioInputs = document.querySelectorAll(`input[name="q${currentQuestionIndex}"]`);
             radioInputs.forEach(input => {
                 input.disabled = true;
             });
 
-            // إضافة فئة locked لجميع labels
             const labels = document.querySelectorAll(`input[name="q${currentQuestionIndex}"]`);
             labels.forEach(input => {
                 input.closest('label').classList.add('locked');
             });
 
-            // إظهار الشرح
+            showExplanation();
+        }
+
+        // اختيار إجابة لسؤال املأ الفراغ
+        function selectFillBlankAnswer(value) {
+            if (answerLocked[currentQuestionIndex]) {
+                return;
+            }
+            
+            userAnswers[currentQuestionIndex] = value;
+            answerLocked[currentQuestionIndex] = true;
+
+            document.getElementById('fillBlankAnswer').disabled = true;
             showExplanation();
         }
 
@@ -2834,7 +3169,6 @@ Required format:
             if (userAnswer !== null) {
                 explanationDiv.style.display = "block";
 
-                // اكتشاف لغة السؤال
                 const questionLanguage = detectTextLanguage(question.q);
                 
                 let correctText = questionLanguage === 'en' ? 'Correct answer!' : 'إجابة صحيحة!';
@@ -2843,14 +3177,35 @@ Required format:
                 let explanationText = questionLanguage === 'en' ? 'Correct Explanation' : 'التفسير الصحيح';
 
                 let resultHTML = "";
+                let isCorrect = false;
 
-                if (userAnswer === question.answer) {
-                    resultHTML = `<p style="color: var(--secondary);"><i class="fas fa-check-circle"></i> ${correctText}</p>`;
+                if (question.type === 'fill_blank') {
+                    // مقارنة نصية لأسئلة املأ الفراغ
+                    const userAnswerStr = userAnswer.toString().toLowerCase().trim();
+                    const correctAnswerStr = question.answer.toString().toLowerCase().trim();
+                    
+                    // مقارنة مرنة للنصوص
+                    isCorrect = userAnswerStr === correctAnswerStr || 
+                               Math.abs(userAnswerStr.length - correctAnswerStr.length) < 3;
+                    
+                    if (isCorrect) {
+                        resultHTML = `<p style="color: var(--secondary);"><i class="fas fa-check-circle"></i> ${correctText}</p>`;
+                    } else {
+                        resultHTML = `
+                        <p style="color: #dc2626;"><i class="fas fa-times-circle"></i> ${wrongText}</p>
+                        <p style="color: var(--secondary);">${correctAnswerText}: ${question.answer}</p>
+                        `;
+                    }
                 } else {
-                    resultHTML = `
-                    <p style="color: #dc2626;"><i class="fas fa-times-circle"></i> ${wrongText}</p>
-                    <p style="color: var(--secondary);">${correctAnswerText}: ${question.options[question.answer]}</p>
-                    `;
+                    if (userAnswer === question.answer) {
+                        resultHTML = `<p style="color: var(--secondary);"><i class="fas fa-check-circle"></i> ${correctText}</p>`;
+                        isCorrect = true;
+                    } else {
+                        resultHTML = `
+                        <p style="color: #dc2626;"><i class="fas fa-times-circle"></i> ${wrongText}</p>
+                        <p style="color: var(--secondary);">${correctAnswerText}: ${question.options[question.answer]}</p>
+                        `;
+                    }
                 }
 
                 // إضافة الشروح
@@ -2881,6 +3236,19 @@ Required format:
                 currentQuestionIndex--;
                 loadQuiz();
             }
+        }
+
+        // اكتشاف لغة النص
+        function detectTextLanguage(text) {
+            if (!text) return quizLanguage === 'en' ? 'en' : 'ar';
+            
+            const arabicChars = text.match(/[؀-ۿ]/g) || [];
+            const englishChars = text.match(/[a-zA-Z]/g) || [];
+            
+            if (englishChars.length > arabicChars.length) {
+                return 'en';
+            }
+            return 'ar';
         }
 
         // فتح نافذة قائمة الأسئلة
@@ -2968,9 +3336,25 @@ Required format:
         // حساب الدرجات
         function calculateScore() {
             let totalCorrect = 0;
+            
             userAnswers.forEach((answer, index) => {
-                if (answer === shuffledQuestions[index]?.answer) {
-                    totalCorrect++;
+                const question = shuffledQuestions[index];
+                
+                if (question.type === 'fill_blank') {
+                    // مقارنة نصية لأسئلة املأ الفراغ
+                    if (answer) {
+                        const userAnswerStr = answer.toString().toLowerCase().trim();
+                        const correctAnswerStr = question.answer.toString().toLowerCase().trim();
+                        
+                        if (userAnswerStr === correctAnswerStr || 
+                            Math.abs(userAnswerStr.length - correctAnswerStr.length) < 3) {
+                            totalCorrect++;
+                        }
+                    }
+                } else {
+                    if (answer === question.answer) {
+                        totalCorrect++;
+                    }
                 }
             });
 
@@ -3032,7 +3416,6 @@ Required format:
             const score = calculateScore();
             const answeredCount = userAnswers.filter(answer => answer !== null).length;
 
-            // عرض النتائج
             document.getElementById("result-box").style.display = "block";
             
             let resultText = currentLanguage === 'ar' ? 'النتيجة' : 'Result';
@@ -3043,14 +3426,11 @@ Required format:
             document.getElementById("percentage").innerHTML = `${percentageText}: ${score.percentage}%`;
             document.getElementById("evaluation").innerHTML = `${evaluationText}: ${score.evaluation}`;
 
-            // إخفاء الاختبار
             document.getElementById("quiz").style.display = "none";
             document.getElementById("quiz-section").style.display = "none";
 
-            // عرض النتائج المتقدمة
             document.getElementById('advanced-results').style.display = 'block';
             
-            // تحديث الإحصائيات
             updateAdvancedStats(score);
         }
 
@@ -3091,189 +3471,6 @@ Required format:
             `;
         }
 
-        // إضافة المزيد من الأسئلة
-        async function addMoreQuestions() {
-            if (!apiKey) {
-                showError(currentLanguage === 'ar' ? 'الرجاء إدخال مفتاح API' : 'Please enter API key');
-                return;
-            }
-
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('loading-details').textContent = currentLanguage === 'ar' ?
-                'جارٍ توليد 5 أسئلة إضافية...' :
-                'Generating 5 additional questions...';
-
-            try {
-                let prompt;
-                
-                // اكتشاف لغة الأسئلة الموجودة
-                const existingLanguage = questions.length > 0 ? detectTextLanguage(questions[0].q) : currentLanguage;
-                
-                if (currentMethod === 'manual') {
-                    const quizTitleInput = document.getElementById('quiz-title').value.trim();
-                    const quizTopicInput = document.getElementById('quiz-topic').value.trim();
-                    
-                    if (existingLanguage === 'en') {
-                        prompt = `I already have ${existingQuestions.length} questions on the following topic:
-
-Title: ${quizTitleInput}
-${quizTopicInput ? `Details: ${quizTopicInput}` : ''}
-
-Please create 5 additional questions different from previous ones. All questions must be in English.
-
-Required format:
-{
-  "questions": [
-    {
-      "id": ${existingQuestions.length + 1},
-      "q": "Question text here",
-      "options": ["Option 1", "Option 2", "Option 3", "Option 4"],
-      "answer": 0,
-      "explanations": {
-        "correct": "Explanation of correct answer",
-        "wrong1": "Explanation of first wrong answer",
-        "wrong2": "Explanation of second wrong answer",
-        "wrong3": "Explanation of third wrong answer"
-      }
-    }
-  ]
-}`;
-                    } else {
-                        prompt = `لدي بالفعل ${existingQuestions.length} سؤالاً حول الموضوع التالي:
-
-العنوان: ${quizTitleInput}
-${quizTopicInput ? `التفاصيل: ${quizTopicInput}` : ''}
-
-الرجاء إنشاء 5 أسئلة إضافية مختلفة عن الأسئلة السابقة. يجب أن تكون جميع الأسئلة باللغة العربية.
-
-التنسيق المطلوب:
-{
-  "questions": [
-    {
-      "id": ${existingQuestions.length + 1},
-      "q": "نص السؤال هنا",
-      "options": ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"],
-      "answer": 0,
-      "explanations": {
-        "correct": "شرح الإجابة الصحيحة",
-        "wrong1": "شرح الخطأ الأول",
-        "wrong2": "شرح الخطأ الثاني",
-        "wrong3": "شرح الخطأ الثالث"
-      }
-    }
-  ]
-}`;
-                    }
-                } else {
-                    // للـ PDF
-                    if (!pdfFile) {
-                        throw new Error(currentLanguage === 'ar' ? 'لم يتم رفع ملف PDF' : 'No PDF file uploaded');
-                    }
-                    
-                    // الحصول على إرشادات اللغة
-                    const languageInstructions = getLanguageInstructions(quizLanguage, pdfFile.name);
-                    
-                    if (languageInstructions.languageCode === 'en') {
-                        prompt = `I already have ${existingQuestions.length} questions from this PDF file.
-Please create 5 additional questions different from previous ones. All questions must be in English.`;
-                    } else {
-                        prompt = `لدي بالفعل ${existingQuestions.length} سؤالاً من ملف PDF هذا.
-الرجاء إنشاء 5 أسئلة إضافية مختلفة عن الأسئلة السابقة. يجب أن تكون جميع الأسئلة باللغة العربية.`;
-                    }
-                }
-
-                const requestBody = {
-                    contents: [{
-                        parts: [{
-                            text: prompt
-                        }]
-                    }],
-                    generationConfig: {
-                        temperature: 0.8,
-                        topK: 40,
-                        topP: 0.95,
-                        maxOutputTokens: 2048,
-                    }
-                };
-
-                const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(requestBody)
-                });
-
-                if (!response.ok) {
-                    throw new Error(`API Error: ${response.status}`);
-                }
-
-                const data = await response.json();
-                
-                if (!data.candidates || !data.candidates[0] || !data.candidates[0].content || !data.candidates[0].content.parts[0]) {
-                    throw new Error('Invalid API response');
-                }
-
-                const responseText = data.candidates[0].content.parts[0].text;
-                const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-                
-                if (!jsonMatch) {
-                    throw new Error('Could not extract data');
-                }
-
-                const newQuestionsData = JSON.parse(jsonMatch[0]);
-                
-                if (!newQuestionsData.questions || !Array.isArray(newQuestionsData.questions)) {
-                    throw new Error('No questions generated');
-                }
-
-                // إضافة الأسئلة الجديدة
-                const newQuestions = newQuestionsData.questions;
-                const updatedIds = newQuestions.map((q, idx) => ({
-                    ...q,
-                    id: existingQuestions.length + idx + 1
-                }));
-                
-                questions = [...questions, ...updatedIds];
-                existingQuestions = questions;
-                totalQuestionsGenerated = questions.length;
-                
-                // تحديث متغيرات المستخدم
-                userAnswers = [...userAnswers, ...Array(updatedIds.length).fill(null)];
-                answerLocked = [...answerLocked, ...Array(updatedIds.length).fill(false)];
-                shuffledQuestions = questions.map(q => shuffleOptions(q));
-                
-                // تحديث وقت الاختبار
-                timeLeft = questions.length * 60;
-                updateTimerDisplay();
-                
-                // إعادة تحميل الاختبار
-                loadQuiz();
-                
-                showSuccessMessage(currentLanguage === 'ar' ?
-                    `تم إضافة ${updatedIds.length} سؤالاً جديداً!` :
-                    `Added ${updatedIds.length} new questions!`);
-
-            } catch (error) {
-                showError(currentLanguage === 'ar' ? 
-                    `خطأ في إضافة الأسئلة: ${error.message}` : 
-                    `Error adding questions: ${error.message}`);
-            } finally {
-                document.getElementById('loading').style.display = 'none';
-            }
-        }
-
-        // إضافة أسئلة بعد الانتهاء من الاختبار
-        function addMoreQuestionsAfterTest() {
-            document.getElementById('result-box').style.display = 'none';
-            document.getElementById('quiz-section').style.display = 'block';
-            document.getElementById('add-more-section').style.display = 'block';
-            loadQuiz();
-            showSuccessMessage(currentLanguage === 'ar' ? 
-                'يمكنك إضافة المزيد من الأسئلة!' : 
-                'You can add more questions!');
-        }
-
         // الرجوع إلى الإعدادات
         function backToSetup() {
             questions = [];
@@ -3285,17 +3482,19 @@ Please create 5 additional questions different from previous ones. All questions
             existingQuestions = [];
             currentBatch = 1;
             totalQuestionsGenerated = 0;
-            quizLanguage = "auto";
             
             if (pdfFile) {
                 removePDF();
+            }
+            
+            if (imageFile) {
+                removeImage();
             }
             
             document.getElementById('result-box').style.display = 'none';
             document.getElementById('advanced-results').style.display = 'none';
             document.getElementById('setup-section').style.display = 'block';
             document.getElementById('quiz-section').style.display = 'none';
-            document.getElementById('add-more-section').style.display = 'none';
             
             document.getElementById('quiz-title').value = '';
             document.getElementById('quiz-topic').value = '';
@@ -3314,106 +3513,34 @@ Please create 5 additional questions different from previous ones. All questions
             document.getElementById("quiz-section").style.display = "block";
             document.getElementById("result-box").style.display = "none";
             document.getElementById('advanced-results').style.display = 'none';
-            document.getElementById('add-more-section').style.display = 'block';
 
             clearInterval(timerInterval);
             startTimer();
             loadQuiz();
         }
 
-        // إنشاء تقرير PDF
-        function generatePDF() {
-            const score = calculateScore();
-            const answeredCount = userAnswers.filter(answer => answer !== null).length;
-            
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            
-            if (currentLanguage === 'ar') {
-                doc.setR2L(true);
-            }
-            
-            doc.setFontSize(24);
-            doc.setTextColor(26, 95, 122);
-            doc.text(currentQuizTitle, 105, 20, null, null, 'center');
-            
-            doc.setFontSize(16);
-            doc.setTextColor(21, 152, 149);
-            let reportTitle = currentLanguage === 'ar' ? 'تقرير نتائج الاختبار' : 'Quiz Results Report';
-            doc.text(reportTitle, 105, 30, null, null, 'center');
-            
-            doc.setFontSize(12);
-            doc.setTextColor(100, 100, 100);
-            let dateText = currentLanguage === 'ar' ? 'تاريخ' : 'Date';
-            doc.text(`${dateText}: ${new Date().toLocaleDateString()}`, 105, 40, null, null, 'center');
-            
-            doc.setFontSize(18);
-            doc.setTextColor(30, 30, 30);
-            let resultsText = currentLanguage === 'ar' ? 'النتائج' : 'Results';
-            doc.text(resultsText, 20, 60);
-            
-            let scoreText = currentLanguage === 'ar' ? 'الدرجة' : 'Score';
-            let percentageText = currentLanguage === 'ar' ? 'النسبة' : 'Percentage';
-            let evaluationText = currentLanguage === 'ar' ? 'التقييم' : 'Evaluation';
-            let answeredText = currentLanguage === 'ar' ? 'المجاب' : 'Answered';
-            let totalText = currentLanguage === 'ar' ? 'الإجمالي' : 'Total';
-            
-            doc.setFontSize(14);
-            doc.text(`${scoreText}: ${score.correct} ${currentLanguage === 'ar' ? 'من' : 'of'} ${score.total}`, 20, 75);
-            doc.text(`${percentageText}: ${score.percentage}%`, 20, 85);
-            doc.text(`${evaluationText}: ${score.evaluation}`, 20, 95);
-            doc.text(`${answeredText}: ${answeredCount} ${currentLanguage === 'ar' ? 'من' : 'of'} ${questions.length}`, 20, 105);
-            doc.text(`${totalText}: ${totalQuestionsGenerated}`, 20, 115);
-            
-            let filename = currentLanguage === 'ar' ? 'نتيجة' : 'result';
-            doc.save(`${filename}-${currentQuizTitle.replace(/\s+/g, '-')}.pdf`);
-            
-            showSuccessMessage(currentLanguage === 'ar' ? 
-                'تم إنشاء تقرير PDF!' : 
-                'PDF report created!');
-        }
-
         // التهيئة الأولية
         window.onload = function() {
             checkDarkModePreference();
             
-            const dropZone = document.querySelector('.file-upload-label');
+            const dropZones = document.querySelectorAll('.file-upload-label');
             
-            dropZone.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                dropZone.style.background = 'rgba(21, 152, 149, 0.2)';
-                dropZone.style.borderColor = 'var(--accent-glow)';
-            });
-            
-            dropZone.addEventListener('dragleave', () => {
-                dropZone.style.background = 'rgba(21, 152, 149, 0.05)';
-                dropZone.style.borderColor = 'var(--accent)';
-            });
-            
-            dropZone.addEventListener('drop', (e) => {
-                e.preventDefault();
-                dropZone.style.background = 'rgba(21, 152, 149, 0.05)';
-                dropZone.style.borderColor = 'var(--accent)';
+            dropZones.forEach(dropZone => {
+                dropZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    dropZone.style.background = 'rgba(21, 152, 149, 0.2)';
+                    dropZone.style.borderColor = 'var(--accent-glow)';
+                });
                 
-                const file = e.dataTransfer.files[0];
-                if (file && file.type === 'application/pdf') {
-                    const event = {
-                        target: {
-                            files: [file]
-                        }
-                    };
-                    handlePDFUpload(event);
-                } else {
-                    showError(currentLanguage === 'ar' ? 
-                        'الرجاء رفع ملف PDF فقط' : 
-                        'Please upload PDF files only');
-                }
+                dropZone.addEventListener('dragleave', () => {
+                    dropZone.style.background = 'rgba(21, 152, 149, 0.05)';
+                    dropZone.style.borderColor = 'var(--accent)';
+                });
             });
 
             document.getElementById('api-key').addEventListener('input', function() {
                 if (this.value.trim()) {
                     this.style.borderColor = 'var(--secondary)';
-                    // إخفاء حالة API عند تغيير المفتاح
                     document.getElementById('api-key-status').style.display = 'none';
                     isAPIKeyValid = false;
                 }
