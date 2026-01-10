@@ -980,6 +980,90 @@
             backdrop-filter: blur(10px);
         }
 
+        /* Option Feedback */
+        .option-feedback {
+            display: none;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            animation: slideDown 0.3s ease;
+        }
+
+        .option-feedback.correct {
+            background: rgba(76, 175, 80, 0.1);
+            border-right: 4px solid var(--secondary);
+        }
+
+        .option-feedback.incorrect {
+            background: rgba(239, 68, 68, 0.1);
+            border-right: 4px solid #ef4444;
+        }
+
+        .option-feedback.show {
+            display: block;
+        }
+
+        /* Instant Review */
+        .instant-review {
+            background: rgba(255, 193, 7, 0.1);
+            border: 2px solid #ffc107;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .instant-review.show {
+            display: block;
+            animation: slideDown 0.5s ease;
+        }
+
+        .instant-review-title {
+            font-weight: bold;
+            color: #ffc107;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .instant-review-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .review-option {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .review-option.correct {
+            background: rgba(76, 175, 80, 0.1);
+            border-color: var(--secondary);
+        }
+
+        .review-option.incorrect {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: #ef4444;
+        }
+
+        .review-option-text {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .review-option-feedback {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
         /* Controls */
         .controls {
             display: flex;
@@ -1579,6 +1663,14 @@
             .question-type-option {
                 min-width: 100%;
             }
+
+            .instant-review-options {
+                flex-direction: column;
+            }
+            
+            .review-option {
+                min-width: 100%;
+            }
         }
     </style>
 </head>
@@ -1741,6 +1833,10 @@
                             <option value="10" selected>10 أسئلة</option>
                             <option value="15">15 أسئلة</option>
                             <option value="20">20 أسئلة</option>
+                            <option value="25">25 أسئلة</option>
+                            <option value="30">30 أسئلة</option>
+                            <option value="35">35 أسئلة</option>
+                            <option value="40">40 أسئلة</option>
                         </select>
                     </div>
                 </div>
@@ -1788,6 +1884,10 @@
                             <option value="10" selected>10 أسئلة</option>
                             <option value="15">15 أسئلة</option>
                             <option value="20">20 أسئلة</option>
+                            <option value="25">25 أسئلة</option>
+                            <option value="30">30 أسئلة</option>
+                            <option value="35">35 أسئلة</option>
+                            <option value="40">40 أسئلة</option>
                         </select>
                     </div>
                 </div>
@@ -1800,7 +1900,7 @@
                             <h4 id="upload-title">انقر لرفع ملف PDF</h4>
                             <p id="upload-subtitle">أو اسحب وأفلت الملف هنا</p>
                             <p style="font-size: 0.8rem; color: var(--light-text); margin-top: 10px;" id="upload-size">
-                                الحد الأقصى لحجم الملف: 10MB
+                                الحد الأقصى لحجم الملف: 100MB
                             </p>
                         </label>
                         <input type="file" id="pdf-file" class="file-input" accept=".pdf" onchange="handlePDFUpload(event)">
@@ -1832,6 +1932,10 @@
                             <option value="10" selected>10 أسئلة</option>
                             <option value="15">15 أسئلة</option>
                             <option value="20">20 أسئلة</option>
+                            <option value="25">25 أسئلة</option>
+                            <option value="30">30 أسئلة</option>
+                            <option value="35">35 أسئلة</option>
+                            <option value="40">40 أسئلة</option>
                         </select>
                     </div>
                 </div>
@@ -2015,7 +2119,7 @@
             "remove-image-text": "إزالة الصورة",
             "upload-title": "انقر لرفع ملف PDF",
             "upload-subtitle": "أو اسحب وأفلت الملف هنا",
-            "upload-size": "الحد الأقصى لحجم الملف: 10MB",
+            "upload-size": "الحد الأقصى لحجم الملف: 100MB",
             "remove-file-text": "إزالة الملف",
             "num-questions-label-manual": "عدد الأسئلة المطلوبة",
             "num-questions-label-image": "عدد الأسئلة المطلوبة",
@@ -2044,7 +2148,9 @@
             "arabic-language-name": "العربية",
             "arabic-language-desc": "أسئلة باللغة العربية",
             "english-language-name": "English",
-            "english-language-desc": "Questions in English"
+            "english-language-desc": "Questions in English",
+            "instant-review-title": "مراجعة فورية لجميع الخيارات",
+            "instant-review-trigger": "انقر هنا لعرض مراجعة فورية لجميع الخيارات"
         };
 
         // نصوص اللغة الإنجليزية
@@ -2069,7 +2175,7 @@
             "remove-image-text": "Remove Image",
             "upload-title": "Click to Upload PDF",
             "upload-subtitle": "or drag and drop file here",
-            "upload-size": "Max file size: 10MB",
+            "upload-size": "Max file size: 100MB",
             "remove-file-text": "Remove File",
             "num-questions-label-manual": "Number of Questions",
             "num-questions-label-image": "Number of Questions",
@@ -2098,7 +2204,9 @@
             "arabic-language-name": "Arabic",
             "arabic-language-desc": "Questions in Arabic",
             "english-language-name": "English",
-            "english-language-desc": "Questions in English"
+            "english-language-desc": "Questions in English",
+            "instant-review-title": "Instant Review for All Options",
+            "instant-review-trigger": "Click here to show instant review for all options"
         };
 
         // تحويل اللغة
@@ -2185,6 +2293,10 @@
                     <option value="10" selected>10 questions</option>
                     <option value="15">15 questions</option>
                     <option value="20">20 questions</option>
+                    <option value="25">25 questions</option>
+                    <option value="30">30 questions</option>
+                    <option value="35">35 questions</option>
+                    <option value="40">40 questions</option>
                 `;
                 
                 document.getElementById('num-questions-image').innerHTML = `
@@ -2192,6 +2304,10 @@
                     <option value="10" selected>10 questions</option>
                     <option value="15">15 questions</option>
                     <option value="20">20 questions</option>
+                    <option value="25">25 questions</option>
+                    <option value="30">30 questions</option>
+                    <option value="35">35 questions</option>
+                    <option value="40">40 questions</option>
                 `;
                 
                 document.getElementById('num-questions-pdf').innerHTML = `
@@ -2199,6 +2315,10 @@
                     <option value="10" selected>10 questions</option>
                     <option value="15">15 questions</option>
                     <option value="20">20 questions</option>
+                    <option value="25">25 questions</option>
+                    <option value="30">30 questions</option>
+                    <option value="35">35 questions</option>
+                    <option value="40">40 questions</option>
                 `;
             } else {
                 document.getElementById('num-questions-manual').innerHTML = `
@@ -2206,6 +2326,10 @@
                     <option value="10" selected>10 أسئلة</option>
                     <option value="15">15 أسئلة</option>
                     <option value="20">20 أسئلة</option>
+                    <option value="25">25 أسئلة</option>
+                    <option value="30">30 أسئلة</option>
+                    <option value="35">35 أسئلة</option>
+                    <option value="40">40 أسئلة</option>
                 `;
                 
                 document.getElementById('num-questions-image').innerHTML = `
@@ -2213,6 +2337,10 @@
                     <option value="10" selected>10 أسئلة</option>
                     <option value="15">15 أسئلة</option>
                     <option value="20">20 أسئلة</option>
+                    <option value="25">25 أسئلة</option>
+                    <option value="30">30 أسئلة</option>
+                    <option value="35">35 أسئلة</option>
+                    <option value="40">40 أسئلة</option>
                 `;
                 
                 document.getElementById('num-questions-pdf').innerHTML = `
@@ -2220,6 +2348,10 @@
                     <option value="10" selected>10 أسئلة</option>
                     <option value="15">15 أسئلة</option>
                     <option value="20">20 أسئلة</option>
+                    <option value="25">25 أسئلة</option>
+                    <option value="30">30 أسئلة</option>
+                    <option value="35">35 أسئلة</option>
+                    <option value="40">40 أسئلة</option>
                 `;
             }
         }
@@ -2424,8 +2556,9 @@
                 return;
             }
 
-            if (file.size > 10 * 1024 * 1024) {
-                showError(currentLanguage === 'ar' ? 'حجم الملف كبير جداً. الحد الأقصى 10MB' : 'File too large. Maximum size: 10MB');
+            // تحديث: زيادة الحد الأقصى إلى 100MB
+            if (file.size > 100 * 1024 * 1024) {
+                showError(currentLanguage === 'ar' ? 'حجم الملف كبير جداً. الحد الأقصى 100MB' : 'File too large. Maximum size: 100MB');
                 return;
             }
 
@@ -2528,39 +2661,37 @@
             }
         }
 
-        // الحصول على نموذج JSON بناءً على أنواع الأسئلة المختارة - مُحدَّث لتشمل التغذية الراجعة لجميع الخيارات
+        // الحصول على نموذج JSON بناءً على أنواع الأسئلة المختارة - مُحسَّن لكفاءة أكبر
         function getQuestionFormats(languageCode) {
             const formats = [];
             
             if (selectedQuestionTypes.multipleChoice) {
                 if (languageCode === 'en') {
                     formats.push(`{
-      "id": 1,
       "type": "multiple_choice",
-      "q": "Question text here",
-      "options": ["Option 1", "Option 2", "Option 3", "Option 4"],
+      "q": "Question text",
+      "options": ["Option A", "Option B", "Option C", "Option D"],
       "answer": 0,
       "explanations": {
-        "correct": "Explanation of why this option is correct",
-        "option0": "Feedback for option 1",
-        "option1": "Feedback for option 2", 
-        "option2": "Feedback for option 3",
-        "option3": "Feedback for option 4"
+        "correct": "Brief explanation for correct option",
+        "option0": "Feedback for Option A - Why this is correct or incorrect",
+        "option1": "Feedback for Option B - Why this is correct or incorrect", 
+        "option2": "Feedback for Option C - Why this is correct or incorrect",
+        "option3": "Feedback for Option D - Why this is correct or incorrect"
       }
     }`);
                 } else {
                     formats.push(`{
-      "id": 1,
       "type": "multiple_choice",
-      "q": "نص السؤال هنا",
-      "options": ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"],
+      "q": "نص السؤال",
+      "options": ["الخيار أ", "الخيار ب", "الخيار ج", "الخيار د"],
       "answer": 0,
       "explanations": {
-        "correct": "شرح لماذا هذا الخيار صحيح",
-        "option0": "تغذية راجعة للخيار الأول",
-        "option1": "تغذية راجعة للخيار الثاني",
-        "option2": "تغذية راجعة للخيار الثالث",
-        "option3": "تغذية راجعة للخيار الرابع"
+        "correct": "شرح مختصر للخيار الصحيح",
+        "option0": "تغذية راجعة للخيار أ - لماذا هذا صحيح أو غير صحيح",
+        "option1": "تغذية راجعة للخيار ب - لماذا هذا صحيح أو غير صحيح",
+        "option2": "تغذية راجعة للخيار ج - لماذا هذا صحيح أو غير صحيح",
+        "option3": "تغذية راجعة للخيار د - لماذا هذا صحيح أو غير صحيح"
       }
     }`);
                 }
@@ -2569,28 +2700,26 @@
             if (selectedQuestionTypes.trueFalse) {
                 if (languageCode === 'en') {
                     formats.push(`{
-      "id": 2,
       "type": "true_false",
-      "q": "Statement here",
+      "q": "Statement",
       "options": ["True", "False"],
       "answer": 0,
       "explanations": {
-        "correct": "Explanation why it's true/false",
-        "option0": "Feedback for True option",
-        "option1": "Feedback for False option"
+        "correct": "Brief explanation",
+        "option0": "Detailed feedback for True option",
+        "option1": "Detailed feedback for False option"
       }
     }`);
                 } else {
                     formats.push(`{
-      "id": 2,
       "type": "true_false",
-      "q": "الجملة هنا",
+      "q": "الجملة",
       "options": ["صح", "خطأ"],
       "answer": 0,
       "explanations": {
-        "correct": "شرح لماذا هي صح/خطأ",
-        "option0": "تغذية راجعة لخيار صح",
-        "option1": "تغذية راجعة لخيار خطأ"
+        "correct": "شرح مختصر",
+        "option0": "تغذية راجعة مفصلة لخيار صح",
+        "option1": "تغذية راجعة مفصلة لخيار خطأ"
       }
     }`);
                 }
@@ -2599,33 +2728,31 @@
             if (selectedQuestionTypes.fillBlank) {
                 if (languageCode === 'en') {
                     formats.push(`{
-      "id": 3,
       "type": "fill_blank",
-      "q": "Complete the sentence: The capital of France is _____",
+      "q": "Complete: The capital of France is _____",
       "answer": "Paris",
       "explanations": {
-        "correct": "Paris is the capital of France. Other possible answers might include: 'Paris, France' or 'The capital is Paris'.",
+        "correct": "Paris is correct because it is the capital city of France",
         "common_mistakes": ["London", "Berlin", "Madrid"],
         "mistake_feedback": {
           "London": "London is the capital of the United Kingdom, not France",
-          "Berlin": "Berlin is the capital of Germany",
-          "Madrid": "Madrid is the capital of Spain"
+          "Berlin": "Berlin is the capital of Germany, not France",
+          "Madrid": "Madrid is the capital of Spain, not France"
         }
       }
     }`);
                 } else {
                     formats.push(`{
-      "id": 3,
       "type": "fill_blank",
-      "q": "أكمل الجملة: عاصمة فرنسا هي _____",
+      "q": "أكمل: عاصمة فرنسا هي _____",
       "answer": "باريس",
       "explanations": {
-        "correct": "باريس هي عاصمة فرنسا. إجابات أخرى محتملة: 'باريس، فرنسا' أو 'العاصمة هي باريس'.",
+        "correct": "باريس هي الإجابة الصحيحة لأنها عاصمة فرنسا",
         "common_mistakes": ["لندن", "برلين", "مدريد"],
         "mistake_feedback": {
-          "لندن": "لندن هي عاصمة المملكة المتحدة، وليست فرنسا",
-          "برلين": "برلين هي عاصمة ألمانيا",
-          "مدريد": "مدريد هي عاصمة إسبانيا"
+          "لندن": "لندن عاصمة بريطانيا وليست فرنسا",
+          "برلين": "برلين عاصمة ألمانيا وليست فرنسا",
+          "مدريد": "مدريد عاصمة إسبانيا وليست فرنسا"
         }
       }
     }`);
@@ -2635,7 +2762,7 @@
             return formats;
         }
 
-        // توليد الاختبار باستخدام الذكاء الاصطناعي - مع تحسين البرومبت ليشمل التغذية الراجعة لجميع الخيارات
+        // توليد الاختبار باستخدام الذكاء الاصطناعي - مُحسَّن للأداء
         async function generateQuiz() {
             if (!isAPIKeyValid) {
                 showError(currentLanguage === 'ar' ? 
@@ -2651,15 +2778,25 @@
             const selectedTypesText = getSelectedQuestionTypesText(languageInstructions.languageCode);
             const questionFormats = getQuestionFormats(languageInstructions.languageCode);
 
-            // برومبت محسّن مع تأكيد على التغذية الراجعة لجميع الخيارات
+            // احصل على عدد الأسئلة المطلوب
+            const numQuestions = currentMethod === 'manual' 
+                ? parseInt(document.getElementById('num-questions-manual').value)
+                : currentMethod === 'image'
+                ? parseInt(document.getElementById('num-questions-image').value)
+                : parseInt(document.getElementById('num-questions-pdf').value);
+
+            // برومبت محسّن ومرن
             const feedbackInstruction = languageInstructions.languageCode === 'en' 
-                ? `CRITICAL REQUIREMENT: For each question, you MUST provide detailed feedback for EVERY option, not just the correct answer. For multiple choice questions, provide feedback for option0, option1, option2, option3. For true/false questions, provide feedback for both True and False options. For fill-in-the-blank questions, include common mistakes and feedback for each mistake. This is essential for the learning experience.`
-                : `متطلب مهم جداً: لكل سؤال، يجب أن تقدم تغذية راجعة مفصلة لكل الخيارات، وليس فقط للإجابة الصحيحة. بالنسبة لأسئلة الاختيار المتعدد، قدم تغذية راجعة لـ option0, option1, option2, option3. بالنسبة لأسئلة صح/خطأ، قدم تغذية راجعة لكلا الخيارين. بالنسبة لأسئلة املأ الفراغ، أضف الأخطاء الشائعة وتغذية راجعة لكل خطأ. هذا ضروري لتجربة التعلم.`;
+                ? `IMPORTANT: For each multiple choice question, provide detailed feedback for EACH of the 4 options. Explain why each option is correct or incorrect. For true/false questions, provide detailed feedback for both options. For fill in blank questions, provide feedback for common mistakes. This is CRITICAL for instant review functionality.`
+                : `مهم: لكل سؤال اختيار متعدد، قدم تغذية راجعة مفصلة لكل خيار من الخيارات الأربعة. اشرح لماذا كل خيار صحيح أو غير صحيح. لأسئلة صح/خطأ، قدم تغذية راجعة مفصلة لكلا الخيارين. لأسئلة املأ الفراغ، قدم تغذية راجعة للأخطاء الشائعة. هذا أمر حاسم لوظيفة المراجعة الفورية.`;
+
+            const reviewInstruction = languageInstructions.languageCode === 'en' 
+                ? `CRITICAL: The feedback for each option must be detailed and educational. For multiple choice questions, provide feedback for options 0-3 (all four options). Users will see instant review showing feedback for all options simultaneously.`
+                : `هام جداً: يجب أن تكون التغذية الراجعة لكل خيار مفصلة وتعليمية. لأسئلة الاختيار المتعدد، قدم تغذية راجعة للخيارات 0-3 (جميع الخيارات الأربعة). سيرى المستخدمون مراجعة فورية تعرض التغذية الراجعة لجميع الخيارات في وقت واحد.`;
 
             if (currentMethod === 'manual') {
                 const quizTitleInput = document.getElementById('quiz-title').value.trim();
                 const quizTopicInput = document.getElementById('quiz-topic').value.trim();
-                const numQuestions = document.getElementById('num-questions-manual').value;
 
                 if (!quizTitleInput) {
                     showError(currentLanguage === 'ar' ? 'الرجاء إدخال عنوان للاختبار' : 'Please enter quiz title');
@@ -2679,13 +2816,17 @@
 Topic: ${quizTitleInput}
 Details: ${quizTopicInput}
 
-I want a quiz with ${numQuestions} questions of the following types: ${selectedTypesText}.
+I need ${numQuestions} questions of the following types: ${selectedTypesText}.
 
 ${feedbackInstruction}
 
-IMPORTANT: Generate a mix of the selected question types. For example, if multiple types are selected, include questions from each type.
+${reviewInstruction}
+
+Keep questions concise but ensure comprehensive feedback for all options. Generate diverse questions covering different aspects of the topic.
 
 ${languageInstructions.formatInstructions}
+
+IMPORTANT: Generate exactly ${numQuestions} questions. Each multiple choice question MUST have feedback for all 4 options.
 
 Please follow this JSON format:
 
@@ -2700,13 +2841,17 @@ ${questionFormats.join(',\n')}
 الموضوع: ${quizTitleInput}
 التفاصيل: ${quizTopicInput}
 
-أرغب في اختبار مكون من ${numQuestions} أسئلة من الأنواع التالية: ${selectedTypesText}.
+أحتاج إلى ${numQuestions} أسئلة من الأنواع التالية: ${selectedTypesText}.
 
 ${feedbackInstruction}
 
-مهم: قم بإنشاء مزيج من أنواع الأسئلة المختارة. على سبيل المثال، إذا تم اختيار أنواع متعددة، قم بتضمين أسئلة من كل نوع.
+${reviewInstruction}
+
+حافظ على الأسئلة موجزة ولكن تأكد من تقديم تغذية راجعة شاملة لجميع الخيارات. أنشئ أسئلة متنوعة تغطي جوانب مختلفة من الموضوع.
 
 ${languageInstructions.formatInstructions}
+
+مهم: أنشئ بالضبط ${numQuestions} سؤالاً. يجب أن يكون لكل سؤال اختيار متعدد تغذية راجعة لجميع الخيارات الأربعة.
 
 الرجاء الالتزام بتنسيق JSON التالي:
 
@@ -2725,7 +2870,7 @@ ${questionFormats.join(',\n')}
                         temperature: 0.7,
                         topK: 40,
                         topP: 0.95,
-                        maxOutputTokens: 4096,
+                        maxOutputTokens: 8192,
                     }
                 };
 
@@ -2735,7 +2880,6 @@ ${questionFormats.join(',\n')}
                     return;
                 }
 
-                const numQuestions = document.getElementById('num-questions-image').value;
                 title = `${imageFile.name.replace(/\.[^/.]+$/, '')} - ${currentLanguage === 'ar' ? 'اختبار' : 'Quiz'}`;
                 
                 if (languageInstructions.languageCode === 'en') {
@@ -2747,9 +2891,13 @@ Question types to include: ${selectedTypesText}
 
 ${feedbackInstruction}
 
-IMPORTANT: Analyze the text in the image and generate questions based on the content. Generate a mix of the selected question types.
+${reviewInstruction}
+
+Extract key information from the image and create questions. Ensure comprehensive feedback for all options.
 
 ${languageInstructions.formatInstructions}
+
+IMPORTANT: Generate exactly ${numQuestions} questions. Each multiple choice question MUST have feedback for all 4 options.
 
 Required JSON format:
 
@@ -2767,9 +2915,13 @@ ${questionFormats.join(',\n')}
 
 ${feedbackInstruction}
 
-مهم: قم بتحليل النص في الصورة وإنشاء أسئلة بناءً على المحتوى. قم بإنشاء مزيج من أنواع الأسئلة المختارة.
+${reviewInstruction}
+
+استخرج المعلومات الرئيسية من الصورة وأنشئ أسئلة. تأكد من تقديم تغذية راجعة شاملة لجميع الخيارات.
 
 ${languageInstructions.formatInstructions}
+
+مهم: أنشئ بالضبط ${numQuestions} سؤالاً. يجب أن يكون لكل سؤال اختيار متعدد تغذية راجعة لجميع الخيارات الأربعة.
 
 تنسيق JSON المطلوب:
 
@@ -2799,7 +2951,7 @@ ${questionFormats.join(',\n')}
                         temperature: 0.7,
                         topK: 40,
                         topP: 0.95,
-                        maxOutputTokens: 4096,
+                        maxOutputTokens: 8192,
                     }
                 };
 
@@ -2809,7 +2961,6 @@ ${questionFormats.join(',\n')}
                     return;
                 }
 
-                const numQuestions = document.getElementById('num-questions-pdf').value;
                 title = `${pdfFile.name.replace('.pdf', '')} - ${currentLanguage === 'ar' ? 'اختبار' : 'Quiz'}`;
                 
                 if (languageInstructions.languageCode === 'en') {
@@ -2821,9 +2972,13 @@ Question types to include: ${selectedTypesText}
 
 ${feedbackInstruction}
 
-IMPORTANT: Analyze the PDF content and generate questions based on the text. Generate a mix of the selected question types.
+${reviewInstruction}
+
+Extract key information from the PDF and create questions. Ensure comprehensive feedback for all options.
 
 ${languageInstructions.formatInstructions}
+
+IMPORTANT: Generate exactly ${numQuestions} questions. Each multiple choice question MUST have feedback for all 4 options.
 
 Required JSON format:
 
@@ -2841,9 +2996,13 @@ ${questionFormats.join(',\n')}
 
 ${feedbackInstruction}
 
-مهم: قم بتحليل محتوى PDF وإنشاء أسئلة بناءً على النص. قم بإنشاء مزيج من أنواع الأسئلة المختارة.
+${reviewInstruction}
+
+استخرج المعلومات الرئيسية من PDF وأنشئ أسئلة. تأكد من تقديم تغذية راجعة شاملة لجميع الخيارات.
 
 ${languageInstructions.formatInstructions}
+
+مهم: أنشئ بالضبط ${numQuestions} سؤالاً. يجب أن يكون لكل سؤال اختيار متعدد تغذية راجعة لجميع الخيارات الأربعة.
 
 تنسيق JSON المطلوب:
 
@@ -2873,7 +3032,7 @@ ${questionFormats.join(',\n')}
                         temperature: 0.7,
                         topK: 40,
                         topP: 0.95,
-                        maxOutputTokens: 4096,
+                        maxOutputTokens: 8192,
                     }
                 };
             }
@@ -2885,17 +3044,13 @@ ${questionFormats.join(',\n')}
             document.getElementById('loading').style.display = 'block';
             document.getElementById('error-message').style.display = 'none';
             
-            const numQuestions = currentMethod === 'manual' 
-                ? document.getElementById('num-questions-manual').value 
-                : currentMethod === 'image'
-                ? document.getElementById('num-questions-image').value
-                : document.getElementById('num-questions-pdf').value;
-            
             document.getElementById('loading-details').textContent = currentLanguage === 'ar' ?
                 `جارٍ توليد ${numQuestions} سؤالاً باستخدام الذكاء الاصطناعي...` :
                 `Generating ${numQuestions} questions using AI...`;
 
             try {
+                console.log(`Requesting ${numQuestions} questions...`);
+                
                 const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
                     method: 'POST',
                     headers: {
@@ -2906,21 +3061,23 @@ ${questionFormats.join(',\n')}
 
                 if (!response.ok) {
                     const errorText = await response.text();
-                    throw new Error(`API Error: ${response.status} - ${errorText}`);
+                    console.error('API Error:', response.status, errorText);
+                    throw new Error(`API Error: ${response.status} - ${errorText.substring(0, 100)}`);
                 }
 
                 const data = await response.json();
                 
                 if (!data.candidates || !data.candidates[0] || !data.candidates[0].content || !data.candidates[0].content.parts[0]) {
-                    throw new Error('Invalid API response');
+                    throw new Error('Invalid API response - no content returned');
                 }
 
                 const responseText = data.candidates[0].content.parts[0].text;
-                console.log('API Response:', responseText.substring(0, 500));
+                console.log('API Response received, length:', responseText.length);
                 
                 // استخراج JSON من الاستجابة
                 const jsonMatch = responseText.match(/\{[\s\S]*\}/);
                 if (!jsonMatch) {
+                    console.error('No JSON found in response');
                     throw new Error(currentLanguage === 'ar' ? 
                         'تعذر استخراج البيانات من استجابة الذكاء الاصطناعي' : 
                         'Could not extract data from AI response');
@@ -2931,9 +3088,20 @@ ${questionFormats.join(',\n')}
                     quizData = JSON.parse(jsonMatch[0]);
                 } catch (parseError) {
                     console.error('JSON Parse Error:', parseError);
-                    throw new Error(currentLanguage === 'ar' ? 
-                        'خطأ في تحليل استجابة الذكاء الاصطناعي' : 
-                        'Error parsing AI response');
+                    // حاول إصلاح بعض مشاكل JSON الشائعة
+                    const cleanedJson = jsonMatch[0]
+                        .replace(/'/g, '"')
+                        .replace(/(\w+):/g, '"$1":')
+                        .replace(/,\s*}/g, '}')
+                        .replace(/,\s*]/g, ']');
+                    
+                    try {
+                        quizData = JSON.parse(cleanedJson);
+                    } catch (secondError) {
+                        throw new Error(currentLanguage === 'ar' ? 
+                            'خطأ في تحليل استجابة الذكاء الاصطناعي' : 
+                            'Error parsing AI response');
+                    }
                 }
                 
                 if (!quizData.questions || !Array.isArray(quizData.questions)) {
@@ -2946,10 +3114,18 @@ ${questionFormats.join(',\n')}
                 existingQuestions = questions;
                 totalQuestionsGenerated = questions.length;
                 
+                // إضافة ID إذا لم يكن موجوداً
+                questions = questions.map((q, index) => ({
+                    ...q,
+                    id: q.id || index + 1
+                }));
+                
+                console.log(`Generated ${questions.length} questions`);
+                
                 userAnswers = Array(questions.length).fill(null);
                 answerLocked = Array(questions.length).fill(false);
                 shuffledQuestions = questions.map(q => shuffleOptions(q));
-                timeLeft = questions.length * 60;
+                timeLeft = Math.max(questions.length * 60, 600); // دقيقة واحدة لكل سؤال على الأقل، مع حد أدنى 10 دقائق
                 currentQuestionIndex = 0;
                 markedQuestions = [];
 
@@ -2965,10 +3141,26 @@ ${questionFormats.join(',\n')}
                     `Successfully generated ${questions.length} questions!`);
 
             } catch (error) {
-                showError(currentLanguage === 'ar' ? 
-                    `حدث خطأ: ${error.message}` : 
-                    `Error: ${error.message}`);
-                console.error('Error:', error);
+                console.error('Error in generateQuiz:', error);
+                
+                // رسائل خطأ أكثر وضوحاً
+                if (error.message.includes('429')) {
+                    showError(currentLanguage === 'ar' ? 
+                        'تم تجاوز حد طلبات API. حاول مرة أخرى لاحقاً.' : 
+                        'API rate limit exceeded. Try again later.');
+                } else if (error.message.includes('500') || error.message.includes('503')) {
+                    showError(currentLanguage === 'ar' ? 
+                        'خادم Google غير متوفر حالياً. حاول مرة أخرى لاحقاً.' : 
+                        'Google server is unavailable. Try again later.');
+                } else if (error.message.includes('400')) {
+                    showError(currentLanguage === 'ar' ? 
+                        'طلب غير صالح. قد يكون محتوى الملف كبيراً جداً.' : 
+                        'Bad request. File content may be too large.');
+                } else {
+                    showError(currentLanguage === 'ar' ? 
+                        `حدث خطأ: ${error.message}` : 
+                        `Error: ${error.message}`);
+                }
             } finally {
                 document.getElementById('loading').style.display = 'none';
             }
@@ -3060,6 +3252,7 @@ ${questionFormats.join(',\n')}
             let totalQuestionsText = questionLanguage === 'en' ? 'Total Questions' : 'إجمالي الأسئلة';
             let answeredText = questionLanguage === 'en' ? 'Answered' : 'تم الإجابة';
             let flaggedText = questionLanguage === 'en' ? 'Flagged' : 'معلمة';
+            let instantReviewText = questionLanguage === 'en' ? 'Instant Review' : 'مراجعة فورية';
 
             let html = `
             <div class="question-box">
@@ -3107,6 +3300,10 @@ ${questionFormats.join(',\n')}
                         ${opt}
                         ${isLocked && i === question.answer ? ' <i class="fas fa-check" style="color: var(--secondary);"></i>' : ''}
                     </label>
+                    
+                    <div id="option-feedback-${currentQuestionIndex}-${i}" class="option-feedback" style="display: none;">
+                        ${question.explanations && question.explanations[`option${i}`] ? question.explanations[`option${i}`] : ''}
+                    </div>
                     `;
                 });
                 
@@ -3123,6 +3320,45 @@ ${questionFormats.join(',\n')}
                                value="${userAnswers[currentQuestionIndex] || ''}"
                                onchange="selectFillBlankAnswer(this.value)">
                     </label>
+                </div>
+                `;
+            }
+
+            // إضافة زر المراجعة الفورية
+            if (question.type !== 'fill_blank' && question.explanations && Object.keys(question.explanations).length > 0) {
+                html += `
+                <div class="instant-review" id="instant-review-${currentQuestionIndex}">
+                    <div class="instant-review-title">
+                        <i class="fas fa-lightbulb"></i>
+                        ${instantReviewText}
+                    </div>
+                    <button class="btn btn-primary" onclick="showInstantReview(${currentQuestionIndex})" style="width: 100%; margin-bottom: 10px;">
+                        <i class="fas fa-eye"></i> ${currentLanguage === 'ar' ? 'عرض المراجعة الفورية لجميع الخيارات' : 'Show Instant Review for All Options'}
+                    </button>
+                    <div id="review-content-${currentQuestionIndex}" style="display: none;">
+                        <div class="instant-review-options">
+                `;
+                
+                question.options.forEach((opt, i) => {
+                    const isCorrect = i === question.answer;
+                    const feedback = question.explanations[`option${i}`] || '';
+                    
+                    html += `
+                    <div class="review-option ${isCorrect ? 'correct' : 'incorrect'}">
+                        <div class="review-option-text">
+                            <strong>${opt}</strong> 
+                            ${isCorrect ? '<span style="color: var(--secondary);"><i class="fas fa-check"></i></span>' : '<span style="color: #ef4444;"><i class="fas fa-times"></i></span>'}
+                        </div>
+                        <div class="review-option-feedback">
+                            ${feedback}
+                        </div>
+                    </div>
+                    `;
+                });
+                
+                html += `
+                        </div>
+                    </div>
                 </div>
                 `;
             }
@@ -3188,6 +3424,29 @@ ${questionFormats.join(',\n')}
             
             // التحقق إذا كان هذا آخر سؤال وتمت الإجابة عليه
             checkIfLastQuestionAnswered();
+            
+            // إظهار المراجعة الفورية إذا تمت الإجابة
+            if (answerLocked[currentQuestionIndex] && question.type !== 'fill_blank') {
+                document.getElementById(`instant-review-${currentQuestionIndex}`).classList.add('show');
+            }
+        }
+
+        // عرض المراجعة الفورية
+        function showInstantReview(questionIndex) {
+            const reviewContent = document.getElementById(`review-content-${questionIndex}`);
+            const reviewContainer = document.getElementById(`instant-review-${questionIndex}`);
+            
+            if (reviewContent.style.display === 'none') {
+                reviewContent.style.display = 'block';
+                reviewContainer.querySelector('button').innerHTML = currentLanguage === 'ar' ? 
+                    '<i class="fas fa-eye-slash"></i> إخفاء المراجعة الفورية' : 
+                    '<i class="fas fa-eye-slash"></i> Hide Instant Review';
+            } else {
+                reviewContent.style.display = 'none';
+                reviewContainer.querySelector('button').innerHTML = currentLanguage === 'ar' ? 
+                    '<i class="fas fa-eye"></i> عرض المراجعة الفورية لجميع الخيارات' : 
+                    '<i class="fas fa-eye"></i> Show Instant Review for All Options';
+            }
         }
 
         // اختيار إجابة
@@ -3208,6 +3467,22 @@ ${questionFormats.join(',\n')}
             labels.forEach(input => {
                 input.closest('label').classList.add('locked');
             });
+
+            // إظهار التغذية الراجعة للخيار المختار
+            const feedbackDiv = document.getElementById(`option-feedback-${currentQuestionIndex}-${answerIndex}`);
+            const question = shuffledQuestions[currentQuestionIndex];
+            
+            if (feedbackDiv && question.explanations && question.explanations[`option${answerIndex}`]) {
+                feedbackDiv.className = 'option-feedback';
+                feedbackDiv.classList.add(answerIndex === question.answer ? 'correct' : 'incorrect');
+                feedbackDiv.classList.add('show');
+            }
+
+            // إظهار المراجعة الفورية
+            const instantReviewDiv = document.getElementById(`instant-review-${currentQuestionIndex}`);
+            if (instantReviewDiv) {
+                instantReviewDiv.classList.add('show');
+            }
 
             showExplanation();
             checkIfLastQuestionAnswered();
@@ -3659,7 +3934,7 @@ ${questionFormats.join(',\n')}
             userAnswers = Array(questions.length).fill(null);
             answerLocked = Array(questions.length).fill(false);
             shuffledQuestions = questions.map(q => shuffleOptions(q));
-            timeLeft = questions.length * 60;
+            timeLeft = Math.max(questions.length * 60, 600);
             currentQuestionIndex = 0;
             markedQuestions = [];
 
