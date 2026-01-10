@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -1113,6 +1112,231 @@
             margin: 10px 0;
             color: var(--text);
         }
+
+        /* New Styles for Enhanced Features */
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        .success-message {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--secondary-gradient);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            z-index: 10000;
+            box-shadow: var(--glow-secondary);
+            animation: slideInRight 0.5s ease;
+        }
+
+        .quiz-stats {
+            background: rgba(26, 95, 122, 0.1);
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            font-size: 0.9rem;
+            color: var(--text);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .batch-indicator {
+            background: var(--tertiary-gradient);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            margin-right: 10px;
+        }
+
+        .category-badge {
+            background: var(--accent-gradient);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            margin-right: 10px;
+        }
+
+        .difficulty-badge {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            margin-right: 10px;
+        }
+
+        .source-info {
+            background: rgba(21, 152, 149, 0.1);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--light-text);
+            margin-top: 10px;
+            border-right: 3px solid var(--accent);
+        }
+
+        .question-meta {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .add-more-section {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 152, 0, 0.1);
+            border-radius: 15px;
+            border: 2px dashed var(--tertiary);
+        }
+
+        .add-more-section h4 {
+            color: var(--text);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        .pdf-context-info {
+            background: rgba(26, 95, 122, 0.05);
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        .pdf-context-info i {
+            color: var(--accent);
+            margin-left: 5px;
+        }
+
+        .batch-navigation {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .batch-btn {
+            padding: 8px 15px;
+            border-radius: 8px;
+            background: rgba(26, 95, 122, 0.1);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .batch-btn:hover {
+            background: rgba(26, 95, 122, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .batch-btn.active {
+            background: var(--accent-gradient);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .smart-suggestions {
+            background: rgba(76, 175, 80, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-right: 4px solid var(--secondary);
+        }
+
+        .smart-suggestions h5 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .suggestions-list {
+            list-style: none;
+            padding-right: 20px;
+        }
+
+        .suggestions-list li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .suggestions-list li:before {
+            content: "✓";
+            position: absolute;
+            right: -20px;
+            color: var(--secondary);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 152, 0, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 152, 0, 0);
+            }
+        }
     </style>
 </head>
 <body>
@@ -1170,6 +1394,9 @@
                                 <li>أنشئ مفتاح API جديد</li>
                                 <li>انسخ المفتاح وألصقه هنا</li>
                             </ol>
+                            <p style="margin-top: 10px; color: var(--accent);">
+                                <i class="fas fa-lightbulb"></i> يستخدم النظام نموذج: <strong>Gemini 2.5 Flash Lite</strong>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -1294,6 +1521,20 @@
                     </button>
                 </div>
             </div>
+
+            <!-- قسم إضافة المزيد من الأسئلة -->
+            <div class="add-more-section" id="add-more-section" style="display: none;">
+                <h4><i class="fas fa-plus-circle"></i> هل تريد المزيد من الأسئلة؟</h4>
+                <p style="color: var(--light-text); margin-bottom: 15px;">
+                    يمكنك إضافة المزيد من الأسئلة من نفس ملف PDF، مع ضمان عدم التكرار وتغطية أجزاء جديدة
+                </p>
+                <button class="btn btn-warning" onclick="addMoreQuestions()" id="add-more-questions-btn">
+                    <i class="fas fa-plus"></i> إضافة 10 أسئلة أخرى
+                </button>
+                <p style="font-size: 0.8rem; color: var(--light-text); margin-top: 10px;">
+                    <i class="fas fa-lightbulb"></i> يستخدم نظام الذكاء الاصطناعي: <strong>Gemini 2.5 Flash Lite</strong>
+                </p>
+            </div>
         </section>
 
         <!-- Final Results -->
@@ -1304,19 +1545,18 @@
 
             <!-- قسم النتائج المتقدمة -->
             <div id="advanced-results" style="display: none;">
-                <div class="chart-container">
-                    <canvas id="performanceChart"></canvas>
-                </div>
+                <!-- قسم الإحصائيات -->
+                <div class="stats-overview" id="stats-overview"></div>
 
-                <!-- قسم النصائح -->
-                <div class="tips-container" id="tips-container"></div>
+                <!-- قسم النصائح الذكية -->
+                <div class="smart-suggestions" id="smart-suggestions"></div>
 
                 <!-- قسم تحميل PDF -->
                 <div class="share-results">
                     <h4 style="color: var(--text); margin-bottom: 20px;">
                         <i class="fas fa-file-pdf"></i> تقرير النتائج
                     </h4>
-                    <div class="share-buttons">
+                    <div class="share-buttons" style="display: flex; gap: 15px; flex-wrap: wrap;">
                         <button class="btn btn-success" onclick="generatePDF()">
                             <i class="fas fa-file-pdf"></i> تحميل تقرير PDF
                         </button>
@@ -1325,6 +1565,9 @@
                         </button>
                         <button class="btn btn-primary" onclick="backToSetup()">
                             <i class="fas fa-plus"></i> إنشاء اختبار جديد
+                        </button>
+                        <button class="btn btn-warning" onclick="addMoreQuestionsAfterTest()">
+                            <i class="fas fa-plus-circle"></i> إضافة المزيد من الأسئلة
                         </button>
                     </div>
                 </div>
@@ -1351,6 +1594,7 @@
                     <p id="current-score-details"></p>
                     <p id="current-correct-details"></p>
                     <p id="current-progress-details"></p>
+                    <p id="current-batch-details"></p>
                 </div>
             </div>
         </div>
@@ -1387,17 +1631,26 @@
         let pdfFile = null;
         let pdfText = "";
         let currentMethod = "manual";
+        
+        // متغيرات جديدة للتحسينات
+        let pdfContext = "";
+        let existingQuestions = [];
+        let currentBatch = 1;
+        let totalQuestionsGenerated = 0;
+        let allQuestionsHistory = [];
+        
+        // تحديد نموذج Gemini المستخدم
+        const GEMINI_MODEL = "gemini-2.5-flash-lite";
+        const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent";
 
         // اختيار طريقة الاختبار
         function selectMethod(method) {
             currentMethod = method;
             
-            // تحديث التبويبات النشطة
             document.getElementById('manual-tab').classList.remove('active');
             document.getElementById('pdf-tab').classList.remove('active');
             document.getElementById(`${method}-tab`).classList.add('active');
             
-            // إظهار/إخفاء الأقسام
             document.getElementById('manual-section').style.display = method === 'manual' ? 'block' : 'none';
             document.getElementById('pdf-section').style.display = method === 'pdf' ? 'block' : 'none';
         }
@@ -1438,13 +1691,11 @@
             const file = event.target.files[0];
             if (!file) return;
 
-            // التحقق من نوع الملف
             if (file.type !== 'application/pdf') {
                 showError('الرجاء رفع ملف PDF فقط');
                 return;
             }
 
-            // التحقق من حجم الملف (10MB كحد أقصى)
             if (file.size > 10 * 1024 * 1024) {
                 showError('حجم الملف كبير جداً. الحد الأقصى 10MB');
                 return;
@@ -1455,37 +1706,57 @@
             // عرض معلومات الملف
             document.getElementById('pdf-filename').textContent = file.name;
             document.getElementById('pdf-filesize').textContent = `الحجم: ${(file.size / 1024 / 1024).toFixed(2)} MB`;
-            
-            // إظهار معاينة الملف
             document.getElementById('pdf-preview').classList.add('active');
 
-            // قراءة محتوى PDF
+            // إظهار مؤشر التحميل
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('loading-details').textContent = 'جارٍ تحليل ملف PDF...';
+
             try {
                 const arrayBuffer = await file.arrayBuffer();
                 const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
                 
                 document.getElementById('pdf-pages').textContent = `عدد الصفحات: ${pdf.numPages}`;
                 
-                // استخراج النص من الصفحات الأولى
-                let extractedText = '';
-                const numPagesToExtract = Math.min(pdf.numPages, 3);
+                // استخراج النص من أول 10 صفحات لتسريع العملية
+                let fullText = '';
+                let totalPages = Math.min(pdf.numPages, 10);
                 
-                for (let i = 1; i <= numPagesToExtract; i++) {
-                    const page = await pdf.getPage(i);
-                    const textContent = await page.getTextContent();
-                    const pageText = textContent.items.map(item => item.str).join(' ');
-                    extractedText += `\n--- الصفحة ${i} ---\n${pageText}\n`;
+                for (let i = 1; i <= totalPages; i++) {
+                    try {
+                        const page = await pdf.getPage(i);
+                        const textContent = await page.getTextContent();
+                        const pageText = textContent.items.map(item => item.str).join(' ');
+                        fullText += `\n--- الصفحة ${i} ---\n${pageText}\n`;
+                        
+                        // تحديث حالة التحميل
+                        document.getElementById('loading-details').textContent = 
+                            `جارٍ تحليل الصفحة ${i} من ${totalPages}...`;
+                    } catch (pageError) {
+                        console.warn(`خطأ في تحليل الصفحة ${i}:`, pageError);
+                    }
                 }
                 
-                pdfText = extractedText;
+                pdfText = fullText.substring(0, 5000);
+                pdfContext = fullText;
                 
                 // عرض عينة من النص
-                const sampleText = extractedText.substring(0, 500) + '...';
+                const sampleText = fullText.substring(0, 500) + '...';
                 document.getElementById('pdf-sample-text').textContent = sampleText;
+                
+                // إعادة تعيين المتغيرات
+                existingQuestions = [];
+                currentBatch = 1;
+                totalQuestionsGenerated = 0;
+                allQuestionsHistory = [];
+                
+                showSuccessMessage('تم تحليل ملف PDF بنجاح! يمكنك الآن توليد الأسئلة.');
                 
             } catch (error) {
                 console.error('Error reading PDF:', error);
-                showError('حدث خطأ في قراءة ملف PDF');
+                showError('حدث خطأ في قراءة ملف PDF: ' + error.message);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
             }
         }
 
@@ -1493,15 +1764,19 @@
         function removePDF() {
             pdfFile = null;
             pdfText = "";
+            pdfContext = "";
             document.getElementById('pdf-file').value = "";
             document.getElementById('pdf-preview').classList.remove('active');
+            existingQuestions = [];
+            currentBatch = 1;
+            totalQuestionsGenerated = 0;
+            allQuestionsHistory = [];
         }
 
         // توليد الاختبار باستخدام الذكاء الاصطناعي
         async function generateQuiz() {
             const apiKeyInput = document.getElementById('api-key').value.trim();
             
-            // التحقق من مفتاح API
             if (!apiKeyInput) {
                 showError('الرجاء إدخال مفتاح Google Gemini API');
                 return;
@@ -1509,7 +1784,6 @@
 
             apiKey = apiKeyInput;
 
-            // إعداد البيانات بناءً على الطريقة المختارة
             let prompt = '';
             let title = '';
 
@@ -1523,23 +1797,13 @@
                 }
 
                 title = quizTitleInput;
-                prompt = `
-أنت مساعد متخصص في إنشاء اختبارات تعليمية في جميع التخصصات.
-
-الرجاء إنشاء اختبار مكون من 10 أسئلة حول الموضوع التالي:
+                prompt = `أنشئ اختباراً تعليمياً حول الموضوع التالي:
 العنوان: ${quizTitleInput}
 ${quizTopicInput ? `التفاصيل: ${quizTopicInput}` : ''}
 
-متطلبات الأسئلة:
-1. كل سؤال يجب أن يكون واضحاً ومباشراً
-2. كل سؤال يجب أن يحتوي على 4 خيارات (أ، ب، ج، د)
-3. تحديد الإجابة الصحيحة بوضوح
-4. كتابة شرح مفصل للإجابة الصحيحة
-5. كتابة شرح للخيارات الخاطئة ولماذا هي خاطئة
-6. الأسئلة يجب أن تكون متنوعة بين (مفاهيم، أحكام، تطبيقات)
-7. اللغة يجب أن تكون عربية فصيحة وبسيطة
+أرغب في اختبار مكون من 10 أسئلة مع 4 خيارات لكل سؤال.
+الرجاء الالتزام بالتنسيق التالي:
 
-الرجاء إرجاع النتيجة بتنسيق JSON صارم بالشكل التالي:
 {
   "questions": [
     {
@@ -1548,102 +1812,101 @@ ${quizTopicInput ? `التفاصيل: ${quizTopicInput}` : ''}
       "options": ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"],
       "answer": 0,
       "explanations": {
-        "correct": "الشرح الكامل للإجابة الصحيحة",
-        "wrong1": "شرح لماذا الخيار الأول خاطئ",
-        "wrong2": "شرح لماذا الخيار الثاني خاطئ", 
-        "wrong3": "شرح لماذا الخيار الثالث خاطئ"
+        "correct": "شرح الإجابة الصحيحة",
+        "wrong1": "شرح الخطأ الأول",
+        "wrong2": "شرح الخطأ الثاني",
+        "wrong3": "شرح الخطأ الثالث"
       }
     }
   ]
-}
-
-يجب أن يكون هناك 10 أسئلة بالضبط.
-`;
+}`;
             } else if (currentMethod === 'pdf') {
                 if (!pdfFile) {
                     showError('الرجاء رفع ملف PDF أولاً');
                     return;
                 }
 
+                if (!pdfContext) {
+                    showError('الرجاء الانتظار حتى يكتمل تحليل ملف PDF');
+                    return;
+                }
+
                 const numQuestions = document.getElementById('num-questions').value;
                 const questionType = document.getElementById('question-type').value;
                 
-                title = pdfFile.name.replace('.pdf', '') + ' - اختبار';
+                title = `${pdfFile.name.replace('.pdf', '')} - اختبار - الدفعة ${currentBatch}`;
                 
                 let typeDescription = '';
                 switch(questionType) {
                     case 'concepts':
-                        typeDescription = 'أسئلة تركز على المفاهيم الأساسية والتعاريف';
+                        typeDescription = 'أسئلة تركز على المفاهيم الأساسية';
                         break;
                     case 'applications':
-                        typeDescription = 'أسئلة تطبيقية تركز على كيفية تطبيق المعلومات';
+                        typeDescription = 'أسئلة تطبيقية';
                         break;
                     case 'analysis':
-                        typeDescription = 'أسئلة تحليلية تتطلب تفكيراً عميقاً وتحليلاً';
+                        typeDescription = 'أسئلة تحليلية';
                         break;
                     default:
-                        typeDescription = 'مزيج من أسئلة المفاهيم والتطبيقات والتحليل';
+                        typeDescription = 'مزيج من أنواع الأسئلة';
                 }
 
-                prompt = `
-أنت مساعد متخصص في إنشاء اختبارات تعليمية بناءً على محتوى ملفات PDF.
+                // بناء على الدفعة، إنشاء محتوى مختلف
+                const contextPart = existingQuestions.length > 0 ? 
+                    `لدي بالفعل ${existingQuestions.length} سؤالاً. الرجاء إنشاء أسئلة جديدة مختلفة عن السابقة.` : 
+                    `الرجاء إنشاء أول دفعة من الأسئلة بناءً على المحتوى.`;
 
-أنا أعطيك محتوى من ملف PDF. الرجاء إنشاء اختبار مكون من ${numQuestions} أسئلة بناءً على هذا المحتوى.
+                prompt = `${contextPart}
 
-محتوى PDF:
-${pdfText.substring(0, 3000)}... (مستمر)
+المحتوى من ملف PDF:
+${pdfContext.substring(0, 7000)}
 
-تعليمات إنشاء الأسئلة:
-1. يجب أن تستند جميع الأسئلة بشكل مباشر إلى محتوى PDF
-2. كل سؤال يجب أن يحتوي على 4 خيارات (أ، ب، ج، د)
-3. تحديد الإجابة الصحيحة بوضوح مع الإشارة إلى مصدرها في النص
-4. كتابة شرح مفصل للإجابة الصحيحة
-5. كتابة شرح للخيارات الخاطئة ولماذا هي خاطئة مع الإشارة إلى النص
-6. نوع الأسئلة: ${typeDescription}
-7. اللغة يجب أن تكون عربية فصيحة وبسيطة
-8. يجب أن تغطي الأسئلة جوانب مختلفة من المحتوى
+الرجاء إنشاء ${numQuestions} أسئلة من النوع: ${typeDescription}
 
-الرجاء إرجاع النتيجة بتنسيق JSON صارم بالشكل التالي:
+متطلبات الأسئلة:
+1. الاستناد إلى محتوى PDF
+2. 4 خيارات لكل سؤال
+3. تحديد الإجابة الصحيحة بوضوح
+4. كتابة شرح لكل إجابة
+5. الإشارة إلى المصدر في النص
+6. تجنب تكرار الأسئلة السابقة
+
+التنسيق المطلوب:
 {
   "questions": [
     {
-      "id": 1,
+      "id": ${totalQuestionsGenerated + 1},
       "q": "نص السؤال هنا",
-      "options": ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"],
+      "options": ["خيار 1", "خيار 2", "خيار 3", "خيار 4"],
       "answer": 0,
       "explanations": {
-        "correct": "الشرح الكامل للإجابة الصحيحة مع الإشارة إلى المصدر في النص",
-        "wrong1": "شرح لماذا الخيار الأول خاطئ",
-        "wrong2": "شرح لماذا الخيار الثاني خاطئ", 
-        "wrong3": "شرح لماذا الخيار الثالث خاطئ"
+        "correct": "شرح الإجابة الصحيحة",
+        "wrong1": "شرح الخطأ الأول",
+        "wrong2": "شرح الخطأ الثاني",
+        "wrong3": "شرح الخطأ الثالث"
       },
-      "source": "إشارة إلى مكان المعلومات في النص الأصلي"
+      "source": "المصدر في النص",
+      "batch": ${currentBatch},
+      "questionType": "${questionType}",
+      "category": "تصنيف السؤال"
     }
   ]
-}
-
-يجب أن يكون هناك ${numQuestions} أسئلة بالضبط.
-`;
+}`;
             }
 
-            // تحديث العنوان
             currentQuizTitle = title;
             document.getElementById('main-title').textContent = currentQuizTitle;
             document.getElementById('current-quiz-title').textContent = currentQuizTitle;
 
-            // إظهار مؤشر التحميل
             document.getElementById('loading').style.display = 'block';
             document.getElementById('error-message').style.display = 'none';
             
-            if (currentMethod === 'pdf') {
-                document.getElementById('loading-details').textContent = `جارٍ تحليل ملف PDF وتوليد ${numQuestions} أسئلة...`;
-            } else {
-                document.getElementById('loading-details').textContent = 'جارٍ توليد الأسئلة...';
-            }
+            const numQuestions = document.getElementById('num-questions').value;
+            document.getElementById('loading-details').textContent = 
+                `جارٍ توليد الدفعة ${currentBatch} (${numQuestions} أسئلة)...`;
 
             try {
-                // استدعاء واجهة برمجة تطبيقات Gemini
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`, {
+                const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1658,13 +1921,14 @@ ${pdfText.substring(0, 3000)}... (مستمر)
                             temperature: 0.7,
                             topK: 40,
                             topP: 0.95,
-                            maxOutputTokens: 8192,
+                            maxOutputTokens: 4096,
                         }
                     })
                 });
 
                 if (!response.ok) {
-                    throw new Error(`خطأ في الاستجابة: ${response.status}`);
+                    const errorText = await response.text();
+                    throw new Error(`خطأ: ${response.status} - ${errorText}`);
                 }
 
                 const data = await response.json();
@@ -1678,7 +1942,8 @@ ${pdfText.substring(0, 3000)}... (مستمر)
                 // استخراج JSON من الاستجابة
                 const jsonMatch = responseText.match(/\{[\s\S]*\}/);
                 if (!jsonMatch) {
-                    throw new Error('تعذر استخراج البيانات من الاستجابة');
+                    console.error('استجابة API:', responseText.substring(0, 500));
+                    throw new Error('تعذر استخراج البيانات');
                 }
 
                 const quizData = JSON.parse(jsonMatch[0]);
@@ -1687,24 +1952,48 @@ ${pdfText.substring(0, 3000)}... (مستمر)
                     throw new Error('لم يتم توليد الأسئلة بشكل صحيح');
                 }
 
-                questions = quizData.questions;
+                // إضافة الأسئلة الجديدة إلى الأسئلة الحالية
+                const newQuestions = quizData.questions;
+                
+                // التحقق من عدم تكرار الأسئلة
+                const uniqueQuestions = newQuestions.filter(newQ => {
+                    return !existingQuestions.some(existingQ => 
+                        existingQ.q === newQ.q || 
+                        existingQ.q.includes(newQ.q.substring(0, 50))
+                    );
+                });
+
+                if (uniqueQuestions.length === 0) {
+                    throw new Error('الأسئلة الجديدة مكررة');
+                }
+
+                if (existingQuestions.length > 0) {
+                    questions = [...existingQuestions, ...uniqueQuestions];
+                } else {
+                    questions = uniqueQuestions;
+                }
+                
+                existingQuestions = questions;
+                allQuestionsHistory = [...allQuestionsHistory, ...uniqueQuestions];
+                totalQuestionsGenerated += uniqueQuestions.length;
                 
                 // تهيئة المتغيرات
                 userAnswers = Array(questions.length).fill(null);
                 answerLocked = Array(questions.length).fill(false);
                 shuffledQuestions = questions.map(q => shuffleOptions(q));
-                timeLeft = questions.length * 60; // دقيقة لكل سؤال
+                timeLeft = questions.length * 60;
                 currentQuestionIndex = 0;
                 markedQuestions = [];
 
-                // إخفاء قسم الإعداد وإظهار قسم الاختبار
                 document.getElementById('setup-section').style.display = 'none';
                 document.getElementById('quiz-section').style.display = 'block';
+                document.getElementById('add-more-section').style.display = 'block';
 
-                // بدء المؤقت وتحميل أول سؤال
                 clearInterval(timerInterval);
                 startTimer();
                 loadQuiz();
+
+                showSuccessMessage(`تم توليد ${uniqueQuestions.length} سؤالاً في الدفعة ${currentBatch}!`);
 
             } catch (error) {
                 showError(`حدث خطأ: ${error.message}`);
@@ -1719,6 +2008,24 @@ ${pdfText.substring(0, 3000)}... (مستمر)
             const errorDiv = document.getElementById('error-message');
             errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
             errorDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // دالة لعرض رسائل النجاح
+        function showSuccessMessage(message) {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success-message';
+            successDiv.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            
+            document.body.appendChild(successDiv);
+            
+            setTimeout(() => {
+                successDiv.style.animation = 'slideOutRight 0.5s ease';
+                setTimeout(() => successDiv.remove(), 500);
+            }, 3000);
         }
 
         // دالة لترتيب الخيارات بشكل عشوائي
@@ -1785,10 +2092,23 @@ ${pdfText.substring(0, 3000)}... (مستمر)
                 <div class="question-number">
                     <i class="fas fa-question-circle"></i>
                     السؤال ${currentQuestionIndex + 1} من ${questions.length}
+                    ${question.batch ? `<span class="batch-indicator">دفعة ${question.batch}</span>` : ''}
+                    ${question.category ? `<span class="category-badge">${question.category}</span>` : ''}
                     ${isLocked ? '<span style="color: var(--accent); margin-right: 10px;"><i class="fas fa-lock"></i> مقفل</span>' : ''}
                     ${markedQuestions.includes(currentQuestionIndex) ? '<span style="background: var(--tertiary-gradient); color: white; padding: 5px 10px; border-radius: 10px; font-size: 0.8rem; margin-right: 10px;"><i class="fas fa-flag"></i> معلمة</span>' : ''}
                 </div>
+                
+                <div class="quiz-stats">
+                    <span><i class="fas fa-layer-group"></i> إجمالي الأسئلة: ${questions.length}</span>
+                    <span><i class="fas fa-history"></i> عدد الدفعات: ${currentBatch}</span>
+                    <span><i class="fas fa-question"></i> تم الإجابة: ${userAnswers.filter(a => a !== null).length}</span>
+                    <span><i class="fas fa-flag"></i> معلمة: ${markedQuestions.length}</span>
+                </div>
+                
                 <div class="question-text">${question.q}</div>
+                
+                ${question.source ? `<div class="source-info"><i class="fas fa-map-marker-alt"></i> المصدر: ${question.source}</div>` : ''}
+                
                 <div class="options">
             `;
 
@@ -1810,26 +2130,23 @@ ${pdfText.substring(0, 3000)}... (مستمر)
 
                 html += `
                 <label class="${labelClass}">
-                    <input type="radio" name="q${currentQuestionIndex}" value="${i}" ${isChecked ? 'checked' : ''} ${isDisabled ? 'disabled' : ''} onchange="selectAnswer(${i})" ${isLocked ? 'onclick="return false;"' : ''}>
+                    <input type="radio" name="q${currentQuestionIndex}" value="${i}" ${isChecked ? 'checked' : ''} ${isDisabled ? 'disabled' : ''} onchange="selectAnswer(${i})">
                     ${opt}
-                    ${isLocked && i === question.answer ? ' <i class="fas fa-check" style="color: var(--secondary); margin-right: 5px;"></i>' : ''}
+                    ${isLocked && i === question.answer ? ' <i class="fas fa-check" style="color: var(--secondary);"></i>' : ''}
                 </label>
                 `;
             });
 
             html += `
                 </div>
-                ${currentMethod === 'pdf' && question.source ? `<div style="margin-top: 15px; padding: 10px; background: rgba(26, 95, 122, 0.1); border-radius: 10px; font-size: 0.9rem; color: var(--light-text);"><i class="fas fa-file-alt"></i> المصدر: ${question.source}</div>` : ''}
                 <div id="explanation" class="explanation"></div>
             </div>
             <div class="navigation">
                 <button class="btn btn-secondary" onclick="previousQuestion()" ${currentQuestionIndex === 0 ? 'disabled' : ''}>
-                    <i class="fas fa-arrow-right"></i>
-                    السابق
+                    <i class="fas fa-arrow-right"></i> السابق
                 </button>
                 <button class="btn btn-primary" onclick="nextQuestion()" ${currentQuestionIndex === questions.length - 1 ? 'disabled' : ''}>
-                    التالي
-                    <i class="fas fa-arrow-left"></i>
+                    التالي <i class="fas fa-arrow-left"></i>
                 </button>
             </div>
             `;
@@ -1841,7 +2158,11 @@ ${pdfText.substring(0, 3000)}... (مستمر)
             progress.style.width = questions.length > 0 ? `${((currentQuestionIndex + 1) / questions.length) * 100}%` : '0%';
 
             // تحديث معلومات الاختبار
-            document.getElementById('quiz-info').innerHTML = `السؤال ${currentQuestionIndex + 1} من ${questions.length}`;
+            document.getElementById('quiz-info').innerHTML = `
+                السؤال ${currentQuestionIndex + 1} من ${questions.length} 
+                | تم الإجابة: ${userAnswers.filter(a => a !== null).length}
+                | معلمة: ${markedQuestions.length}
+            `;
 
             // تحديث زر وضع العلامة
             const markBtn = document.getElementById('mark-review-btn');
@@ -1849,7 +2170,7 @@ ${pdfText.substring(0, 3000)}... (مستمر)
                 markBtn.innerHTML = '<i class="fas fa-flag"></i> إزالة العلامة';
                 markBtn.style.background = 'var(--tertiary-gradient)';
             } else {
-                markBtn.innerHTML = '<i class="fas fa-flag"></i> وضع علامة للمراجعة';
+                markBtn.innerHTML = '<i class="fas fa-flag"></i> وضع علامة';
                 markBtn.style.background = 'var(--secondary-gradient)';
             }
 
@@ -1896,26 +2217,23 @@ ${pdfText.substring(0, 3000)}... (مستمر)
                 let resultHTML = "";
 
                 if (userAnswer === question.answer) {
-                    resultHTML = `<p class="correct"><i class="fas fa-check-circle"></i> إجابة صحيحة! أحسنت!</p>`;
+                    resultHTML = `<p style="color: var(--secondary);"><i class="fas fa-check-circle"></i> إجابة صحيحة!</p>`;
                 } else {
                     resultHTML = `
-                    <p class="wrong"><i class="fas fa-times-circle"></i> إجابة خاطئة — الإجابة الصحيحة: <span class="correct">${question.options[question.answer]}</span></p>
+                    <p style="color: #dc2626;"><i class="fas fa-times-circle"></i> إجابة خاطئة</p>
+                    <p style="color: var(--secondary);">الإجابة الصحيحة: ${question.options[question.answer]}</p>
                     `;
                 }
 
-                // إضافة الشروح الملونة
-                resultHTML += `
-                <div class="explanation-line explanation-correct"><strong>📚 التفسير الصحيح:</strong> ${questions[currentQuestionIndex].explanations.correct}</div>
-                `;
-
-                // إضافة التفسيرات للخيارات الخاطئة
-                const wrongKeys = ['wrong1', 'wrong2', 'wrong3'];
-
-                wrongKeys.forEach((key, index) => {
-                    if (questions[currentQuestionIndex].explanations[key]) {
-                        resultHTML += `<div class="explanation-line explanation-wrong-${index + 1}"><strong>💡 ملاحظة:</strong> ${questions[currentQuestionIndex].explanations[key]}</div>`;
-                    }
-                });
+                // إضافة الشروح
+                if (questions[currentQuestionIndex]?.explanations?.correct) {
+                    resultHTML += `
+                    <div style="margin-top: 15px; padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 8px;">
+                        <strong>📚 التفسير الصحيح:</strong><br>
+                        ${questions[currentQuestionIndex].explanations.correct}
+                    </div>
+                    `;
+                }
 
                 explanationDiv.innerHTML = resultHTML;
             }
@@ -1942,7 +2260,7 @@ ${pdfText.substring(0, 3000)}... (مستمر)
             const grid = document.getElementById('questions-grid-modal');
             grid.innerHTML = '';
 
-            questions.forEach((_, index) => {
+            questions.forEach((question, index) => {
                 const btn = document.createElement('div');
                 btn.className = `question-status-grid-modal ${index === currentQuestionIndex ? 'current' : ''} ${userAnswers[index] !== null ? 'answered' : ''} ${markedQuestions.includes(index) ? 'flagged' : ''}`;
                 btn.innerHTML = `<span>${index + 1}</span>`;
@@ -1972,9 +2290,11 @@ ${pdfText.substring(0, 3000)}... (مستمر)
                 btn.style.background = 'var(--tertiary-gradient)';
             } else {
                 markedQuestions.splice(index, 1);
-                btn.innerHTML = '<i class="fas fa-flag"></i> وضع علامة للمراجعة';
+                btn.innerHTML = '<i class="fas fa-flag"></i> وضع علامة';
                 btn.style.background = 'var(--secondary-gradient)';
             }
+            
+            loadQuiz();
         }
 
         // فتح نافذة الدرجات الحالية
@@ -1993,11 +2313,13 @@ ${pdfText.substring(0, 3000)}... (مستمر)
             text.textContent = `${percentage}%`;
             
             document.getElementById('current-score-details').innerHTML = 
-                `<strong>الدرجة الحالية:</strong> ${score.correct} من ${totalQuestions}`;
+                `<strong>الدرجة:</strong> ${score.correct} من ${totalQuestions}`;
             document.getElementById('current-correct-details').innerHTML = 
-                `<strong>الإجابات الصحيحة:</strong> ${score.correct}`;
+                `<strong>الصحيحة:</strong> ${score.correct}`;
             document.getElementById('current-progress-details').innerHTML = 
-                `<strong>التقدم:</strong> ${answeredCount} من ${totalQuestions} (${Math.round((answeredCount/totalQuestions)*100)}%)`;
+                `<strong>التقدم:</strong> ${answeredCount} من ${totalQuestions}`;
+            document.getElementById('current-batch-details').innerHTML = 
+                `<strong>الدفعة:</strong> ${currentBatch} | <strong>الإجمالي:</strong> ${totalQuestionsGenerated}`;
             
             document.getElementById('currentScoreModal').style.display = 'block';
         }
@@ -2010,7 +2332,7 @@ ${pdfText.substring(0, 3000)}... (مستمر)
         function calculateScore() {
             let totalCorrect = 0;
             userAnswers.forEach((answer, index) => {
-                if (answer === questions[index]?.answer) {
+                if (answer === shuffledQuestions[index]?.answer) {
                     totalCorrect++;
                 }
             });
@@ -2021,19 +2343,19 @@ ${pdfText.substring(0, 3000)}... (مستمر)
             let evaluation = "";
             let evaluationIcon = "";
             if (percentage >= 90) {
-                evaluation = "ممتاز - فهم تام للموضوع";
+                evaluation = "ممتاز";
                 evaluationIcon = "🌟";
             } else if (percentage >= 80) {
-                evaluation = "جيد جداً - إلمام جيد بالأحكام";
+                evaluation = "جيد جداً";
                 evaluationIcon = "🔵";
             } else if (percentage >= 70) {
-                evaluation = "جيد - فهم مقبول يحتاج لبعض التحسين";
+                evaluation = "جيد";
                 evaluationIcon = "🟢";
             } else if (percentage >= 60) {
-                evaluation = "مقبول - تحتاج لمراجعة إضافية";
+                evaluation = "مقبول";
                 evaluationIcon = "🟡";
             } else {
-                evaluation = "يحتاج تحسين - راجع الموضوع جيداً";
+                evaluation = "يحتاج تحسين";
                 evaluationIcon = "⚠️";
             }
 
@@ -2046,16 +2368,162 @@ ${pdfText.substring(0, 3000)}... (مستمر)
             };
         }
 
+        // إضافة المزيد من الأسئلة
+        async function addMoreQuestions() {
+            if (!pdfFile || !pdfContext) {
+                showError('لم يتم تحميل ملف PDF');
+                return;
+            }
+
+            if (!apiKey) {
+                showError('الرجاء إدخال مفتاح API');
+                return;
+            }
+
+            currentBatch++;
+            const numQuestions = document.getElementById('num-questions').value;
+            const questionType = document.getElementById('question-type').value;
+            
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('loading-details').textContent = 
+                `جارٍ توليد الدفعة ${currentBatch} (${numQuestions} أسئلة)...`;
+
+            try {
+                const prompt = `لدي بالفعل ${totalQuestionsGenerated} سؤالاً من هذا المحتوى.
+الرجاء إنشاء ${numQuestions} أسئلة إضافية جديدة ومختلفة.
+
+محتوى PDF:
+${pdfContext.substring(0, 7000)}
+
+أنواع الأسئلة المطلوبة: ${questionType}
+
+التنسيق المطلوب:
+{
+  "questions": [
+    {
+      "id": ${totalQuestionsGenerated + 1},
+      "q": "نص السؤال",
+      "options": ["خيار 1", "خيار 2", "خيار 3", "خيار 4"],
+      "answer": 0,
+      "explanations": {
+        "correct": "شرح",
+        "wrong1": "شرح",
+        "wrong2": "شرح",
+        "wrong3": "شرح"
+      },
+      "source": "المصدر",
+      "batch": ${currentBatch},
+      "questionType": "${questionType}",
+      "category": "التصنيف"
+    }
+  ]
+}`;
+
+                const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: prompt
+                            }]
+                        }],
+                        generationConfig: {
+                            temperature: 0.8,
+                            topK: 40,
+                            topP: 0.95,
+                            maxOutputTokens: 4096,
+                        }
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`خطأ: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const responseText = data.candidates[0].content.parts[0].text;
+                const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+                
+                if (!jsonMatch) {
+                    throw new Error('تعذر استخراج البيانات');
+                }
+
+                const newQuizData = JSON.parse(jsonMatch[0]);
+                
+                if (!newQuizData.questions || !Array.isArray(newQuizData.questions)) {
+                    throw new Error('لم يتم توليد الأسئلة');
+                }
+
+                // التحقق من عدم التكرار
+                const uniqueNewQuestions = newQuizData.questions.filter(newQ => {
+                    return !existingQuestions.some(existingQ => 
+                        existingQ.q === newQ.q
+                    );
+                });
+
+                if (uniqueNewQuestions.length === 0) {
+                    throw new Error('الأسئلة مكررة');
+                }
+
+                // إضافة الأسئلة الجديدة
+                questions = [...questions, ...uniqueNewQuestions];
+                existingQuestions = questions;
+                allQuestionsHistory = [...allQuestionsHistory, ...uniqueNewQuestions];
+                totalQuestionsGenerated += uniqueNewQuestions.length;
+
+                // تحديث واجهة المستخدم
+                const currentTitle = document.getElementById('current-quiz-title');
+                currentTitle.textContent = `${pdfFile.name.replace('.pdf', '')} - ${totalQuestionsGenerated} سؤالاً`;
+
+                // إعادة تهيئة متغيرات المستخدم للأسئلة الجديدة فقط
+                userAnswers = [...userAnswers, ...Array(uniqueNewQuestions.length).fill(null)];
+                answerLocked = [...answerLocked, ...Array(uniqueNewQuestions.length).fill(false)];
+                
+                // إعادة خلط جميع الأسئلة
+                shuffledQuestions = questions.map(q => shuffleOptions(q));
+
+                // إعادة تحميل الاختبار
+                if (document.getElementById('quiz-section').style.display !== 'none') {
+                    loadQuiz();
+                }
+
+                // تحديث وقت الاختبار
+                timeLeft = questions.length * 60;
+                updateTimerDisplay();
+
+                showSuccessMessage(`تم إضافة ${uniqueNewQuestions.length} سؤالاً في الدفعة ${currentBatch}!`);
+
+            } catch (error) {
+                showError(`خطأ: ${error.message}`);
+                console.error('Error:', error);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        // إضافة أسئلة بعد الانتهاء من الاختبار
+        function addMoreQuestionsAfterTest() {
+            document.getElementById('result-box').style.display = 'none';
+            document.getElementById('quiz-section').style.display = 'block';
+            document.getElementById('add-more-section').style.display = 'block';
+            loadQuiz();
+            showSuccessMessage('يمكنك إضافة المزيد من الأسئلة!');
+        }
+
         // إنهاء الاختبار
         function finishQuiz() {
             clearInterval(timerInterval);
 
             const score = calculateScore();
+            const answeredCount = userAnswers.filter(answer => answer !== null).length;
 
             // عرض النتائج
             document.getElementById("result-box").style.display = "block";
             document.getElementById("result").innerHTML = `${score.evaluationIcon} النتيجة: ${score.correct} من ${score.total}`;
-            document.getElementById("percentage").innerHTML = `النسبة المئوية: ${score.percentage}%`;
+            document.getElementById("percentage").innerHTML = `النسبة: ${score.percentage}%`;
             document.getElementById("evaluation").innerHTML = `التقييم: ${score.evaluation}`;
 
             // إخفاء الاختبار
@@ -2064,28 +2532,68 @@ ${pdfText.substring(0, 3000)}... (مستمر)
 
             // عرض النتائج المتقدمة
             document.getElementById('advanced-results').style.display = 'block';
+            
+            // تحديث الإحصائيات
+            updateAdvancedStats(score);
+        }
+
+        // تحديث الإحصائيات المتقدمة
+        function updateAdvancedStats(score) {
+            const statsContainer = document.getElementById('stats-overview');
+            const answeredCount = userAnswers.filter(answer => answer !== null).length;
+            const unansweredCount = questions.length - answeredCount;
+            const markedCount = markedQuestions.length;
+            
+            statsContainer.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-value">${score.correct}/${score.total}</div>
+                    <div class="stat-label">الدرجة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${score.percentage}%</div>
+                    <div class="stat-label">النسبة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${answeredCount}</div>
+                    <div class="stat-label">تم الإجابة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${unansweredCount}</div>
+                    <div class="stat-label">لم تتم الإجابة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${markedCount}</div>
+                    <div class="stat-label">معلمة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${currentBatch}</div>
+                    <div class="stat-label">الدفعات</div>
+                </div>
+            `;
         }
 
         // الرجوع إلى الإعدادات
         function backToSetup() {
-            // إعادة تعيين كل شيء
             questions = [];
             userAnswers = [];
             answerLocked = [];
             shuffledQuestions = [];
             currentQuestionIndex = 0;
             markedQuestions = [];
+            existingQuestions = [];
+            currentBatch = 1;
+            totalQuestionsGenerated = 0;
+            allQuestionsHistory = [];
+            pdfContext = "";
             
-            // إعادة تعيين ملف PDF
             removePDF();
             
-            // إخفاء النتائج وإظهار الإعدادات
             document.getElementById('result-box').style.display = 'none';
             document.getElementById('advanced-results').style.display = 'none';
             document.getElementById('setup-section').style.display = 'block';
             document.getElementById('quiz-section').style.display = 'none';
+            document.getElementById('add-more-section').style.display = 'none';
             
-            // مسح حقول الإدخال
             document.getElementById('quiz-title').value = '';
             document.getElementById('quiz-topic').value = '';
             document.getElementById('api-key').value = '';
@@ -2093,7 +2601,6 @@ ${pdfText.substring(0, 3000)}... (مستمر)
 
         // إعادة تشغيل الاختبار
         function restartQuiz() {
-            // إعادة تعيين المتغيرات
             userAnswers = Array(questions.length).fill(null);
             answerLocked = Array(questions.length).fill(false);
             shuffledQuestions = questions.map(q => shuffleOptions(q));
@@ -2101,17 +2608,14 @@ ${pdfText.substring(0, 3000)}... (مستمر)
             currentQuestionIndex = 0;
             markedQuestions = [];
 
-            // إعادة تعيين العرض
             document.getElementById("quiz").style.display = "block";
             document.getElementById("quiz-section").style.display = "block";
             document.getElementById("result-box").style.display = "none";
             document.getElementById('advanced-results').style.display = 'none';
+            document.getElementById('add-more-section').style.display = 'block';
 
-            // إعادة تحميل المؤقت
             clearInterval(timerInterval);
             startTimer();
-
-            // إعادة تحميل الاختبار
             loadQuiz();
         }
 
@@ -2125,7 +2629,6 @@ ${pdfText.substring(0, 3000)}... (مستمر)
             
             doc.setR2L(true);
             
-            // العنوان
             doc.setFontSize(24);
             doc.setTextColor(26, 95, 122);
             doc.text(currentQuizTitle, 105, 20, null, null, 'center');
@@ -2136,30 +2639,29 @@ ${pdfText.substring(0, 3000)}... (مستمر)
             
             doc.setFontSize(12);
             doc.setTextColor(100, 100, 100);
-            doc.text(`تاريخ الاختبار: ${new Date().toLocaleDateString('ar-SA')}`, 105, 40, null, null, 'center');
+            doc.text(`تاريخ: ${new Date().toLocaleDateString('ar-SA')}`, 105, 40, null, null, 'center');
             
-            // النتائج
             doc.setFontSize(18);
             doc.setTextColor(30, 30, 30);
             doc.text('النتائج', 20, 60);
             
             doc.setFontSize(14);
-            doc.text(`الدرجة النهائية: ${score.correct} من ${score.total}`, 20, 75);
-            doc.text(`النسبة المئوية: ${score.percentage}%`, 20, 85);
+            doc.text(`الدرجة: ${score.correct} من ${score.total}`, 20, 75);
+            doc.text(`النسبة: ${score.percentage}%`, 20, 85);
             doc.text(`التقييم: ${score.evaluation}`, 20, 95);
-            doc.text(`عدد الأسئلة المجابة: ${answeredCount} من ${questions.length}`, 20, 105);
+            doc.text(`المجاب: ${answeredCount} من ${questions.length}`, 20, 105);
+            doc.text(`الدفعات: ${currentBatch}`, 20, 115);
+            doc.text(`الإجمالي: ${totalQuestionsGenerated}`, 20, 125);
             
-            // حفظ الملف
-            doc.save(`نتيجة-${currentQuizTitle.replace(/\s+/g, '-')}-${new Date().toISOString().slice(0,10)}.pdf`);
+            doc.save(`نتيجة-${currentQuizTitle.replace(/\s+/g, '-')}.pdf`);
             
-            alert('تم إنشاء وتحميل تقرير PDF بنجاح!');
+            showSuccessMessage('تم إنشاء تقرير PDF!');
         }
 
         // التهيئة الأولية
         window.onload = function() {
             checkDarkModePreference();
             
-            // إضافة دعم سحب وإفلات الملفات
             const dropZone = document.querySelector('.file-upload-label');
             
             dropZone.addEventListener('dragover', (e) => {
@@ -2186,8 +2688,29 @@ ${pdfText.substring(0, 3000)}... (مستمر)
                         }
                     };
                     handlePDFUpload(event);
+                } else {
+                    showError('الرجاء رفع ملف PDF فقط');
                 }
             });
+
+            document.getElementById('api-key').addEventListener('input', function() {
+                if (this.value.trim()) {
+                    this.style.borderColor = 'var(--secondary)';
+                }
+            });
+        }
+
+        // إغلاق النوافذ المنبثقة
+        window.onclick = function(event) {
+            const currentScoreModal = document.getElementById('currentScoreModal');
+            const questionsModal = document.getElementById('questionsModal');
+            
+            if (event.target === currentScoreModal) {
+                closeCurrentScoreModal();
+            }
+            if (event.target === questionsModal) {
+                closeQuestionsModal();
+            }
         }
     </script>
 </body>
