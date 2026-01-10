@@ -125,9 +125,10 @@
         .header-actions {
             display: flex;
             gap: 10px;
+            align-items: center;
         }
 
-        .theme-btn, .lang-btn {
+        .theme-btn, .lang-btn, .sound-btn {
             background: rgba(26, 95, 122, 0.2);
             color: white;
             border: 2px solid rgba(255, 255, 255, 0.3);
@@ -146,7 +147,7 @@
             box-shadow: 0 0 15px rgba(26, 95, 122, 0.3);
         }
 
-        .theme-btn:hover, .lang-btn:hover {
+        .theme-btn:hover, .lang-btn:hover, .sound-btn:hover {
             background: rgba(26, 95, 122, 0.3);
             transform: translateY(-3px);
             box-shadow: 0 0 25px rgba(26, 95, 122, 0.5);
@@ -156,6 +157,15 @@
         .lang-btn.active {
             background: var(--accent-gradient);
             border-color: var(--accent);
+        }
+
+        .sound-btn.muted {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .sound-btn.muted i {
+            color: #ef4444;
         }
 
         .language-switcher {
@@ -437,6 +447,120 @@
         .remove-file-btn:hover {
             background: rgba(220, 38, 38, 0.2);
             transform: translateY(-2px);
+        }
+
+        /* PDF Details Section */
+        .pdf-details-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px dashed var(--border);
+            display: none;
+        }
+
+        .pdf-details-section.active {
+            display: block;
+            animation: slideDown 0.5s ease;
+        }
+
+        .pdf-details-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .pdf-details-tab {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .pdf-details-tab:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .pdf-details-tab.active {
+            background: rgba(26, 95, 122, 0.3);
+            border-color: var(--accent);
+            box-shadow: 0 0 15px rgba(21, 152, 149, 0.3);
+        }
+
+        .pdf-details-content {
+            display: none;
+        }
+
+        .pdf-details-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .details-input-group {
+            margin: 15px 0;
+        }
+
+        .details-input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .details-input {
+            width: 100%;
+            padding: 12px 18px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 1rem;
+            background: var(--card-bg);
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        .details-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .page-range-inputs {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .page-range-inputs input {
+            flex: 1;
+        }
+
+        .page-range-separator {
+            color: var(--light-text);
+            font-weight: bold;
+        }
+
+        .topics-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .hint-text {
+            font-size: 0.85rem;
+            color: var(--light-text);
+            margin-top: 8px;
+            font-style: italic;
         }
 
         /* Image Preview */
@@ -1671,6 +1795,62 @@
             .review-option {
                 min-width: 100%;
             }
+
+            .page-range-inputs {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .page-range-separator {
+                display: none;
+            }
+
+            .pdf-details-tabs {
+                flex-direction: column;
+            }
+        }
+
+        /* Sound Animation */
+        .sound-wave {
+            display: inline-block;
+            margin-left: 8px;
+        }
+
+        .sound-wave span {
+            display: inline-block;
+            width: 3px;
+            height: 10px;
+            background: var(--secondary);
+            margin: 0 1px;
+            border-radius: 2px;
+            animation: soundWave 1.2s infinite ease-in-out;
+        }
+
+        .sound-wave span:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .sound-wave span:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .sound-wave span:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes soundWave {
+            0%, 100% {
+                transform: scaleY(1);
+            }
+            50% {
+                transform: scaleY(2);
+            }
+        }
+
+        .sound-btn.muted .sound-wave span {
+            background: #ef4444;
+            animation: none;
+            transform: scaleY(0.5);
         }
     </style>
 </head>
@@ -1693,6 +1873,15 @@
                 <div class="developer-credit">تنفيذ المعلم فهد الخالدي</div>
             </div>
             <div class="header-actions">
+                <button class="sound-btn" id="soundBtn" onclick="toggleSound()">
+                    <i class="fas fa-volume-up"></i>
+                    <div class="sound-wave">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
                 <button class="theme-btn" id="themeBtn">
                     <i class="fas fa-moon"></i>
                 </button>
@@ -1925,6 +2114,86 @@
                         </div>
                     </div>
 
+                    <!-- قسم تفاصيل PDF -->
+                    <div class="pdf-details-section" id="pdf-details-section">
+                        <h4 style="color: var(--text); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-filter"></i> <span id="pdf-details-title">تحديد تفاصيل المحتوى</span>
+                        </h4>
+                        <p style="color: var(--light-text); margin-bottom: 20px; font-size: 0.95rem;" id="pdf-details-subtitle">
+                            يمكنك تحديد نطاق محدد من الملف لتحليله. اترك الحقول فارغة لتحليل الملف بالكامل.
+                        </p>
+                        
+                        <div class="pdf-details-tabs">
+                            <div class="pdf-details-tab active" onclick="selectPDFDetailsTab('pages')" id="pages-tab">
+                                <i class="fas fa-file"></i> <span id="pages-tab-text">الصفحات</span>
+                            </div>
+                            <div class="pdf-details-tab" onclick="selectPDFDetailsTab('units')" id="units-tab">
+                                <i class="fas fa-layer-group"></i> <span id="units-tab-text">الوحدات</span>
+                            </div>
+                            <div class="pdf-details-tab" onclick="selectPDFDetailsTab('topics')" id="topics-tab">
+                                <i class="fas fa-tags"></i> <span id="topics-tab-text">المواضيع</span>
+                            </div>
+                        </div>
+                        
+                        <!-- محتوى الصفحات -->
+                        <div class="pdf-details-content active" id="pages-content">
+                            <div class="details-input-group">
+                                <label for="page-range"><i class="fas fa-arrows-alt-h"></i> <span id="page-range-label">نطاق الصفحات</span></label>
+                                <div class="page-range-inputs">
+                                    <input type="number" id="start-page" class="details-input" placeholder="الصفحة الأولى" min="1">
+                                    <div class="page-range-separator">إلى</div>
+                                    <input type="number" id="end-page" class="details-input" placeholder="الصفحة الأخيرة">
+                                </div>
+                                <p class="hint-text" id="page-range-hint">
+                                    اترك الحقول فارغة لتحليل جميع الصفحات. أدخل أرقام الصفحات فقط.
+                                </p>
+                            </div>
+                            
+                            <div class="details-input-group">
+                                <label for="specific-pages"><i class="fas fa-hashtag"></i> <span id="specific-pages-label">صفحات محددة</span></label>
+                                <input type="text" id="specific-pages" class="details-input" 
+                                       placeholder="مثال: 1,3,5-8,10,12-15">
+                                <p class="hint-text" id="specific-pages-hint">
+                                    يمكنك تحديد صفحات محددة باستخدام الفواصل والفواصل المنقوطة للنطاقات.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- محتوى الوحدات -->
+                        <div class="pdf-details-content" id="units-content">
+                            <div class="details-input-group">
+                                <label for="units-list"><i class="fas fa-list-ol"></i> <span id="units-list-label">الوحدات المطلوبة</span></label>
+                                <textarea id="units-list" class="details-input topics-textarea" 
+                                          placeholder="مثال: 
+- الوحدة الأولى: المدخل إلى علم الفقه
+- الوحدة الثانية: أحكام الطهارة
+- الوحدة الثالثة: أحكام الصلاة
+- الوحدة الرابعة: أحكام الصيام"></textarea>
+                                <p class="hint-text" id="units-list-hint">
+                                    اذكر العناوين الرئيسية للوحدات أو الفصول التي تريد التركيز عليها.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- محتوى المواضيع -->
+                        <div class="pdf-details-content" id="topics-content">
+                            <div class="details-input-group">
+                                <label for="topics-list"><i class="fas fa-tags"></i> <span id="topics-list-label">المواضيع المطلوبة</span></label>
+                                <textarea id="topics-list" class="details-input topics-textarea" 
+                                          placeholder="مثال: 
+- تعريف الصلاة وأركانها
+- شروط الصلاة
+- مكروهات الصلاة
+- مبطلات الصلاة
+- صلاة الجماعة
+- صلاة المريض"></textarea>
+                                <p class="hint-text" id="topics-list-hint">
+                                    اذكر المواضيع أو المفاهيم المحددة التي تريد التركيز عليها في التحليل.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="input-group">
                         <label for="num-questions-pdf"><i class="fas fa-question-circle"></i> <span id="num-questions-label-pdf">عدد الأسئلة المطلوبة</span></label>
                         <select id="num-questions-pdf" class="input-field">
@@ -2064,6 +2333,14 @@
         </div>
     </div>
 
+    <!-- Audio Elements -->
+    <audio id="correctSound" preload="auto">
+        <source src="https://media.vocaroo.com/mp3/19lcrilHKuHR" type="audio/mpeg">
+    </audio>
+    <audio id="wrongSound" preload="auto">
+        <source src="https://www.soundjay.com/buttons/button-3.mp3" type="audio/mpeg">
+    </audio>
+
     <script>
         // المتغيرات العامة
         let questions = [];
@@ -2085,6 +2362,7 @@
         let currentLanguage = "ar";
         let isAPIKeyValid = false;
         let quizLanguage = "ar";
+        let soundEnabled = true;
         
         // أنواع الأسئلة المختارة
         let selectedQuestionTypes = {
@@ -2150,7 +2428,20 @@
             "english-language-name": "English",
             "english-language-desc": "Questions in English",
             "instant-review-title": "مراجعة فورية لجميع الخيارات",
-            "instant-review-trigger": "انقر هنا لعرض مراجعة فورية لجميع الخيارات"
+            "instant-review-trigger": "انقر هنا لعرض مراجعة فورية لجميع الخيارات",
+            "pdf-details-title": "تحديد تفاصيل المحتوى",
+            "pdf-details-subtitle": "يمكنك تحديد نطاق محدد من الملف لتحليله. اترك الحقول فارغة لتحليل الملف بالكامل.",
+            "pages-tab-text": "الصفحات",
+            "units-tab-text": "الوحدات",
+            "topics-tab-text": "المواضيع",
+            "page-range-label": "نطاق الصفحات",
+            "page-range-hint": "اترك الحقول فارغة لتحليل جميع الصفحات. أدخل أرقام الصفحات فقط.",
+            "specific-pages-label": "صفحات محددة",
+            "specific-pages-hint": "يمكنك تحديد صفحات محددة باستخدام الفواصل والفواصل المنقوطة للنطاقات.",
+            "units-list-label": "الوحدات المطلوبة",
+            "units-list-hint": "اذكر العناوين الرئيسية للوحدات أو الفصول التي تريد التركيز عليها.",
+            "topics-list-label": "المواضيع المطلوبة",
+            "topics-list-hint": "اذكر المواضيع أو المفاهيم المحددة التي تريد التركيز عليها في التحليل."
         };
 
         // نصوص اللغة الإنجليزية
@@ -2206,7 +2497,20 @@
             "english-language-name": "English",
             "english-language-desc": "Questions in English",
             "instant-review-title": "Instant Review for All Options",
-            "instant-review-trigger": "Click here to show instant review for all options"
+            "instant-review-trigger": "Click here to show instant review for all options",
+            "pdf-details-title": "Specify Content Details",
+            "pdf-details-subtitle": "You can specify a specific range from the file to analyze. Leave fields empty to analyze the entire file.",
+            "pages-tab-text": "Pages",
+            "units-tab-text": "Units",
+            "topics-tab-text": "Topics",
+            "page-range-label": "Page Range",
+            "page-range-hint": "Leave fields empty to analyze all pages. Enter page numbers only.",
+            "specific-pages-label": "Specific Pages",
+            "specific-pages-hint": "You can specify specific pages using commas and hyphens for ranges.",
+            "units-list-label": "Required Units",
+            "units-list-hint": "List the main headings of units or chapters you want to focus on.",
+            "topics-list-label": "Required Topics",
+            "topics-list-hint": "List the specific topics or concepts you want to focus on in the analysis."
         };
 
         // تحويل اللغة
@@ -2271,6 +2575,19 @@
                 document.getElementById('quiz-title').placeholder = "Example: Islamic Jurisprudence - Prayer Rules";
                 document.getElementById('quiz-topic').placeholder = "Write details about the topic you want to test...";
                 document.getElementById('api-key').placeholder = "Enter your API key here";
+                document.getElementById('units-list').placeholder = `Example:
+- Unit 1: Introduction to Islamic Jurisprudence
+- Unit 2: Rules of Purification
+- Unit 3: Rules of Prayer
+- Unit 4: Rules of Fasting`;
+                document.getElementById('topics-list').placeholder = `Example:
+- Definition and pillars of prayer
+- Conditions of prayer
+- Disliked acts in prayer
+- Invalidators of prayer
+- Congregational prayer
+- Prayer for the sick`;
+                document.getElementById('specific-pages').placeholder = "Example: 1,3,5-8,10,12-15";
             } else {
                 apiSteps.innerHTML = `
                     <li>اذهب إلى <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a></li>
@@ -2282,6 +2599,19 @@
                 document.getElementById('quiz-title').placeholder = "مثال: الفقه الإسلامي - أحكام الصلاة";
                 document.getElementById('quiz-topic').placeholder = "اكتب تفاصيل الموضوع الذي تريد اختباره...";
                 document.getElementById('api-key').placeholder = "أدخل مفتاح API الخاص بك هنا";
+                document.getElementById('units-list').placeholder = `مثال: 
+- الوحدة الأولى: المدخل إلى علم الفقه
+- الوحدة الثانية: أحكام الطهارة
+- الوحدة الثالثة: أحكام الصلاة
+- الوحدة الرابعة: أحكام الصيام`;
+                document.getElementById('topics-list').placeholder = `مثال: 
+- تعريف الصلاة وأركانها
+- شروط الصلاة
+- مكروهات الصلاة
+- مبطلات الصلاة
+- صلاة الجماعة
+- صلاة المريض`;
+                document.getElementById('specific-pages').placeholder = "مثال: 1,3,5-8,10,12-15";
             }
         }
 
@@ -2368,6 +2698,13 @@
             document.getElementById('manual-section').style.display = method === 'manual' ? 'block' : 'none';
             document.getElementById('image-section').style.display = method === 'image' ? 'block' : 'none';
             document.getElementById('pdf-section').style.display = method === 'pdf' ? 'block' : 'none';
+            
+            // إظهار أو إخفاء قسم تفاصيل PDF
+            if (method === 'pdf' && pdfFile) {
+                document.getElementById('pdf-details-section').classList.add('active');
+            } else {
+                document.getElementById('pdf-details-section').classList.remove('active');
+            }
         }
 
         // اختيار لغة الاختبار
@@ -2378,6 +2715,23 @@
             document.getElementById('english-language').classList.remove('active');
             
             document.getElementById(`${lang}-language`).classList.add('active');
+        }
+
+        // اختيار تبويب تفاصيل PDF
+        function selectPDFDetailsTab(tab) {
+            // إزالة النشاط من جميع التبويبات
+            document.getElementById('pages-tab').classList.remove('active');
+            document.getElementById('units-tab').classList.remove('active');
+            document.getElementById('topics-tab').classList.remove('active');
+            
+            // إخفاء جميع المحتويات
+            document.getElementById('pages-content').classList.remove('active');
+            document.getElementById('units-content').classList.remove('active');
+            document.getElementById('topics-content').classList.remove('active');
+            
+            // إضافة النشاط للتبويب المحدد
+            document.getElementById(`${tab}-tab`).classList.add('active');
+            document.getElementById(`${tab}-content`).classList.add('active');
         }
 
         // تبديل نوع السؤال
@@ -2421,6 +2775,13 @@
                 icon.classList.remove('fa-sun');
                 icon.classList.add('fa-moon');
             }
+            
+            // التحقق من تفضيل الصوت
+            const soundPref = localStorage.getItem('soundEnabled');
+            if (soundPref !== null) {
+                soundEnabled = soundPref === 'true';
+                updateSoundButton();
+            }
         }
 
         // تبديل الوضع الليلي
@@ -2437,6 +2798,48 @@
                 localStorage.setItem('darkMode', 'disabled');
             }
         });
+
+        // تبديل الصوت
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            localStorage.setItem('soundEnabled', soundEnabled);
+            updateSoundButton();
+            
+            // تشغيل صوت تجريبي عند تشغيل الصوت
+            if (soundEnabled) {
+                playSound('correct');
+            }
+        }
+
+        // تحديث زر الصوت
+        function updateSoundButton() {
+            const soundBtn = document.getElementById('soundBtn');
+            const icon = soundBtn.querySelector('i');
+            const wave = soundBtn.querySelector('.sound-wave');
+            
+            if (soundEnabled) {
+                soundBtn.classList.remove('muted');
+                icon.classList.remove('fa-volume-mute');
+                icon.classList.add('fa-volume-up');
+                wave.style.display = 'inline-block';
+            } else {
+                soundBtn.classList.add('muted');
+                icon.classList.remove('fa-volume-up');
+                icon.classList.add('fa-volume-mute');
+                wave.style.display = 'inline-block';
+            }
+        }
+
+        // تشغيل صوت
+        function playSound(type) {
+            if (!soundEnabled) return;
+            
+            const audio = document.getElementById(`${type}Sound`);
+            if (audio) {
+                audio.currentTime = 0;
+                audio.play().catch(e => console.log("Error playing sound:", e));
+            }
+        }
 
         // التحقق من مفتاح API
         async function verifyAPIKey() {
@@ -2570,6 +2973,7 @@
                 `Size: ${(file.size / 1024 / 1024).toFixed(2)} MB`;
             
             document.getElementById('pdf-preview').classList.add('active');
+            document.getElementById('pdf-details-section').classList.add('active');
             
             showSuccessMessage(currentLanguage === 'ar' ? 
                 'تم رفع الملف بنجاح! قم بتوليد الأسئلة الآن.' : 
@@ -2581,9 +2985,114 @@
             pdfFile = null;
             document.getElementById('pdf-file').value = "";
             document.getElementById('pdf-preview').classList.remove('active');
+            document.getElementById('pdf-details-section').classList.remove('active');
             existingQuestions = [];
             currentBatch = 1;
             totalQuestionsGenerated = 0;
+        }
+
+        // الحصول على تفاصيل PDF المحددة
+        function getPDFDetails() {
+            const details = {
+                pages: {
+                    startPage: document.getElementById('start-page').value.trim(),
+                    endPage: document.getElementById('end-page').value.trim(),
+                    specificPages: document.getElementById('specific-pages').value.trim()
+                },
+                units: document.getElementById('units-list').value.trim(),
+                topics: document.getElementById('topics-list').value.trim()
+            };
+            
+            return details;
+        }
+
+        // توليد تعليمات تفاصيل PDF للذكاء الاصطناعي
+        function generatePDFDetailsInstructions(details, languageCode) {
+            let instructions = '';
+            
+            if (languageCode === 'en') {
+                instructions = "Focus on the following specific content from the PDF:\n\n";
+                
+                // إضافة تعليمات الصفحات
+                if (details.pages.startPage || details.pages.endPage || details.pages.specificPages) {
+                    instructions += "PAGE RANGE:\n";
+                    if (details.pages.startPage && details.pages.endPage) {
+                        instructions += `- Analyze pages ${details.pages.startPage} to ${details.pages.endPage}\n`;
+                    } else if (details.pages.startPage) {
+                        instructions += `- Start from page ${details.pages.startPage}\n`;
+                    } else if (details.pages.endPage) {
+                        instructions += `- Analyze up to page ${details.pages.endPage}\n`;
+                    }
+                    if (details.pages.specificPages) {
+                        instructions += `- Specifically analyze pages: ${details.pages.specificPages}\n`;
+                    }
+                    instructions += "\n";
+                }
+                
+                // إضافة تعليمات الوحدات
+                if (details.units) {
+                    instructions += "SPECIFIC UNITS/CHAPTERS:\n";
+                    const units = details.units.split('\n').filter(line => line.trim());
+                    units.forEach(unit => {
+                        instructions += `- ${unit.trim()}\n`;
+                    });
+                    instructions += "\n";
+                }
+                
+                // إضافة تعليمات المواضيع
+                if (details.topics) {
+                    instructions += "SPECIFIC TOPICS/CONCEPTS:\n";
+                    const topics = details.topics.split('\n').filter(line => line.trim());
+                    topics.forEach(topic => {
+                        instructions += `- ${topic.trim()}\n`;
+                    });
+                    instructions += "\n";
+                }
+                
+                instructions += "Generate questions based ONLY on the above specified content.";
+            } else {
+                instructions = "ركز على المحتوى المحدد التالي من ملف PDF:\n\n";
+                
+                // إضافة تعليمات الصفحات
+                if (details.pages.startPage || details.pages.endPage || details.pages.specificPages) {
+                    instructions += "نطاق الصفحات:\n";
+                    if (details.pages.startPage && details.pages.endPage) {
+                        instructions += `- حلل الصفحات من ${details.pages.startPage} إلى ${details.pages.endPage}\n`;
+                    } else if (details.pages.startPage) {
+                        instructions += `- ابدأ من الصفحة ${details.pages.startPage}\n`;
+                    } else if (details.pages.endPage) {
+                        instructions += `- حلل حتى الصفحة ${details.pages.endPage}\n`;
+                    }
+                    if (details.pages.specificPages) {
+                        instructions += `- ركز تحديداً على الصفحات: ${details.pages.specificPages}\n`;
+                    }
+                    instructions += "\n";
+                }
+                
+                // إضافة تعليمات الوحدات
+                if (details.units) {
+                    instructions += "الوحدات/الفصول المحددة:\n";
+                    const units = details.units.split('\n').filter(line => line.trim());
+                    units.forEach(unit => {
+                        instructions += `- ${unit.trim()}\n`;
+                    });
+                    instructions += "\n";
+                }
+                
+                // إضافة تعليمات المواضيع
+                if (details.topics) {
+                    instructions += "المواضيع/المفاهيم المحددة:\n";
+                    const topics = details.topics.split('\n').filter(line => line.trim());
+                    topics.forEach(topic => {
+                        instructions += `- ${topic.trim()}\n`;
+                    });
+                    instructions += "\n";
+                }
+                
+                instructions += "أنشئ الأسئلة بناءً على المحتوى المحدد أعلاه فقط.";
+            }
+            
+            return instructions;
         }
 
         // دالة لعرض الأخطاء
@@ -2963,10 +3472,16 @@ ${questionFormats.join(',\n')}
 
                 title = `${pdfFile.name.replace('.pdf', '')} - ${currentLanguage === 'ar' ? 'اختبار' : 'Quiz'}`;
                 
+                // الحصول على تفاصيل PDF المحددة
+                const pdfDetails = getPDFDetails();
+                const pdfDetailsInstructions = generatePDFDetailsInstructions(pdfDetails, languageInstructions.languageCode);
+                
                 if (languageInstructions.languageCode === 'en') {
                     prompt = `${languageInstructions.promptPrefix}
 
 I need ${numQuestions} questions based on the content of the PDF file.
+
+${pdfDetailsInstructions}
 
 Question types to include: ${selectedTypesText}
 
@@ -2974,7 +3489,7 @@ ${feedbackInstruction}
 
 ${reviewInstruction}
 
-Extract key information from the PDF and create questions. Ensure comprehensive feedback for all options.
+Extract key information from the specified content in the PDF and create questions. Ensure comprehensive feedback for all options.
 
 ${languageInstructions.formatInstructions}
 
@@ -2992,13 +3507,15 @@ ${questionFormats.join(',\n')}
 
 أحتاج إلى ${numQuestions} أسئلة بناءً على محتوى ملف PDF.
 
+${pdfDetailsInstructions}
+
 أنواع الأسئلة المطلوبة: ${selectedTypesText}
 
 ${feedbackInstruction}
 
 ${reviewInstruction}
 
-استخرج المعلومات الرئيسية من PDF وأنشئ أسئلة. تأكد من تقديم تغذية راجعة شاملة لجميع الخيارات.
+استخرج المعلومات الرئيسية من المحتوى المحدد في PDF وأنشئ أسئلة. تأكد من تقديم تغذية راجعة شاملة لجميع الخيارات.
 
 ${languageInstructions.formatInstructions}
 
@@ -3484,6 +4001,13 @@ ${questionFormats.join(',\n')}
                 instantReviewDiv.classList.add('show');
             }
 
+            // تشغيل الصوت المناسب
+            if (answerIndex === question.answer) {
+                playSound('correct');
+            } else {
+                playSound('wrong');
+            }
+
             showExplanation();
             checkIfLastQuestionAnswered();
         }
@@ -3498,6 +4022,19 @@ ${questionFormats.join(',\n')}
             answerLocked[currentQuestionIndex] = true;
 
             document.getElementById('fillBlankAnswer').disabled = true;
+            
+            // التحقق من الإجابة الصحيحة وتشغيل الصوت المناسب
+            const question = shuffledQuestions[currentQuestionIndex];
+            const userAnswerStr = value.toString().toLowerCase().trim();
+            const correctAnswerStr = question.answer.toString().toLowerCase().trim();
+            
+            if (userAnswerStr === correctAnswerStr || 
+                Math.abs(userAnswerStr.length - correctAnswerStr.length) < 3) {
+                playSound('correct');
+            } else {
+                playSound('wrong');
+            }
+            
             showExplanation();
             checkIfLastQuestionAnswered();
         }
@@ -3927,6 +4464,11 @@ ${questionFormats.join(',\n')}
             
             document.getElementById('quiz-title').value = '';
             document.getElementById('quiz-topic').value = '';
+            document.getElementById('start-page').value = '';
+            document.getElementById('end-page').value = '';
+            document.getElementById('specific-pages').value = '';
+            document.getElementById('units-list').value = '';
+            document.getElementById('topics-list').value = '';
         }
 
         // إعادة تشغيل الاختبار
@@ -3974,6 +4516,9 @@ ${questionFormats.join(',\n')}
                     isAPIKeyValid = false;
                 }
             });
+            
+            // تعيين الصوت الخاطئ افتراضياً
+            document.getElementById('wrongSound').src = "https://www.soundjay.com/buttons/button-3.mp3";
         }
 
         // إغلاق النوافذ المنبثقة
