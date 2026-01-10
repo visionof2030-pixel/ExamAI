@@ -1,16 +1,12 @@
+!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="نظام اختبار تفاعلي ذكي - توليد أسئلة باستخدام الذكاء الاصطناعي من ملفات PDF">
+    <title>نظام الاختبارات الذكي - AI Powered PDF Reader</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js"></script>
     <style>
         :root {
             --primary: #1A5F7A;
@@ -25,9 +21,6 @@
             --tertiary: #FF9800;
             --tertiary-glow: #FFB74D;
             --tertiary-light: #FFCC80;
-            --quaternary: #9C27B0;
-            --quaternary-glow: #BA68C8;
-            --quaternary-light: #CE93D8;
             --islamic-green: #228B22;
             --islamic-blue: #1A5F7A;
             --islamic-gold: #D4AF37;
@@ -81,6 +74,12 @@
             min-height: 100vh;
         }
 
+        body.english-mode {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            direction: ltr;
+        }
+
+        /* Header */
         header {
             background: rgba(26, 95, 122, 0.1);
             backdrop-filter: blur(20px);
@@ -118,7 +117,7 @@
             gap: 10px;
         }
 
-        .theme-btn, .back-btn {
+        .theme-btn, .lang-btn {
             background: rgba(26, 95, 122, 0.2);
             color: white;
             border: 2px solid rgba(255, 255, 255, 0.3);
@@ -137,11 +136,30 @@
             box-shadow: 0 0 15px rgba(26, 95, 122, 0.3);
         }
 
-        .theme-btn:hover, .back-btn:hover {
+        .theme-btn:hover, .lang-btn:hover {
             background: rgba(26, 95, 122, 0.3);
             transform: translateY(-3px);
-            box-shadow: 0 0 25px rgba(26, 95, 122, 0.5), 0 5px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 25px rgba(26, 95, 122, 0.5);
             border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .lang-btn.active {
+            background: var(--accent-gradient);
+            border-color: var(--accent);
+        }
+
+        .language-switcher {
+            position: fixed;
+            top: 90px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            padding: 8px 15px;
+            font-size: 0.9rem;
         }
 
         main {
@@ -150,6 +168,7 @@
             padding: 0 20px;
         }
 
+        /* Hero Section */
         .hero-section {
             background: linear-gradient(135deg, rgba(26, 95, 122, 0.15), rgba(21, 152, 149, 0.15));
             backdrop-filter: blur(30px);
@@ -201,16 +220,16 @@
             margin-right: auto;
         }
 
+        /* Cards */
         .card {
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--card-bg);
             backdrop-filter: blur(30px);
             border-radius: 20px;
             padding: 30px;
             margin-bottom: 25px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow);
             transition: all 0.4s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
             position: relative;
             overflow: hidden;
         }
@@ -230,6 +249,7 @@
             box-shadow: var(--shadow-hover);
         }
 
+        /* Forms */
         .input-group {
             margin: 25px 0;
         }
@@ -261,6 +281,45 @@
             box-shadow: 0 0 20px rgba(21, 152, 149, 0.3);
         }
 
+        .input-with-btn {
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-with-btn .input-field {
+            flex: 1;
+        }
+
+        /* API Key */
+        .api-key-status {
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .api-key-status.valid {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
+            border: 1px solid #4CAF50;
+        }
+
+        .api-key-status.invalid {
+            background: rgba(220, 38, 38, 0.1);
+            color: #dc2626;
+            border: 1px solid #dc2626;
+        }
+
+        .verify-btn {
+            padding: 0 20px;
+            white-space: nowrap;
+        }
+
+        /* File Upload */
         .file-upload-container {
             position: relative;
             margin: 25px 0;
@@ -320,6 +379,17 @@
             animation: slideDown 0.5s ease;
         }
 
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .file-info {
             display: flex;
             align-items: center;
@@ -342,29 +412,6 @@
             font-size: 0.9rem;
         }
 
-        .pdf-preview {
-            max-height: 300px;
-            overflow-y: auto;
-            padding: 15px;
-            background: var(--card-bg);
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .pdf-preview h6 {
-            color: var(--primary);
-            margin-bottom: 10px;
-            padding-bottom: 5px;
-            border-bottom: 2px solid var(--accent);
-        }
-
-        .pdf-text {
-            white-space: pre-wrap;
-            font-family: 'Tajawal', sans-serif;
-        }
-
         .remove-file-btn {
             background: rgba(220, 38, 38, 0.1);
             color: #dc2626;
@@ -382,6 +429,7 @@
             transform: translateY(-2px);
         }
 
+        /* Method Selector */
         .method-selector {
             display: flex;
             gap: 20px;
@@ -429,6 +477,55 @@
             font-size: 0.9rem;
         }
 
+        /* Language Selector */
+        .language-selector {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .language-option {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .language-option:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .language-option.active {
+            background: rgba(26, 95, 122, 0.3);
+            border-color: var(--accent);
+            box-shadow: 0 0 15px rgba(21, 152, 149, 0.3);
+        }
+
+        .language-flag {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .language-name {
+            font-weight: 600;
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        .language-desc {
+            color: var(--light-text);
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+
+        /* Buttons */
         .btn {
             padding: 15px 30px;
             border-radius: 15px;
@@ -534,6 +631,163 @@
             left: -100%;
         }
 
+        /* API Info */
+        .api-key-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .api-info {
+            background: rgba(26, 95, 122, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        .api-info a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .api-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .loader {
+            border: 5px solid rgba(26, 95, 122, 0.2);
+            border-top: 5px solid var(--accent);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Error Message */
+        .error-message {
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(239, 68, 68, 0.1));
+            border: 2px solid #ef4444;
+            color: #dc2626;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--secondary-gradient);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            z-index: 10000;
+            box-shadow: var(--glow-secondary);
+            animation: slideInRight 0.5s ease;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* Quiz Section */
+        #quiz-section {
+            display: none;
+        }
+
+        .current-quiz-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-align: center;
+            margin: 20px 0;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            height: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--islamic-gradient);
+            box-shadow: 0 0 15px rgba(26, 95, 122, 0.5);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Question Box */
         .question-box {
             background: var(--card-bg);
             backdrop-filter: blur(20px);
@@ -585,6 +839,7 @@
             font-weight: 500;
         }
 
+        /* Options */
         .options {
             position: relative;
         }
@@ -689,6 +944,7 @@
             background: var(--accent-gradient);
         }
 
+        /* Explanation */
         .explanation {
             margin-top: 25px;
             padding: 25px;
@@ -700,78 +956,7 @@
             backdrop-filter: blur(10px);
         }
 
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-15px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .progress-bar {
-            height: 15px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            margin-bottom: 30px;
-            overflow: hidden;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
-            position: relative;
-            backdrop-filter: blur(10px);
-        }
-
-        .progress {
-            height: 100%;
-            background: var(--islamic-gradient);
-            box-shadow: 0 0 15px rgba(26, 95, 122, 0.5);
-            width: 0%;
-            transition: width 0.5s ease;
-            border-radius: 10px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            animation: shimmer 1.5s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        #result-box {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            padding: 30px;
-            margin-top: 30px;
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            display: none;
-            animation: slideUp 0.6s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
+        /* Controls */
         .controls {
             display: flex;
             justify-content: space-between;
@@ -823,7 +1008,81 @@
             }
         }
 
-        /* Modal Styles */
+        /* Navigation */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 20px;
+        }
+
+        /* Results */
+        #result-box {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            padding: 30px;
+            margin-top: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            display: none;
+            animation: slideUp 0.6s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Stats */
+        .quiz-stats {
+            background: rgba(26, 95, 122, 0.1);
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            font-size: 0.9rem;
+            color: var(--text);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .batch-indicator {
+            background: var(--tertiary-gradient);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            margin-right: 10px;
+        }
+
+        .category-badge {
+            background: var(--accent-gradient);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            margin-right: 10px;
+        }
+
+        .source-info {
+            background: rgba(21, 152, 149, 0.1);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--light-text);
+            margin-top: 10px;
+            border-right: 3px solid var(--accent);
+        }
+
+        /* Modals */
         .modal {
             display: none;
             position: fixed;
@@ -890,132 +1149,72 @@
             background-clip: text;
         }
 
-        @media (max-width: 768px) {
-            body {
-                padding-top: 70px;
-            }
-
-            .header-container {
-                padding: 0 15px;
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .title-section h1 {
-                font-size: 1.3rem;
-            }
-
-            .hero-title {
-                font-size: 1.8rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1rem;
-            }
-
-            .card, .question-box {
-                padding: 25px;
-            }
-
-            .controls {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .btn {
-                width: 100%;
-                justify-content: center;
-                padding: 14px 25px;
-                font-size: 1rem;
-            }
-
-            .method-selector {
-                flex-direction: column;
-            }
-
-            .method-tab {
-                min-width: 100%;
-            }
-        }
-
-        .loading {
-            display: none;
+        /* Add More Section */
+        .add-more-section {
             text-align: center;
-            padding: 30px;
-        }
-
-        .loader {
-            border: 5px solid rgba(26, 95, 122, 0.2);
-            border-top: 5px solid var(--accent);
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .error-message {
-            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(239, 68, 68, 0.1));
-            border: 2px solid #ef4444;
-            color: #dc2626;
+            margin-top: 30px;
             padding: 20px;
+            background: rgba(255, 152, 0, 0.1);
             border-radius: 15px;
-            margin: 20px 0;
+            border: 2px dashed var(--tertiary);
             display: none;
         }
 
-        .api-key-section {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 25px;
+        /* Stats Overview */
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
             margin: 20px 0;
-            border: 2px solid rgba(255, 255, 255, 0.2);
         }
 
-        .api-info {
-            background: rgba(26, 95, 122, 0.1);
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
             padding: 15px;
             border-radius: 10px;
-            margin-top: 15px;
-            font-size: 0.9rem;
-        }
-
-        .api-info a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .api-info a:hover {
-            text-decoration: underline;
-        }
-
-        .current-quiz-title {
-            font-size: 1.8rem;
-            font-weight: 800;
             text-align: center;
-            margin: 20px 0;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            border: 1px solid var(--border);
         }
 
-        /* Navigation styles */
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-            gap: 20px;
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 5px;
         }
 
-        /* Questions Grid Modal */
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* Smart Suggestions */
+        .smart-suggestions {
+            background: rgba(76, 175, 80, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-right: 4px solid var(--secondary);
+        }
+
+        .suggestions-list {
+            list-style: none;
+            padding-right: 20px;
+        }
+
+        .suggestions-list li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .suggestions-list li:before {
+            content: "✓";
+            position: absolute;
+            right: -20px;
+            color: var(--secondary);
+        }
+
+        /* Questions Grid */
         #questions-grid-modal {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
@@ -1113,235 +1312,176 @@
             color: var(--text);
         }
 
-        /* New Styles for Enhanced Features */
-        @keyframes slideInRight {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+        /* English Mode Styles */
+        body.english-mode .question-box,
+        body.english-mode .card,
+        body.english-mode .modal-content {
+            text-align: left;
         }
 
-        @keyframes slideOutRight {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(100%);
-                opacity: 0;
-            }
+        body.english-mode .question-number {
+            justify-content: flex-start;
         }
 
-        .success-message {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: bold;
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            background: var(--secondary-gradient);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            z-index: 10000;
-            box-shadow: var(--glow-secondary);
-            animation: slideInRight 0.5s ease;
+        body.english-mode .options label {
+            text-align: left;
         }
 
-        .quiz-stats {
-            background: rgba(26, 95, 122, 0.1);
-            padding: 10px 15px;
-            border-radius: 10px;
-            margin: 10px 0;
-            font-size: 0.9rem;
-            color: var(--text);
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 10px;
+        body.english-mode .options input[type="radio"] {
+            margin-right: 12px;
+            margin-left: 0;
         }
 
-        .batch-indicator {
-            background: var(--tertiary-gradient);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-            margin-right: 10px;
+        body.english-mode .navigation {
+            flex-direction: row-reverse;
         }
 
-        .category-badge {
-            background: var(--accent-gradient);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 10px;
-            font-size: 0.8rem;
-            margin-right: 10px;
+        body.english-mode .close-modal {
+            float: right;
         }
 
-        .difficulty-badge {
-            background: var(--primary-gradient);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-            margin-right: 10px;
+        body.english-mode .method-selector {
+            flex-direction: row;
         }
 
-        .source-info {
-            background: rgba(21, 152, 149, 0.1);
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            color: var(--light-text);
-            margin-top: 10px;
-            border-right: 3px solid var(--accent);
+        body.english-mode .method-tab {
+            text-align: left;
         }
 
-        .question-meta {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
+        body.english-mode .score-details {
+            text-align: left;
         }
 
-        .add-more-section {
+        body.english-mode .quiz-info {
             text-align: center;
-            margin-top: 30px;
-            padding: 20px;
-            background: rgba(255, 152, 0, 0.1);
-            border-radius: 15px;
-            border: 2px dashed var(--tertiary);
         }
 
-        .add-more-section h4 {
-            color: var(--text);
-            margin-bottom: 15px;
-            font-size: 1.2rem;
+        body.english-mode .batch-indicator,
+        body.english-mode .category-badge {
+            margin-left: 10px;
+            margin-right: 0;
         }
 
-        .stats-overview {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
+        body.english-mode .suggestions-list {
+            padding-left: 20px;
+            padding-right: 0;
         }
 
-        .stat-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            border-radius: 10px;
+        body.english-mode .suggestions-list li:before {
+            left: -20px;
+            right: auto;
+        }
+
+        body.english-mode .question-status-grid-modal {
             text-align: center;
-            border: 1px solid var(--border);
         }
 
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--accent);
-            margin-bottom: 5px;
+        body.english-mode .source-info {
+            border-left: 3px solid var(--accent);
+            border-right: none;
         }
 
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--light-text);
-        }
-
-        .pdf-context-info {
-            background: rgba(26, 95, 122, 0.05);
-            padding: 10px 15px;
+        /* PDF Analysis Status */
+        .analysis-status {
+            background: rgba(255, 193, 7, 0.1);
+            border: 2px solid #ffc107;
             border-radius: 10px;
-            margin: 10px 0;
-            font-size: 0.9rem;
-            color: var(--light-text);
-        }
-
-        .pdf-context-info i {
-            color: var(--accent);
-            margin-left: 5px;
-        }
-
-        .batch-navigation {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        .batch-btn {
-            padding: 8px 15px;
-            border-radius: 8px;
-            background: rgba(26, 95, 122, 0.1);
-            border: 1px solid var(--border);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        .batch-btn:hover {
-            background: rgba(26, 95, 122, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .batch-btn.active {
-            background: var(--accent-gradient);
-            color: white;
-            border-color: var(--accent);
-        }
-
-        .smart-suggestions {
-            background: rgba(76, 175, 80, 0.1);
             padding: 15px;
-            border-radius: 10px;
             margin: 15px 0;
-            border-right: 4px solid var(--secondary);
+            text-align: center;
         }
 
-        .smart-suggestions h5 {
-            color: var(--secondary);
+        .analysis-status i {
+            color: #ffc107;
+            font-size: 1.5rem;
             margin-bottom: 10px;
-            font-size: 1rem;
         }
 
-        .suggestions-list {
-            list-style: none;
-            padding-right: 20px;
-        }
-
-        .suggestions-list li {
-            margin-bottom: 8px;
-            position: relative;
-        }
-
-        .suggestions-list li:before {
-            content: "✓";
-            position: absolute;
-            right: -20px;
-            color: var(--secondary);
-        }
-
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.4);
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
             }
-            70% {
-                box-shadow: 0 0 0 10px rgba(255, 152, 0, 0);
+
+            .header-container {
+                padding: 0 15px;
+                flex-direction: column;
+                gap: 15px;
             }
-            100% {
-                box-shadow: 0 0 0 0 rgba(255, 152, 0, 0);
+
+            .title-section h1 {
+                font-size: 1.3rem;
+            }
+
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .card, .question-box {
+                padding: 25px;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+                padding: 14px 25px;
+                font-size: 1rem;
+            }
+
+            .method-selector {
+                flex-direction: column;
+            }
+
+            .method-tab {
+                min-width: 100%;
+            }
+
+            .language-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+
+            .input-with-btn {
+                flex-direction: column;
+            }
+
+            .input-with-btn .btn {
+                width: 100%;
+            }
+
+            .language-selector {
+                flex-direction: column;
+            }
+            
+            .language-option {
+                min-width: 100%;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="lang-btn active" onclick="switchLanguage('ar')">
+            <i class="fas fa-language"></i> العربية
+        </button>
+        <button class="lang-btn" onclick="switchLanguage('en')">
+            <i class="fas fa-language"></i> English
+        </button>
+    </div>
+
     <!-- Header -->
-    <header class="glass-effect">
+    <header>
         <div class="header-container">
             <div class="title-section">
                 <h1 id="main-title">نظام الاختبارات الذكي</h1>
@@ -1359,8 +1499,8 @@
         <!-- Setup Section -->
         <section id="setup-section" class="hero-section">
             <div class="hero-content">
-                <h1 class="hero-title">نظام الاختبارات الذكي التفاعلي</h1>
-                <p class="hero-subtitle">أنشئ اختبارات مخصصة في أي مجال باستخدام الذكاء الاصطناعي</p>
+                <h1 class="hero-title" id="hero-title">نظام الاختبارات الذكي التفاعلي</h1>
+                <p class="hero-subtitle" id="hero-subtitle">أنشئ اختبارات مخصصة في أي مجال باستخدام الذكاء الاصطناعي</p>
                 
                 <!-- طريقة الاختيار -->
                 <div class="method-selector">
@@ -1368,34 +1508,64 @@
                         <div class="method-icon">
                             <i class="fas fa-keyboard"></i>
                         </div>
-                        <div class="method-title">إدخال يدوي</div>
-                        <div class="method-desc">أدخل عنوان وموضوع الاختبار</div>
+                        <div class="method-title" id="manual-title">إدخال يدوي</div>
+                        <div class="method-desc" id="manual-desc">أدخل عنوان وموضوع الاختبار</div>
                     </div>
                     <div class="method-tab" onclick="selectMethod('pdf')" id="pdf-tab">
                         <div class="method-icon">
                             <i class="fas fa-file-pdf"></i>
                         </div>
-                        <div class="method-title">رفع ملف PDF</div>
-                        <div class="method-desc">تحميل ملف وتوليد أسئلة منه</div>
+                        <div class="method-title" id="pdf-title">رفع ملف PDF</div>
+                        <div class="method-desc" id="pdf-desc">تحميل ملف وتوليد أسئلة باستخدام الذكاء الاصطناعي</div>
+                    </div>
+                </div>
+
+                <!-- اختيار لغة الاختبار -->
+                <div id="quiz-language-section">
+                    <div class="input-group">
+                        <label><i class="fas fa-globe"></i> <span id="language-label">اختر لغة الاختبار</span></label>
+                        <div class="language-selector">
+                            <div class="language-option active" onclick="selectQuizLanguage('auto')" id="auto-language">
+                                <div class="language-flag">🌐</div>
+                                <div class="language-name" id="auto-language-name">تلقائي</div>
+                                <div class="language-desc" id="auto-language-desc">(يتعرف على لغة الملف)</div>
+                            </div>
+                            <div class="language-option" onclick="selectQuizLanguage('ar')" id="arabic-language">
+                                <div class="language-flag">🇸🇦</div>
+                                <div class="language-name" id="arabic-language-name">العربية</div>
+                                <div class="language-desc" id="arabic-language-desc">أسئلة باللغة العربية</div>
+                            </div>
+                            <div class="language-option" onclick="selectQuizLanguage('en')" id="english-language">
+                                <div class="language-flag">🇺🇸</div>
+                                <div class="language-name" id="english-language-name">English</div>
+                                <div class="language-desc" id="english-language-desc">Questions in English</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- قسم مفتاح API -->
                 <div class="api-key-section">
                     <div class="input-group">
-                        <label for="api-key"><i class="fas fa-key"></i> مفتاح Google Gemini API</label>
-                        <input type="password" id="api-key" class="input-field" 
-                               placeholder="أدخل مفتاح API الخاص بك هنا">
+                        <label for="api-key"><i class="fas fa-key"></i> <span id="api-key-label">مفتاح Google Gemini API</span></label>
+                        <div class="input-with-btn">
+                            <input type="password" id="api-key" class="input-field" 
+                                   placeholder="أدخل مفتاح API الخاص بك هنا">
+                            <button class="btn btn-primary verify-btn" onclick="verifyAPIKey()" id="verify-btn">
+                                <i class="fas fa-check"></i> <span id="verify-text">تحقق</span>
+                            </button>
+                        </div>
+                        <div class="api-key-status" id="api-key-status"></div>
                         <div class="api-info">
-                            <p><i class="fas fa-info-circle"></i> للحصول على مفتاح API:</p>
-                            <ol style="margin-right: 20px; margin-top: 10px;">
+                            <p><i class="fas fa-info-circle"></i> <span id="api-info-text">للحصول على مفتاح API:</span></p>
+                            <ol id="api-steps" style="margin-right: 20px; margin-top: 10px;">
                                 <li>اذهب إلى <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a></li>
                                 <li>سجل الدخول بحساب Google</li>
                                 <li>أنشئ مفتاح API جديد</li>
                                 <li>انسخ المفتاح وألصقه هنا</li>
                             </ol>
                             <p style="margin-top: 10px; color: var(--accent);">
-                                <i class="fas fa-lightbulb"></i> يستخدم النظام نموذج: <strong>Gemini 2.5 Flash Lite</strong>
+                                <i class="fas fa-lightbulb"></i> <span id="api-model-text">يستخدم النظام نموذج:</span> <strong>Gemini 2.5 Flash Lite</strong>
                             </p>
                         </div>
                     </div>
@@ -1404,15 +1574,25 @@
                 <!-- قسم الإدخال اليدوي -->
                 <div id="manual-section">
                     <div class="input-group">
-                        <label for="quiz-title"><i class="fas fa-heading"></i> عنوان الاختبار</label>
+                        <label for="quiz-title"><i class="fas fa-heading"></i> <span id="quiz-title-label">عنوان الاختبار</span></label>
                         <input type="text" id="quiz-title" class="input-field" 
                                placeholder="مثال: الفقه الإسلامي - أحكام الصلاة">
                     </div>
 
                     <div class="input-group">
-                        <label for="quiz-topic"><i class="fas fa-book"></i> تفاصيل الموضوع (اختياري)</label>
+                        <label for="quiz-topic"><i class="fas fa-book"></i> <span id="quiz-topic-label">تفاصيل الموضوع (اختياري)</span></label>
                         <textarea id="quiz-topic" class="input-field" rows="3" 
                                   placeholder="يمكنك إضافة تفاصيل إضافية عن الموضوع الذي تريد اختباره..."></textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="num-questions-manual"><i class="fas fa-question-circle"></i> <span id="num-questions-label-manual">عدد الأسئلة المطلوبة</span></label>
+                        <select id="num-questions-manual" class="input-field">
+                            <option value="5">5 أسئلة</option>
+                            <option value="10" selected>10 أسئلة</option>
+                            <option value="15">15 أسئلة</option>
+                            <option value="20">20 أسئلة</option>
+                        </select>
                     </div>
                 </div>
 
@@ -1421,9 +1601,9 @@
                     <div class="file-upload-container">
                         <label for="pdf-file" class="file-upload-label">
                             <i class="fas fa-cloud-upload-alt"></i>
-                            <h4>انقر لرفع ملف PDF</h4>
-                            <p>أو اسحب وأفلت الملف هنا</p>
-                            <p style="font-size: 0.8rem; color: var(--light-text); margin-top: 10px;">
+                            <h4 id="upload-title">انقر لرفع ملف PDF</h4>
+                            <p id="upload-subtitle">أو اسحب وأفلت الملف هنا</p>
+                            <p style="font-size: 0.8rem; color: var(--light-text); margin-top: 10px;" id="upload-size">
                                 الحد الأقصى لحجم الملف: 10MB
                             </p>
                         </label>
@@ -1437,22 +1617,21 @@
                                 <div class="file-details">
                                     <h5 id="pdf-filename"></h5>
                                     <p id="pdf-filesize"></p>
-                                    <p id="pdf-pages"></p>
                                 </div>
                             </div>
-                            <div class="pdf-preview" id="pdf-content-preview">
-                                <h6>عينة من المحتوى:</h6>
-                                <div class="pdf-text" id="pdf-sample-text"></div>
+                            <div class="analysis-status" id="analysis-status">
+                                <i class="fas fa-robot"></i>
+                                <p id="analysis-status-text">سيقوم الذكاء الاصطناعي بتحليل الملف وتوليد الأسئلة</p>
                             </div>
-                            <button class="remove-file-btn" onclick="removePDF()">
-                                <i class="fas fa-trash"></i> إزالة الملف
+                            <button class="remove-file-btn" onclick="removePDF()" id="remove-file-btn">
+                                <i class="fas fa-trash"></i> <span id="remove-file-text">إزالة الملف</span>
                             </button>
                         </div>
                     </div>
 
                     <div class="input-group">
-                        <label for="num-questions"><i class="fas fa-question-circle"></i> عدد الأسئلة المطلوبة</label>
-                        <select id="num-questions" class="input-field">
+                        <label for="num-questions-pdf"><i class="fas fa-question-circle"></i> <span id="num-questions-label-pdf">عدد الأسئلة المطلوبة</span></label>
+                        <select id="num-questions-pdf" class="input-field">
                             <option value="5">5 أسئلة</option>
                             <option value="10" selected>10 أسئلة</option>
                             <option value="15">15 أسئلة</option>
@@ -1461,7 +1640,7 @@
                     </div>
 
                     <div class="input-group">
-                        <label for="question-type"><i class="fas fa-filter"></i> نوع الأسئلة</label>
+                        <label for="question-type"><i class="fas fa-filter"></i> <span id="question-type-label">نوع الأسئلة</span></label>
                         <select id="question-type" class="input-field">
                             <option value="mixed">مختلطة (معلومات + تطبيقات)</option>
                             <option value="concepts">مفاهيم أساسية</option>
@@ -1472,13 +1651,13 @@
                 </div>
 
                 <!-- زر التوليد -->
-                <button class="btn btn-islamic" onclick="generateQuiz()" style="width: 100%; margin-top: 20px;">
-                    <i class="fas fa-robot"></i> توليد اختبار باستخدام الذكاء الاصطناعي
+                <button class="btn btn-islamic" onclick="generateQuiz()" style="width: 100%; margin-top: 20px;" id="generate-btn">
+                    <i class="fas fa-robot"></i> <span id="generate-text">توليد اختبار باستخدام الذكاء الاصطناعي</span>
                 </button>
 
                 <div class="loading" id="loading">
                     <div class="loader"></div>
-                    <p>جارٍ توليد الأسئلة باستخدام الذكاء الاصطناعي...</p>
+                    <p id="loading-text">جارٍ توليد الأسئلة باستخدام الذكاء الاصطناعي...</p>
                     <p style="font-size: 0.9rem; opacity: 0.7;" id="loading-details"></p>
                 </div>
 
@@ -1491,7 +1670,7 @@
             <h2 class="current-quiz-title" id="current-quiz-title"></h2>
             
             <!-- Progress Bar -->
-            <div class="progress-bar glass-effect">
+            <div class="progress-bar">
                 <div class="progress" id="progress"></div>
             </div>
 
@@ -1503,36 +1682,36 @@
                 <div class="quiz-info" id="quiz-info"></div>
                 <div id="timer">⏱️ <span id="time-display">10:00</span></div>
                 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                    <button class="btn btn-primary" onclick="openQuestionsModal()">
+                    <button class="btn btn-primary" onclick="openQuestionsModal()" id="questions-list-btn">
                         <i class="fas fa-list"></i>
-                        قائمة الأسئلة
+                        <span id="questions-list-text">قائمة الأسئلة</span>
                     </button>
                     <button class="btn btn-warning" onclick="toggleMarkForReview()" id="mark-review-btn">
                         <i class="fas fa-flag"></i>
-                        وضع علامة للمراجعة
+                        <span id="mark-review-text">وضع علامة للمراجعة</span>
                     </button>
-                    <button class="btn btn-islamic" onclick="finishQuiz()">
+                    <button class="btn btn-islamic" onclick="finishQuiz()" id="finish-quiz-btn">
                         <i class="fas fa-flag-checkered"></i>
-                        إنهاء الاختبار
+                        <span id="finish-quiz-text">إنهاء الاختبار</span>
                     </button>
-                    <button class="btn btn-secondary" onclick="openCurrentScoreModal()">
+                    <button class="btn btn-secondary" onclick="openCurrentScoreModal()" id="current-score-btn">
                         <i class="fas fa-chart-bar"></i>
-                        الدرجات الحالية
+                        <span id="current-score-text">الدرجات الحالية</span>
                     </button>
                 </div>
             </div>
 
             <!-- قسم إضافة المزيد من الأسئلة -->
             <div class="add-more-section" id="add-more-section" style="display: none;">
-                <h4><i class="fas fa-plus-circle"></i> هل تريد المزيد من الأسئلة؟</h4>
-                <p style="color: var(--light-text); margin-bottom: 15px;">
-                    يمكنك إضافة المزيد من الأسئلة من نفس ملف PDF، مع ضمان عدم التكرار وتغطية أجزاء جديدة
+                <h4><i class="fas fa-plus-circle"></i> <span id="add-more-title">هل تريد المزيد من الأسئلة؟</span></h4>
+                <p style="color: var(--light-text); margin-bottom: 15px;" id="add-more-desc">
+                    يمكنك إضافة المزيد من الأسئلة باستخدام الذكاء الاصطناعي
                 </p>
                 <button class="btn btn-warning" onclick="addMoreQuestions()" id="add-more-questions-btn">
-                    <i class="fas fa-plus"></i> إضافة 10 أسئلة أخرى
+                    <i class="fas fa-plus"></i> <span id="add-more-questions-text">إضافة 5 أسئلة أخرى</span>
                 </button>
                 <p style="font-size: 0.8rem; color: var(--light-text); margin-top: 10px;">
-                    <i class="fas fa-lightbulb"></i> يستخدم نظام الذكاء الاصطناعي: <strong>Gemini 2.5 Flash Lite</strong>
+                    <i class="fas fa-lightbulb"></i> <span id="ai-model-text">يستخدم نظام الذكاء الاصطناعي:</span> <strong>Gemini 2.5 Flash Lite</strong>
                 </p>
             </div>
         </section>
@@ -1554,20 +1733,20 @@
                 <!-- قسم تحميل PDF -->
                 <div class="share-results">
                     <h4 style="color: var(--text); margin-bottom: 20px;">
-                        <i class="fas fa-file-pdf"></i> تقرير النتائج
+                        <i class="fas fa-file-pdf"></i> <span id="report-title">تقرير النتائج</span>
                     </h4>
                     <div class="share-buttons" style="display: flex; gap: 15px; flex-wrap: wrap;">
-                        <button class="btn btn-success" onclick="generatePDF()">
-                            <i class="fas fa-file-pdf"></i> تحميل تقرير PDF
+                        <button class="btn btn-success" onclick="generatePDF()" id="download-report-btn">
+                            <i class="fas fa-file-pdf"></i> <span id="download-report-text">تحميل تقرير PDF</span>
                         </button>
-                        <button class="btn btn-secondary" onclick="restartQuiz()">
-                            <i class="fas fa-redo"></i> إعادة الاختبار
+                        <button class="btn btn-secondary" onclick="restartQuiz()" id="restart-quiz-btn">
+                            <i class="fas fa-redo"></i> <span id="restart-quiz-text">إعادة الاختبار</span>
                         </button>
-                        <button class="btn btn-primary" onclick="backToSetup()">
-                            <i class="fas fa-plus"></i> إنشاء اختبار جديد
+                        <button class="btn btn-primary" onclick="backToSetup()" id="new-quiz-btn">
+                            <i class="fas fa-plus"></i> <span id="new-quiz-text">إنشاء اختبار جديد</span>
                         </button>
-                        <button class="btn btn-warning" onclick="addMoreQuestionsAfterTest()">
-                            <i class="fas fa-plus-circle"></i> إضافة المزيد من الأسئلة
+                        <button class="btn btn-warning" onclick="addMoreQuestionsAfterTest()" id="add-more-after-btn">
+                            <i class="fas fa-plus-circle"></i> <span id="add-more-after-text">إضافة المزيد من الأسئلة</span>
                         </button>
                     </div>
                 </div>
@@ -1580,7 +1759,7 @@
         <div class="modal-content">
             <span class="close-modal" onclick="closeCurrentScoreModal()">&times;</span>
             <div class="modal-header">
-                <h3><i class="fas fa-chart-bar"></i> الدرجات الحالية</h3>
+                <h3><i class="fas fa-chart-bar"></i> <span id="current-score-modal-title">الدرجات الحالية</span></h3>
             </div>
             <div class="current-score-content">
                 <div class="score-circle">
@@ -1605,12 +1784,12 @@
         <div class="modal-content">
             <span class="close-modal" onclick="closeQuestionsModal()">&times;</span>
             <div class="modal-header">
-                <h3><i class="fas fa-th-list"></i> قائمة الأسئلة</h3>
+                <h3><i class="fas fa-th-list"></i> <span id="questions-modal-title">قائمة الأسئلة</span></h3>
             </div>
             <div id="questions-grid-modal"></div>
-            <button class="btn btn-primary" onclick="closeQuestionsModal()" style="margin-top:20px; width: 100%;">
+            <button class="btn btn-primary" onclick="closeQuestionsModal()" style="margin-top:20px; width: 100%;" id="close-questions-btn">
                 <i class="fas fa-times"></i>
-                إغلاق القائمة
+                <span id="close-questions-text">إغلاق القائمة</span>
             </button>
         </div>
     </div>
@@ -1625,23 +1804,241 @@
         let markedQuestions = [];
         let answerLocked = [];
         let shuffledQuestions = [];
-        let soundEnabled = true;
         let currentQuizTitle = "";
         let apiKey = "";
         let pdfFile = null;
-        let pdfText = "";
         let currentMethod = "manual";
-        
-        // متغيرات جديدة للتحسينات
-        let pdfContext = "";
         let existingQuestions = [];
         let currentBatch = 1;
         let totalQuestionsGenerated = 0;
-        let allQuestionsHistory = [];
+        let currentLanguage = "ar";
+        let isAPIKeyValid = false;
+        let quizLanguage = "auto"; // اللغة المختارة للاختبار
         
         // تحديد نموذج Gemini المستخدم
         const GEMINI_MODEL = "gemini-2.5-flash-lite";
         const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent";
+
+        // نصوص اللغة العربية
+        const arabicTexts = {
+            "hero-title": "نظام الاختبارات الذكي التفاعلي",
+            "hero-subtitle": "أنشئ اختبارات مخصصة في أي مجال باستخدام الذكاء الاصطناعي",
+            "manual-title": "إدخال يدوي",
+            "manual-desc": "أدخل عنوان وموضوع الاختبار",
+            "pdf-title": "رفع ملف PDF",
+            "pdf-desc": "تحميل ملف وتوليد أسئلة باستخدام الذكاء الاصطناعي",
+            "api-key-label": "مفتاح Google Gemini API",
+            "verify-text": "تحقق",
+            "api-info-text": "للحصول على مفتاح API:",
+            "api-model-text": "يستخدم النظام نموذج:",
+            "quiz-title-label": "عنوان الاختبار",
+            "quiz-topic-label": "تفاصيل الموضوع (اختياري)",
+            "upload-title": "انقر لرفع ملف PDF",
+            "upload-subtitle": "أو اسحب وأفلت الملف هنا",
+            "upload-size": "الحد الأقصى لحجم الملف: 10MB",
+            "remove-file-text": "إزالة الملف",
+            "num-questions-label-manual": "عدد الأسئلة المطلوبة",
+            "num-questions-label-pdf": "عدد الأسئلة المطلوبة",
+            "question-type-label": "نوع الأسئلة",
+            "generate-text": "توليد اختبار باستخدام الذكاء الاصطناعي",
+            "loading-text": "جارٍ توليد الأسئلة باستخدام الذكاء الاصطناعي...",
+            "questions-list-text": "قائمة الأسئلة",
+            "mark-review-text": "وضع علامة للمراجعة",
+            "finish-quiz-text": "إنهاء الاختبار",
+            "current-score-text": "الدرجات الحالية",
+            "add-more-title": "هل تريد المزيد من الأسئلة؟",
+            "add-more-desc": "يمكنك إضافة المزيد من الأسئلة باستخدام الذكاء الاصطناعي",
+            "add-more-questions-text": "إضافة 5 أسئلة أخرى",
+            "ai-model-text": "يستخدم نظام الذكاء الاصطناعي:",
+            "report-title": "تقرير النتائج",
+            "download-report-text": "تحميل تقرير PDF",
+            "restart-quiz-text": "إعادة الاختبار",
+            "new-quiz-text": "إنشاء اختبار جديد",
+            "add-more-after-text": "إضافة المزيد من الأسئلة",
+            "current-score-modal-title": "الدرجات الحالية",
+            "questions-modal-title": "قائمة الأسئلة",
+            "close-questions-text": "إغلاق القائمة",
+            "analysis-status-text": "سيقوم الذكاء الاصطناعي بتحليل الملف وتوليد الأسئلة",
+            "language-label": "اختر لغة الاختبار",
+            "auto-language-name": "تلقائي",
+            "auto-language-desc": "(يتعرف على لغة الملف)",
+            "arabic-language-name": "العربية",
+            "arabic-language-desc": "أسئلة باللغة العربية",
+            "english-language-name": "English",
+            "english-language-desc": "Questions in English"
+        };
+
+        // نصوص اللغة الإنجليزية
+        const englishTexts = {
+            "hero-title": "Smart Interactive Quiz System",
+            "hero-subtitle": "Create customized quizzes in any field using AI",
+            "manual-title": "Manual Input",
+            "manual-desc": "Enter quiz title and topic",
+            "pdf-title": "Upload PDF File",
+            "pdf-desc": "Upload file and generate questions using AI",
+            "api-key-label": "Google Gemini API Key",
+            "verify-text": "Verify",
+            "api-info-text": "To get API key:",
+            "api-model-text": "System uses model:",
+            "quiz-title-label": "Quiz Title",
+            "quiz-topic-label": "Topic Details (Optional)",
+            "upload-title": "Click to Upload PDF",
+            "upload-subtitle": "or drag and drop file here",
+            "upload-size": "Max file size: 10MB",
+            "remove-file-text": "Remove File",
+            "num-questions-label-manual": "Number of Questions",
+            "num-questions-label-pdf": "Number of Questions",
+            "question-type-label": "Question Type",
+            "generate-text": "Generate Quiz with AI",
+            "loading-text": "Generating questions using AI...",
+            "questions-list-text": "Questions List",
+            "mark-review-text": "Mark for Review",
+            "finish-quiz-text": "Finish Quiz",
+            "current-score-text": "Current Score",
+            "add-more-title": "Want More Questions?",
+            "add-more-desc": "You can add more questions using AI",
+            "add-more-questions-text": "Add 5 More Questions",
+            "ai-model-text": "AI system uses:",
+            "report-title": "Results Report",
+            "download-report-text": "Download PDF Report",
+            "restart-quiz-text": "Restart Quiz",
+            "new-quiz-text": "Create New Quiz",
+            "add-more-after-text": "Add More Questions",
+            "current-score-modal-title": "Current Score",
+            "questions-modal-title": "Questions List",
+            "close-questions-text": "Close List",
+            "analysis-status-text": "AI will analyze the file and generate questions",
+            "language-label": "Choose Quiz Language",
+            "auto-language-name": "Auto",
+            "auto-language-desc": "(Detects file language)",
+            "arabic-language-name": "Arabic",
+            "arabic-language-desc": "Questions in Arabic",
+            "english-language-name": "English",
+            "english-language-desc": "Questions in English"
+        };
+
+        // تحويل اللغة
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            // تحديث أزرار اللغة
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.lang-btn[onclick="switchLanguage('${lang}')"]`).classList.add('active');
+            
+            // تغيير اتجاه الصفحة
+            if (lang === 'en') {
+                document.body.classList.add('english-mode');
+                document.documentElement.setAttribute('dir', 'ltr');
+                document.documentElement.setAttribute('lang', 'en');
+            } else {
+                document.body.classList.remove('english-mode');
+                document.documentElement.setAttribute('dir', 'rtl');
+                document.documentElement.setAttribute('lang', 'ar');
+            }
+            
+            // تحديث النصوص
+            updateTexts(lang);
+            
+            // تحديث نصوص الحقول النصية
+            updatePlaceholders(lang);
+            
+            // إذا كان هناك اختبار معروض، إعادة تحميله
+            if (document.getElementById('quiz-section').style.display !== 'none') {
+                loadQuiz();
+            }
+        }
+
+        // تحديث النصوص
+        function updateTexts(lang) {
+            const texts = lang === 'ar' ? arabicTexts : englishTexts;
+            
+            for (const [key, value] of Object.entries(texts)) {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.textContent = value;
+                }
+            }
+        }
+
+        // تحديث النصوص التوضيحية
+        function updatePlaceholders(lang) {
+            const apiSteps = document.getElementById('api-steps');
+            if (lang === 'en') {
+                apiSteps.innerHTML = `
+                    <li>Go to <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a></li>
+                    <li>Sign in with Google account</li>
+                    <li>Create a new API key</li>
+                    <li>Copy and paste the key here</li>
+                `;
+                
+                document.getElementById('quiz-title').placeholder = "Example: Islamic Jurisprudence - Prayer Rules";
+                document.getElementById('quiz-topic').placeholder = "You can add additional details about the topic you want to test...";
+                document.getElementById('api-key').placeholder = "Enter your API key here";
+                
+                // تحديث خيارات القائمة المنسدلة
+                const questionTypeSelect = document.getElementById('question-type');
+                questionTypeSelect.innerHTML = `
+                    <option value="mixed">Mixed (Knowledge + Application)</option>
+                    <option value="concepts">Basic Concepts</option>
+                    <option value="applications">Application Questions</option>
+                    <option value="analysis">Analytical Questions</option>
+                `;
+                
+                const numQuestionsManual = document.getElementById('num-questions-manual');
+                numQuestionsManual.innerHTML = `
+                    <option value="5">5 questions</option>
+                    <option value="10" selected>10 questions</option>
+                    <option value="15">15 questions</option>
+                    <option value="20">20 questions</option>
+                `;
+                
+                const numQuestionsPdf = document.getElementById('num-questions-pdf');
+                numQuestionsPdf.innerHTML = `
+                    <option value="5">5 questions</option>
+                    <option value="10" selected>10 questions</option>
+                    <option value="15">15 questions</option>
+                    <option value="20">20 questions</option>
+                `;
+            } else {
+                apiSteps.innerHTML = `
+                    <li>اذهب إلى <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a></li>
+                    <li>سجل الدخول بحساب Google</li>
+                    <li>أنشئ مفتاح API جديد</li>
+                    <li>انسخ المفتاح وألصقه هنا</li>
+                `;
+                
+                document.getElementById('quiz-title').placeholder = "مثال: الفقه الإسلامي - أحكام الصلاة";
+                document.getElementById('quiz-topic').placeholder = "يمكنك إضافة تفاصيل إضافية عن الموضوع الذي تريد اختباره...";
+                document.getElementById('api-key').placeholder = "أدخل مفتاح API الخاص بك هنا";
+                
+                // تحديث خيارات القائمة المنسدلة
+                const questionTypeSelect = document.getElementById('question-type');
+                questionTypeSelect.innerHTML = `
+                    <option value="mixed">مختلطة (معلومات + تطبيقات)</option>
+                    <option value="concepts">مفاهيم أساسية</option>
+                    <option value="applications">أسئلة تطبيقية</option>
+                    <option value="analysis">أسئلة تحليلية</option>
+                `;
+                
+                const numQuestionsManual = document.getElementById('num-questions-manual');
+                numQuestionsManual.innerHTML = `
+                    <option value="5">5 أسئلة</option>
+                    <option value="10" selected>10 أسئلة</option>
+                    <option value="15">15 أسئلة</option>
+                    <option value="20">20 أسئلة</option>
+                `;
+                
+                const numQuestionsPdf = document.getElementById('num-questions-pdf');
+                numQuestionsPdf.innerHTML = `
+                    <option value="5">5 أسئلة</option>
+                    <option value="10" selected>10 أسئلة</option>
+                    <option value="15">15 أسئلة</option>
+                    <option value="20">20 أسئلة</option>
+                `;
+            }
+        }
 
         // اختيار طريقة الاختبار
         function selectMethod(method) {
@@ -1653,6 +2050,18 @@
             
             document.getElementById('manual-section').style.display = method === 'manual' ? 'block' : 'none';
             document.getElementById('pdf-section').style.display = method === 'pdf' ? 'block' : 'none';
+        }
+
+        // اختيار لغة الاختبار
+        function selectQuizLanguage(lang) {
+            quizLanguage = lang;
+            
+            // تحديد الأزرار النشطة
+            document.getElementById('auto-language').classList.remove('active');
+            document.getElementById('arabic-language').classList.remove('active');
+            document.getElementById('english-language').classList.remove('active');
+            
+            document.getElementById(`${lang}-language`).classList.add('active');
         }
 
         // التحقق من تفضيل الوضع الداكن
@@ -1686,227 +2095,28 @@
             }
         });
 
-        // التعامل مع رفع ملف PDF
-        async function handlePDFUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            if (file.type !== 'application/pdf') {
-                showError('الرجاء رفع ملف PDF فقط');
-                return;
-            }
-
-            if (file.size > 10 * 1024 * 1024) {
-                showError('حجم الملف كبير جداً. الحد الأقصى 10MB');
-                return;
-            }
-
-            pdfFile = file;
-
-            // عرض معلومات الملف
-            document.getElementById('pdf-filename').textContent = file.name;
-            document.getElementById('pdf-filesize').textContent = `الحجم: ${(file.size / 1024 / 1024).toFixed(2)} MB`;
-            document.getElementById('pdf-preview').classList.add('active');
-
-            // إظهار مؤشر التحميل
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('loading-details').textContent = 'جارٍ تحليل ملف PDF...';
-
-            try {
-                const arrayBuffer = await file.arrayBuffer();
-                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-                
-                document.getElementById('pdf-pages').textContent = `عدد الصفحات: ${pdf.numPages}`;
-                
-                // استخراج النص من أول 10 صفحات لتسريع العملية
-                let fullText = '';
-                let totalPages = Math.min(pdf.numPages, 10);
-                
-                for (let i = 1; i <= totalPages; i++) {
-                    try {
-                        const page = await pdf.getPage(i);
-                        const textContent = await page.getTextContent();
-                        const pageText = textContent.items.map(item => item.str).join(' ');
-                        fullText += `\n--- الصفحة ${i} ---\n${pageText}\n`;
-                        
-                        // تحديث حالة التحميل
-                        document.getElementById('loading-details').textContent = 
-                            `جارٍ تحليل الصفحة ${i} من ${totalPages}...`;
-                    } catch (pageError) {
-                        console.warn(`خطأ في تحليل الصفحة ${i}:`, pageError);
-                    }
-                }
-                
-                pdfText = fullText.substring(0, 5000);
-                pdfContext = fullText;
-                
-                // عرض عينة من النص
-                const sampleText = fullText.substring(0, 500) + '...';
-                document.getElementById('pdf-sample-text').textContent = sampleText;
-                
-                // إعادة تعيين المتغيرات
-                existingQuestions = [];
-                currentBatch = 1;
-                totalQuestionsGenerated = 0;
-                allQuestionsHistory = [];
-                
-                showSuccessMessage('تم تحليل ملف PDF بنجاح! يمكنك الآن توليد الأسئلة.');
-                
-            } catch (error) {
-                console.error('Error reading PDF:', error);
-                showError('حدث خطأ في قراءة ملف PDF: ' + error.message);
-            } finally {
-                document.getElementById('loading').style.display = 'none';
-            }
-        }
-
-        // إزالة ملف PDF
-        function removePDF() {
-            pdfFile = null;
-            pdfText = "";
-            pdfContext = "";
-            document.getElementById('pdf-file').value = "";
-            document.getElementById('pdf-preview').classList.remove('active');
-            existingQuestions = [];
-            currentBatch = 1;
-            totalQuestionsGenerated = 0;
-            allQuestionsHistory = [];
-        }
-
-        // توليد الاختبار باستخدام الذكاء الاصطناعي
-        async function generateQuiz() {
+        // التحقق من مفتاح API
+        async function verifyAPIKey() {
             const apiKeyInput = document.getElementById('api-key').value.trim();
             
             if (!apiKeyInput) {
-                showError('الرجاء إدخال مفتاح Google Gemini API');
+                showError(currentLanguage === 'ar' ? 'الرجاء إدخال مفتاح API' : 'Please enter API key');
                 return;
             }
 
-            apiKey = apiKeyInput;
-
-            let prompt = '';
-            let title = '';
-
-            if (currentMethod === 'manual') {
-                const quizTitleInput = document.getElementById('quiz-title').value.trim();
-                const quizTopicInput = document.getElementById('quiz-topic').value.trim();
-
-                if (!quizTitleInput) {
-                    showError('الرجاء إدخال عنوان للاختبار');
-                    return;
-                }
-
-                title = quizTitleInput;
-                prompt = `أنشئ اختباراً تعليمياً حول الموضوع التالي:
-العنوان: ${quizTitleInput}
-${quizTopicInput ? `التفاصيل: ${quizTopicInput}` : ''}
-
-أرغب في اختبار مكون من 10 أسئلة مع 4 خيارات لكل سؤال.
-الرجاء الالتزام بالتنسيق التالي:
-
-{
-  "questions": [
-    {
-      "id": 1,
-      "q": "نص السؤال هنا",
-      "options": ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"],
-      "answer": 0,
-      "explanations": {
-        "correct": "شرح الإجابة الصحيحة",
-        "wrong1": "شرح الخطأ الأول",
-        "wrong2": "شرح الخطأ الثاني",
-        "wrong3": "شرح الخطأ الثالث"
-      }
-    }
-  ]
-}`;
-            } else if (currentMethod === 'pdf') {
-                if (!pdfFile) {
-                    showError('الرجاء رفع ملف PDF أولاً');
-                    return;
-                }
-
-                if (!pdfContext) {
-                    showError('الرجاء الانتظار حتى يكتمل تحليل ملف PDF');
-                    return;
-                }
-
-                const numQuestions = document.getElementById('num-questions').value;
-                const questionType = document.getElementById('question-type').value;
-                
-                title = `${pdfFile.name.replace('.pdf', '')} - اختبار - الدفعة ${currentBatch}`;
-                
-                let typeDescription = '';
-                switch(questionType) {
-                    case 'concepts':
-                        typeDescription = 'أسئلة تركز على المفاهيم الأساسية';
-                        break;
-                    case 'applications':
-                        typeDescription = 'أسئلة تطبيقية';
-                        break;
-                    case 'analysis':
-                        typeDescription = 'أسئلة تحليلية';
-                        break;
-                    default:
-                        typeDescription = 'مزيج من أنواع الأسئلة';
-                }
-
-                // بناء على الدفعة، إنشاء محتوى مختلف
-                const contextPart = existingQuestions.length > 0 ? 
-                    `لدي بالفعل ${existingQuestions.length} سؤالاً. الرجاء إنشاء أسئلة جديدة مختلفة عن السابقة.` : 
-                    `الرجاء إنشاء أول دفعة من الأسئلة بناءً على المحتوى.`;
-
-                prompt = `${contextPart}
-
-المحتوى من ملف PDF:
-${pdfContext.substring(0, 7000)}
-
-الرجاء إنشاء ${numQuestions} أسئلة من النوع: ${typeDescription}
-
-متطلبات الأسئلة:
-1. الاستناد إلى محتوى PDF
-2. 4 خيارات لكل سؤال
-3. تحديد الإجابة الصحيحة بوضوح
-4. كتابة شرح لكل إجابة
-5. الإشارة إلى المصدر في النص
-6. تجنب تكرار الأسئلة السابقة
-
-التنسيق المطلوب:
-{
-  "questions": [
-    {
-      "id": ${totalQuestionsGenerated + 1},
-      "q": "نص السؤال هنا",
-      "options": ["خيار 1", "خيار 2", "خيار 3", "خيار 4"],
-      "answer": 0,
-      "explanations": {
-        "correct": "شرح الإجابة الصحيحة",
-        "wrong1": "شرح الخطأ الأول",
-        "wrong2": "شرح الخطأ الثاني",
-        "wrong3": "شرح الخطأ الثالث"
-      },
-      "source": "المصدر في النص",
-      "batch": ${currentBatch},
-      "questionType": "${questionType}",
-      "category": "تصنيف السؤال"
-    }
-  ]
-}`;
-            }
-
-            currentQuizTitle = title;
-            document.getElementById('main-title').textContent = currentQuizTitle;
-            document.getElementById('current-quiz-title').textContent = currentQuizTitle;
-
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('error-message').style.display = 'none';
+            const statusDiv = document.getElementById('api-key-status');
+            const verifyBtn = document.getElementById('verify-btn');
             
-            const numQuestions = document.getElementById('num-questions').value;
-            document.getElementById('loading-details').textContent = 
-                `جارٍ توليد الدفعة ${currentBatch} (${numQuestions} أسئلة)...`;
+            statusDiv.className = 'api-key-status';
+            statusDiv.style.display = 'flex';
+            statusDiv.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${currentLanguage === 'ar' ? 'جارٍ التحقق...' : 'Verifying...'}`;
+            
+            verifyBtn.disabled = true;
+            verifyBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${currentLanguage === 'ar' ? 'جارٍ التحقق...' : 'Verifying...'}`;
 
             try {
-                const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
+                // اختبار بسيط للتحقق من صحة المفتاح
+                const response = await fetch(`${GEMINI_API_URL}?key=${apiKeyInput}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1914,93 +2124,77 @@ ${pdfContext.substring(0, 7000)}
                     body: JSON.stringify({
                         contents: [{
                             parts: [{
-                                text: prompt
+                                text: "Test API key"
                             }]
                         }],
                         generationConfig: {
-                            temperature: 0.7,
-                            topK: 40,
-                            topP: 0.95,
-                            maxOutputTokens: 4096,
+                            maxOutputTokens: 10,
                         }
                     })
                 });
 
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`خطأ: ${response.status} - ${errorText}`);
-                }
-
-                const data = await response.json();
-                
-                if (!data.candidates || !data.candidates[0] || !data.candidates[0].content || !data.candidates[0].content.parts[0]) {
-                    throw new Error('استجابة غير صالحة من API');
-                }
-
-                const responseText = data.candidates[0].content.parts[0].text;
-                
-                // استخراج JSON من الاستجابة
-                const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-                if (!jsonMatch) {
-                    console.error('استجابة API:', responseText.substring(0, 500));
-                    throw new Error('تعذر استخراج البيانات');
-                }
-
-                const quizData = JSON.parse(jsonMatch[0]);
-                
-                if (!quizData.questions || !Array.isArray(quizData.questions)) {
-                    throw new Error('لم يتم توليد الأسئلة بشكل صحيح');
-                }
-
-                // إضافة الأسئلة الجديدة إلى الأسئلة الحالية
-                const newQuestions = quizData.questions;
-                
-                // التحقق من عدم تكرار الأسئلة
-                const uniqueQuestions = newQuestions.filter(newQ => {
-                    return !existingQuestions.some(existingQ => 
-                        existingQ.q === newQ.q || 
-                        existingQ.q.includes(newQ.q.substring(0, 50))
-                    );
-                });
-
-                if (uniqueQuestions.length === 0) {
-                    throw new Error('الأسئلة الجديدة مكررة');
-                }
-
-                if (existingQuestions.length > 0) {
-                    questions = [...existingQuestions, ...uniqueQuestions];
+                if (response.ok) {
+                    isAPIKeyValid = true;
+                    apiKey = apiKeyInput;
+                    
+                    statusDiv.className = 'api-key-status valid';
+                    statusDiv.innerHTML = `<i class="fas fa-check-circle"></i> ${currentLanguage === 'ar' ? '✓ مفتاح API صالح' : '✓ API Key is valid'}`;
+                    
+                    showSuccessMessage(currentLanguage === 'ar' ? 'تم التحقق من المفتاح بنجاح!' : 'API key verified successfully!');
                 } else {
-                    questions = uniqueQuestions;
+                    throw new Error('Invalid API key');
                 }
-                
-                existingQuestions = questions;
-                allQuestionsHistory = [...allQuestionsHistory, ...uniqueQuestions];
-                totalQuestionsGenerated += uniqueQuestions.length;
-                
-                // تهيئة المتغيرات
-                userAnswers = Array(questions.length).fill(null);
-                answerLocked = Array(questions.length).fill(false);
-                shuffledQuestions = questions.map(q => shuffleOptions(q));
-                timeLeft = questions.length * 60;
-                currentQuestionIndex = 0;
-                markedQuestions = [];
-
-                document.getElementById('setup-section').style.display = 'none';
-                document.getElementById('quiz-section').style.display = 'block';
-                document.getElementById('add-more-section').style.display = 'block';
-
-                clearInterval(timerInterval);
-                startTimer();
-                loadQuiz();
-
-                showSuccessMessage(`تم توليد ${uniqueQuestions.length} سؤالاً في الدفعة ${currentBatch}!`);
-
             } catch (error) {
-                showError(`حدث خطأ: ${error.message}`);
-                console.error('Error:', error);
+                isAPIKeyValid = false;
+                
+                statusDiv.className = 'api-key-status invalid';
+                statusDiv.innerHTML = `<i class="fas fa-times-circle"></i> ${currentLanguage === 'ar' ? '✗ مفتاح API غير صالح' : '✗ API Key is invalid'}`;
+                
+                showError(currentLanguage === 'ar' ? 'مفتاح API غير صالح' : 'Invalid API key');
             } finally {
-                document.getElementById('loading').style.display = 'none';
+                verifyBtn.disabled = false;
+                verifyBtn.innerHTML = `<i class="fas fa-check"></i> ${currentLanguage === 'ar' ? 'تحقق' : 'Verify'}`;
             }
+        }
+
+        // التعامل مع رفع ملف PDF
+        async function handlePDFUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (file.type !== 'application/pdf') {
+                showError(currentLanguage === 'ar' ? 'الرجاء رفع ملف PDF فقط' : 'Please upload PDF files only');
+                return;
+            }
+
+            if (file.size > 10 * 1024 * 1024) {
+                showError(currentLanguage === 'ar' ? 'حجم الملف كبير جداً. الحد الأقصى 10MB' : 'File too large. Maximum size: 10MB');
+                return;
+            }
+
+            pdfFile = file;
+
+            // عرض معلومات الملف
+            document.getElementById('pdf-filename').textContent = file.name;
+            document.getElementById('pdf-filesize').textContent = currentLanguage === 'ar' ? 
+                `الحجم: ${(file.size / 1024 / 1024).toFixed(2)} MB` : 
+                `Size: ${(file.size / 1024 / 1024).toFixed(2)} MB`;
+            
+            document.getElementById('pdf-preview').classList.add('active');
+            
+            showSuccessMessage(currentLanguage === 'ar' ? 
+                'تم رفع الملف بنجاح! قم بتوليد الأسئلة الآن.' : 
+                'File uploaded successfully! Generate questions now.');
+        }
+
+        // إزالة ملف PDF
+        function removePDF() {
+            pdfFile = null;
+            document.getElementById('pdf-file').value = "";
+            document.getElementById('pdf-preview').classList.remove('active');
+            existingQuestions = [];
+            currentBatch = 1;
+            totalQuestionsGenerated = 0;
         }
 
         // دالة لعرض الأخطاء
@@ -2026,6 +2220,385 @@ ${pdfContext.substring(0, 7000)}
                 successDiv.style.animation = 'slideOutRight 0.5s ease';
                 setTimeout(() => successDiv.remove(), 500);
             }, 3000);
+        }
+
+        // الحصول على التوجيهات بناءً على اللغة المختارة
+        function getLanguageInstructions(targetLanguage, fileName = '') {
+            let detectedLanguage = 'ar';
+            
+            // محاولة اكتشاف لغة الملف من اسمه
+            if (fileName) {
+                const fileNameLower = fileName.toLowerCase();
+                if (fileNameLower.includes('english') || fileNameLower.includes('eng') || 
+                    (fileNameLower.match(/[a-z]/g) && fileNameLower.match(/[a-z]/g).length > fileNameLower.match(/[اأإء-ي]/g)?.length || 0)) {
+                    detectedLanguage = 'en';
+                }
+            }
+            
+            if (targetLanguage === 'auto') {
+                // إذا كان تلقائي، نكتشف لغة الملف
+                if (detectedLanguage === 'en') {
+                    return {
+                        promptPrefix: "Please generate questions in English based on this PDF file.",
+                        formatInstructions: "All questions, options, and explanations must be in English.",
+                        responseLanguage: "English",
+                        languageCode: "en"
+                    };
+                } else {
+                    return {
+                        promptPrefix: "يرجى إنشاء أسئلة باللغة العربية بناءً على ملف PDF هذا.",
+                        formatInstructions: "يجب أن تكون جميع الأسئلة والخيارات والشروح باللغة العربية.",
+                        responseLanguage: "Arabic",
+                        languageCode: "ar"
+                    };
+                }
+            } else if (targetLanguage === 'en') {
+                return {
+                    promptPrefix: "Please generate questions in English based on this PDF file.",
+                    formatInstructions: "All questions, options, and explanations must be in English.",
+                    responseLanguage: "English",
+                    languageCode: "en"
+                };
+            } else {
+                return {
+                    promptPrefix: "يرجى إنشاء أسئلة باللغة العربية بناءً على ملف PDF هذا.",
+                    formatInstructions: "يجب أن تكون جميع الأسئلة والخيارات والشروح باللغة العربية.",
+                    responseLanguage: "Arabic",
+                    languageCode: "ar"
+                };
+            }
+        }
+
+        // الحصول على اسم نوع السؤال باللغة المناسبة
+        function getQuestionTypeName(type, languageCode = 'ar') {
+            if (languageCode === 'en') {
+                const typesEn = {
+                    'mixed': 'Mixed (Knowledge + Application)',
+                    'concepts': 'Basic Concepts',
+                    'applications': 'Application Questions',
+                    'analysis': 'Analytical Questions'
+                };
+                return typesEn[type] || type;
+            } else {
+                const typesAr = {
+                    'mixed': 'مختلطة (معلومات + تطبيقات)',
+                    'concepts': 'مفاهيم أساسية',
+                    'applications': 'أسئلة تطبيقية',
+                    'analysis': 'أسئلة تحليلية'
+                };
+                return typesAr[type] || type;
+            }
+        }
+
+        // توليد الاختبار باستخدام الذكاء الاصطناعي
+        async function generateQuiz() {
+            // التحقق من صحة مفتاح API
+            if (!isAPIKeyValid) {
+                showError(currentLanguage === 'ar' ? 
+                    'الرجاء التحقق من صحة مفتاح API أولاً' : 
+                    'Please verify your API key first');
+                return;
+            }
+
+            let prompt = '';
+            let title = '';
+
+            if (currentMethod === 'manual') {
+                const quizTitleInput = document.getElementById('quiz-title').value.trim();
+                const quizTopicInput = document.getElementById('quiz-topic').value.trim();
+                const numQuestions = document.getElementById('num-questions-manual').value;
+
+                if (!quizTitleInput) {
+                    showError(currentLanguage === 'ar' ? 'الرجاء إدخال عنوان للاختبار' : 'Please enter quiz title');
+                    return;
+                }
+
+                title = quizTitleInput;
+                
+                // استخدام لغة الواجهة للإدخال اليدوي
+                const targetLanguage = currentLanguage === 'en' ? 'en' : 'ar';
+                
+                if (targetLanguage === 'en') {
+                    prompt = `Create an educational quiz on the following topic:
+
+Title: ${quizTitleInput}
+${quizTopicInput ? `Details: ${quizTopicInput}` : ''}
+
+I want a quiz with ${numQuestions} questions with 4 options each.
+All questions, options, and explanations must be in English.
+
+Please follow this format:
+
+{
+  "questions": [
+    {
+      "id": 1,
+      "q": "Question text here",
+      "options": ["Option 1", "Option 2", "Option 3", "Option 4"],
+      "answer": 0,
+      "explanations": {
+        "correct": "Explanation of correct answer",
+        "wrong1": "Explanation of first wrong answer",
+        "wrong2": "Explanation of second wrong answer",
+        "wrong3": "Explanation of third wrong answer"
+      }
+    }
+  ]
+}`;
+                } else {
+                    prompt = `أنشئ اختباراً تعليمياً حول الموضوع التالي:
+
+العنوان: ${quizTitleInput}
+${quizTopicInput ? `التفاصيل: ${quizTopicInput}` : ''}
+
+أرغب في اختبار مكون من ${numQuestions} أسئلة مع 4 خيارات لكل سؤال.
+يجب أن تكون جميع الأسئلة والخيارات والشروح باللغة العربية.
+
+الرجاء الالتزام بالتنسيق التالي:
+
+{
+  "questions": [
+    {
+      "id": 1,
+      "q": "نص السؤال هنا",
+      "options": ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"],
+      "answer": 0,
+      "explanations": {
+        "correct": "شرح الإجابة الصحيحة",
+        "wrong1": "شرح الخطأ الأول",
+        "wrong2": "شرح الخطأ الثاني",
+        "wrong3": "شرح الخطأ الثالث"
+      }
+    }
+  ]
+}`;
+                }
+
+            } else if (currentMethod === 'pdf') {
+                if (!pdfFile) {
+                    showError(currentLanguage === 'ar' ? 'الرجاء رفع ملف PDF أولاً' : 'Please upload PDF file first');
+                    return;
+                }
+
+                const numQuestions = document.getElementById('num-questions-pdf').value;
+                const questionType = document.getElementById('question-type').value;
+                
+                title = `${pdfFile.name.replace('.pdf', '')} - ${currentLanguage === 'ar' ? 'اختبار' : 'Quiz'}`;
+                
+                // الحصول على إرشادات اللغة
+                const languageInstructions = getLanguageInstructions(quizLanguage, pdfFile.name);
+                const questionTypeName = getQuestionTypeName(questionType, languageInstructions.languageCode);
+                
+                if (languageInstructions.languageCode === 'en') {
+                    prompt = `${languageInstructions.promptPrefix}
+
+I need ${numQuestions} questions of type: ${questionTypeName}.
+
+Question requirements:
+1. Based on the PDF content
+2. 4 options per question
+3. Clearly indicate the correct answer
+4. Write explanations for each answer
+5. Reference the source in text
+6. ${languageInstructions.formatInstructions}
+
+Required format:
+{
+  "questions": [
+    {
+      "id": 1,
+      "q": "Question text here",
+      "options": ["Option 1", "Option 2", "Option 3", "Option 4"],
+      "answer": 0,
+      "explanations": {
+        "correct": "Explanation of correct answer",
+        "wrong1": "Explanation of first wrong answer",
+        "wrong2": "Explanation of second wrong answer",
+        "wrong3": "Explanation of third wrong answer"
+      },
+      "source": "Source in text",
+      "questionType": "${questionTypeName}"
+    }
+  ]
+}`;
+                } else {
+                    prompt = `${languageInstructions.promptPrefix}
+
+أحتاج إلى ${numQuestions} أسئلة من النوع: ${questionTypeName}.
+
+متطلبات الأسئلة:
+1. الاستناد إلى محتوى PDF
+2. 4 خيارات لكل سؤال
+3. تحديد الإجابة الصحيحة بوضوح
+4. كتابة شرح لكل إجابة
+5. الإشارة إلى المصدر في النص
+6. ${languageInstructions.formatInstructions}
+
+التنسيق المطلوب:
+{
+  "questions": [
+    {
+      "id": 1,
+      "q": "نص السؤال هنا",
+      "options": ["خيار 1", "خيار 2", "خيار 3", "خيار 4"],
+      "answer": 0,
+      "explanations": {
+        "correct": "شرح الإجابة الصحيحة",
+        "wrong1": "شرح الخطأ الأول",
+        "wrong2": "شرح الخطأ الثاني",
+        "wrong3": "شرح الخطأ الثالث"
+      },
+      "source": "المصدر في النص",
+      "questionType": "${questionTypeName}"
+    }
+  ]
+}`;
+                }
+            }
+
+            currentQuizTitle = title;
+            document.getElementById('main-title').textContent = currentQuizTitle;
+            document.getElementById('current-quiz-title').textContent = currentQuizTitle;
+
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('error-message').style.display = 'none';
+            
+            const numQuestions = currentMethod === 'manual' 
+                ? document.getElementById('num-questions-manual').value 
+                : document.getElementById('num-questions-pdf').value;
+            
+            document.getElementById('loading-details').textContent = currentLanguage === 'ar' ?
+                `جارٍ توليد ${numQuestions} أسئلة باستخدام الذكاء الاصطناعي...` :
+                `Generating ${numQuestions} questions using AI...`;
+
+            try {
+                let requestBody;
+                
+                if (currentMethod === 'manual') {
+                    requestBody = {
+                        contents: [{
+                            parts: [{
+                                text: prompt
+                            }]
+                        }],
+                        generationConfig: {
+                            temperature: 0.7,
+                            topK: 40,
+                            topP: 0.95,
+                            maxOutputTokens: 4096,
+                        }
+                    };
+                } else {
+                    // تحويل PDF إلى Base64
+                    const base64Data = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = () => resolve(reader.result.split(',')[1]);
+                        reader.onerror = reject;
+                        reader.readAsDataURL(pdfFile);
+                    });
+                    
+                    requestBody = {
+                        contents: [{
+                            parts: [
+                                {
+                                    text: prompt
+                                },
+                                {
+                                    inline_data: {
+                                        mime_type: "application/pdf",
+                                        data: base64Data
+                                    }
+                                }
+                            ]
+                        }],
+                        generationConfig: {
+                            temperature: 0.7,
+                            topK: 40,
+                            topP: 0.95,
+                            maxOutputTokens: 4096,
+                        }
+                    };
+                }
+
+                const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`API Error: ${response.status} - ${errorText}`);
+                }
+
+                const data = await response.json();
+                
+                if (!data.candidates || !data.candidates[0] || !data.candidates[0].content || !data.candidates[0].content.parts[0]) {
+                    throw new Error('Invalid API response');
+                }
+
+                const responseText = data.candidates[0].content.parts[0].text;
+                console.log('API Response:', responseText.substring(0, 500));
+                
+                // استخراج JSON من الاستجابة
+                const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+                if (!jsonMatch) {
+                    throw new Error(currentLanguage === 'ar' ? 
+                        'تعذر استخراج البيانات من استجابة الذكاء الاصطناعي' : 
+                        'Could not extract data from AI response');
+                }
+
+                let quizData;
+                try {
+                    quizData = JSON.parse(jsonMatch[0]);
+                } catch (parseError) {
+                    console.error('JSON Parse Error:', parseError);
+                    throw new Error(currentLanguage === 'ar' ? 
+                        'خطأ في تحليل استجابة الذكاء الاصطناعي' : 
+                        'Error parsing AI response');
+                }
+                
+                if (!quizData.questions || !Array.isArray(quizData.questions)) {
+                    throw new Error(currentLanguage === 'ar' ? 
+                        'لم يتم العثور على أسئلة في الاستجابة' : 
+                        'No questions found in response');
+                }
+
+                // إضافة الأسئلة الجديدة
+                questions = quizData.questions;
+                existingQuestions = questions;
+                totalQuestionsGenerated = questions.length;
+                
+                // تهيئة المتغيرات
+                userAnswers = Array(questions.length).fill(null);
+                answerLocked = Array(questions.length).fill(false);
+                shuffledQuestions = questions.map(q => shuffleOptions(q));
+                timeLeft = questions.length * 60;
+                currentQuestionIndex = 0;
+                markedQuestions = [];
+
+                document.getElementById('setup-section').style.display = 'none';
+                document.getElementById('quiz-section').style.display = 'block';
+                document.getElementById('add-more-section').style.display = 'block';
+
+                clearInterval(timerInterval);
+                startTimer();
+                loadQuiz();
+
+                showSuccessMessage(currentLanguage === 'ar' ?
+                    `تم توليد ${questions.length} سؤالاً بنجاح!` :
+                    `Successfully generated ${questions.length} questions!`);
+
+            } catch (error) {
+                showError(currentLanguage === 'ar' ? 
+                    `حدث خطأ: ${error.message}` : 
+                    `Error: ${error.message}`);
+                console.error('Error:', error);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
         }
 
         // دالة لترتيب الخيارات بشكل عشوائي
@@ -2076,6 +2649,19 @@ ${pdfContext.substring(0, 7000)}
             }
         }
 
+        // اكتشاف لغة النص
+        function detectTextLanguage(text) {
+            if (!text) return 'ar';
+            
+            const arabicChars = text.match(/[؀-ۿ]/g) || [];
+            const englishChars = text.match(/[a-zA-Z]/g) || [];
+            
+            if (englishChars.length > arabicChars.length) {
+                return 'en';
+            }
+            return 'ar';
+        }
+
         // تحميل الاختبار
         function loadQuiz() {
             const quizDiv = document.getElementById("quiz");
@@ -2087,27 +2673,42 @@ ${pdfContext.substring(0, 7000)}
             const question = shuffledQuestions[currentQuestionIndex];
             const isLocked = answerLocked[currentQuestionIndex];
 
+            // اكتشاف لغة السؤال
+            const questionLanguage = detectTextLanguage(question.q);
+            
+            // بناء HTML بناءً على لغة السؤال
+            let questionNumberText = questionLanguage === 'en' 
+                ? `Question ${currentQuestionIndex + 1} of ${questions.length}`
+                : `السؤال ${currentQuestionIndex + 1} من ${questions.length}`;
+                
+            let lockedText = questionLanguage === 'en' ? 'Locked' : 'مقفل';
+            let markedText = questionLanguage === 'en' ? 'Flagged' : 'معلمة';
+            
+            let totalQuestionsText = questionLanguage === 'en' ? 'Total Questions' : 'إجمالي الأسئلة';
+            let answeredText = questionLanguage === 'en' ? 'Answered' : 'تم الإجابة';
+            let flaggedText = questionLanguage === 'en' ? 'Flagged' : 'معلمة';
+            
+            let sourceText = questionLanguage === 'en' ? 'Source' : 'المصدر';
+
             let html = `
-            <div class="question-box fade-in">
+            <div class="question-box">
                 <div class="question-number">
                     <i class="fas fa-question-circle"></i>
-                    السؤال ${currentQuestionIndex + 1} من ${questions.length}
-                    ${question.batch ? `<span class="batch-indicator">دفعة ${question.batch}</span>` : ''}
-                    ${question.category ? `<span class="category-badge">${question.category}</span>` : ''}
-                    ${isLocked ? '<span style="color: var(--accent); margin-right: 10px;"><i class="fas fa-lock"></i> مقفل</span>' : ''}
-                    ${markedQuestions.includes(currentQuestionIndex) ? '<span style="background: var(--tertiary-gradient); color: white; padding: 5px 10px; border-radius: 10px; font-size: 0.8rem; margin-right: 10px;"><i class="fas fa-flag"></i> معلمة</span>' : ''}
+                    ${questionNumberText}
+                    ${question.questionType ? `<span class="category-badge">${question.questionType}</span>` : ''}
+                    ${isLocked ? `<span style="color: var(--accent); margin-right: 10px;"><i class="fas fa-lock"></i> ${lockedText}</span>` : ''}
+                    ${markedQuestions.includes(currentQuestionIndex) ? `<span style="background: var(--tertiary-gradient); color: white; padding: 5px 10px; border-radius: 10px; font-size: 0.8rem; margin-right: 10px;"><i class="fas fa-flag"></i> ${markedText}</span>` : ''}
                 </div>
                 
                 <div class="quiz-stats">
-                    <span><i class="fas fa-layer-group"></i> إجمالي الأسئلة: ${questions.length}</span>
-                    <span><i class="fas fa-history"></i> عدد الدفعات: ${currentBatch}</span>
-                    <span><i class="fas fa-question"></i> تم الإجابة: ${userAnswers.filter(a => a !== null).length}</span>
-                    <span><i class="fas fa-flag"></i> معلمة: ${markedQuestions.length}</span>
+                    <span><i class="fas fa-layer-group"></i> ${totalQuestionsText}: ${questions.length}</span>
+                    <span><i class="fas fa-question"></i> ${answeredText}: ${userAnswers.filter(a => a !== null).length}</span>
+                    <span><i class="fas fa-flag"></i> ${flaggedText}: ${markedQuestions.length}</span>
                 </div>
                 
                 <div class="question-text">${question.q}</div>
                 
-                ${question.source ? `<div class="source-info"><i class="fas fa-map-marker-alt"></i> المصدر: ${question.source}</div>` : ''}
+                ${question.source ? `<div class="source-info"><i class="fas fa-map-marker-alt"></i> ${sourceText}: ${question.source}</div>` : ''}
                 
                 <div class="options">
             `;
@@ -2137,16 +2738,31 @@ ${pdfContext.substring(0, 7000)}
                 `;
             });
 
+            // تحديد نصوص الأزرار بناءً على لغة السؤال
+            let previousText, nextText, previousIcon, nextIcon;
+            
+            if (questionLanguage === 'en') {
+                previousText = 'Previous';
+                nextText = 'Next';
+                previousIcon = 'fa-arrow-left';
+                nextIcon = 'fa-arrow-right';
+            } else {
+                previousText = 'السابق';
+                nextText = 'التالي';
+                previousIcon = 'fa-arrow-right';
+                nextIcon = 'fa-arrow-left';
+            }
+
             html += `
                 </div>
                 <div id="explanation" class="explanation"></div>
             </div>
             <div class="navigation">
                 <button class="btn btn-secondary" onclick="previousQuestion()" ${currentQuestionIndex === 0 ? 'disabled' : ''}>
-                    <i class="fas fa-arrow-right"></i> السابق
+                    <i class="fas ${previousIcon}"></i> ${previousText}
                 </button>
                 <button class="btn btn-primary" onclick="nextQuestion()" ${currentQuestionIndex === questions.length - 1 ? 'disabled' : ''}>
-                    التالي <i class="fas fa-arrow-left"></i>
+                    ${nextText} <i class="fas ${nextIcon}"></i>
                 </button>
             </div>
             `;
@@ -2158,19 +2774,23 @@ ${pdfContext.substring(0, 7000)}
             progress.style.width = questions.length > 0 ? `${((currentQuestionIndex + 1) / questions.length) * 100}%` : '0%';
 
             // تحديث معلومات الاختبار
-            document.getElementById('quiz-info').innerHTML = `
-                السؤال ${currentQuestionIndex + 1} من ${questions.length} 
-                | تم الإجابة: ${userAnswers.filter(a => a !== null).length}
-                | معلمة: ${markedQuestions.length}
-            `;
+            let quizInfoText = questionLanguage === 'en'
+                ? `Question ${currentQuestionIndex + 1} of ${questions.length} | Answered: ${userAnswers.filter(a => a !== null).length} | Flagged: ${markedQuestions.length}`
+                : `السؤال ${currentQuestionIndex + 1} من ${questions.length} | تم الإجابة: ${userAnswers.filter(a => a !== null).length} | معلمة: ${markedQuestions.length}`;
+            
+            document.getElementById('quiz-info').innerHTML = quizInfoText;
 
             // تحديث زر وضع العلامة
             const markBtn = document.getElementById('mark-review-btn');
             if (markedQuestions.includes(currentQuestionIndex)) {
-                markBtn.innerHTML = '<i class="fas fa-flag"></i> إزالة العلامة';
+                markBtn.innerHTML = questionLanguage === 'en'
+                    ? '<i class="fas fa-flag"></i> Remove Flag'
+                    : '<i class="fas fa-flag"></i> إزالة العلامة';
                 markBtn.style.background = 'var(--tertiary-gradient)';
             } else {
-                markBtn.innerHTML = '<i class="fas fa-flag"></i> وضع علامة';
+                markBtn.innerHTML = questionLanguage === 'en'
+                    ? '<i class="fas fa-flag"></i> Mark for Review'
+                    : '<i class="fas fa-flag"></i> وضع علامة';
                 markBtn.style.background = 'var(--secondary-gradient)';
             }
 
@@ -2214,23 +2834,31 @@ ${pdfContext.substring(0, 7000)}
             if (userAnswer !== null) {
                 explanationDiv.style.display = "block";
 
+                // اكتشاف لغة السؤال
+                const questionLanguage = detectTextLanguage(question.q);
+                
+                let correctText = questionLanguage === 'en' ? 'Correct answer!' : 'إجابة صحيحة!';
+                let wrongText = questionLanguage === 'en' ? 'Wrong answer' : 'إجابة خاطئة';
+                let correctAnswerText = questionLanguage === 'en' ? 'Correct answer' : 'الإجابة الصحيحة';
+                let explanationText = questionLanguage === 'en' ? 'Correct Explanation' : 'التفسير الصحيح';
+
                 let resultHTML = "";
 
                 if (userAnswer === question.answer) {
-                    resultHTML = `<p style="color: var(--secondary);"><i class="fas fa-check-circle"></i> إجابة صحيحة!</p>`;
+                    resultHTML = `<p style="color: var(--secondary);"><i class="fas fa-check-circle"></i> ${correctText}</p>`;
                 } else {
                     resultHTML = `
-                    <p style="color: #dc2626;"><i class="fas fa-times-circle"></i> إجابة خاطئة</p>
-                    <p style="color: var(--secondary);">الإجابة الصحيحة: ${question.options[question.answer]}</p>
+                    <p style="color: #dc2626;"><i class="fas fa-times-circle"></i> ${wrongText}</p>
+                    <p style="color: var(--secondary);">${correctAnswerText}: ${question.options[question.answer]}</p>
                     `;
                 }
 
                 // إضافة الشروح
-                if (questions[currentQuestionIndex]?.explanations?.correct) {
+                if (question.explanations && question.explanations.correct) {
                     resultHTML += `
                     <div style="margin-top: 15px; padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 8px;">
-                        <strong>📚 التفسير الصحيح:</strong><br>
-                        ${questions[currentQuestionIndex].explanations.correct}
+                        <strong>📚 ${explanationText}:</strong><br>
+                        ${question.explanations.correct}
                     </div>
                     `;
                 }
@@ -2286,11 +2914,15 @@ ${pdfContext.substring(0, 7000)}
 
             if (index === -1) {
                 markedQuestions.push(currentQuestionIndex);
-                btn.innerHTML = '<i class="fas fa-flag"></i> إزالة العلامة';
+                btn.innerHTML = currentLanguage === 'ar' ? 
+                    '<i class="fas fa-flag"></i> إزالة العلامة' : 
+                    '<i class="fas fa-flag"></i> Remove Flag';
                 btn.style.background = 'var(--tertiary-gradient)';
             } else {
                 markedQuestions.splice(index, 1);
-                btn.innerHTML = '<i class="fas fa-flag"></i> وضع علامة';
+                btn.innerHTML = currentLanguage === 'ar' ? 
+                    '<i class="fas fa-flag"></i> وضع علامة' : 
+                    '<i class="fas fa-flag"></i> Mark for Review';
                 btn.style.background = 'var(--secondary-gradient)';
             }
             
@@ -2312,14 +2944,19 @@ ${pdfContext.substring(0, 7000)}
             circle.style.strokeDashoffset = offset;
             text.textContent = `${percentage}%`;
             
+            let scoreText = currentLanguage === 'ar' ? 'الدرجة' : 'Score';
+            let correctText = currentLanguage === 'ar' ? 'الصحيحة' : 'Correct';
+            let progressText = currentLanguage === 'ar' ? 'التقدم' : 'Progress';
+            let totalText = currentLanguage === 'ar' ? 'الإجمالي' : 'Total';
+            
             document.getElementById('current-score-details').innerHTML = 
-                `<strong>الدرجة:</strong> ${score.correct} من ${totalQuestions}`;
+                `<strong>${scoreText}:</strong> ${score.correct} ${currentLanguage === 'ar' ? 'من' : 'of'} ${totalQuestions}`;
             document.getElementById('current-correct-details').innerHTML = 
-                `<strong>الصحيحة:</strong> ${score.correct}`;
+                `<strong>${correctText}:</strong> ${score.correct}`;
             document.getElementById('current-progress-details').innerHTML = 
-                `<strong>التقدم:</strong> ${answeredCount} من ${totalQuestions}`;
+                `<strong>${progressText}:</strong> ${answeredCount} ${currentLanguage === 'ar' ? 'من' : 'of'} ${totalQuestions}`;
             document.getElementById('current-batch-details').innerHTML = 
-                `<strong>الدفعة:</strong> ${currentBatch} | <strong>الإجمالي:</strong> ${totalQuestionsGenerated}`;
+                `<strong>${totalText}:</strong> ${totalQuestionsGenerated}`;
             
             document.getElementById('currentScoreModal').style.display = 'block';
         }
@@ -2342,21 +2979,41 @@ ${pdfContext.substring(0, 7000)}
 
             let evaluation = "";
             let evaluationIcon = "";
-            if (percentage >= 90) {
-                evaluation = "ممتاز";
-                evaluationIcon = "🌟";
-            } else if (percentage >= 80) {
-                evaluation = "جيد جداً";
-                evaluationIcon = "🔵";
-            } else if (percentage >= 70) {
-                evaluation = "جيد";
-                evaluationIcon = "🟢";
-            } else if (percentage >= 60) {
-                evaluation = "مقبول";
-                evaluationIcon = "🟡";
+            
+            if (currentLanguage === 'ar') {
+                if (percentage >= 90) {
+                    evaluation = "ممتاز";
+                    evaluationIcon = "🌟";
+                } else if (percentage >= 80) {
+                    evaluation = "جيد جداً";
+                    evaluationIcon = "🔵";
+                } else if (percentage >= 70) {
+                    evaluation = "جيد";
+                    evaluationIcon = "🟢";
+                } else if (percentage >= 60) {
+                    evaluation = "مقبول";
+                    evaluationIcon = "🟡";
+                } else {
+                    evaluation = "يحتاج تحسين";
+                    evaluationIcon = "⚠️";
+                }
             } else {
-                evaluation = "يحتاج تحسين";
-                evaluationIcon = "⚠️";
+                if (percentage >= 90) {
+                    evaluation = "Excellent";
+                    evaluationIcon = "🌟";
+                } else if (percentage >= 80) {
+                    evaluation = "Very Good";
+                    evaluationIcon = "🔵";
+                } else if (percentage >= 70) {
+                    evaluation = "Good";
+                    evaluationIcon = "🟢";
+                } else if (percentage >= 60) {
+                    evaluation = "Acceptable";
+                    evaluationIcon = "🟡";
+                } else {
+                    evaluation = "Needs Improvement";
+                    evaluationIcon = "⚠️";
+                }
             }
 
             return {
@@ -2368,151 +3025,6 @@ ${pdfContext.substring(0, 7000)}
             };
         }
 
-        // إضافة المزيد من الأسئلة
-        async function addMoreQuestions() {
-            if (!pdfFile || !pdfContext) {
-                showError('لم يتم تحميل ملف PDF');
-                return;
-            }
-
-            if (!apiKey) {
-                showError('الرجاء إدخال مفتاح API');
-                return;
-            }
-
-            currentBatch++;
-            const numQuestions = document.getElementById('num-questions').value;
-            const questionType = document.getElementById('question-type').value;
-            
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('loading-details').textContent = 
-                `جارٍ توليد الدفعة ${currentBatch} (${numQuestions} أسئلة)...`;
-
-            try {
-                const prompt = `لدي بالفعل ${totalQuestionsGenerated} سؤالاً من هذا المحتوى.
-الرجاء إنشاء ${numQuestions} أسئلة إضافية جديدة ومختلفة.
-
-محتوى PDF:
-${pdfContext.substring(0, 7000)}
-
-أنواع الأسئلة المطلوبة: ${questionType}
-
-التنسيق المطلوب:
-{
-  "questions": [
-    {
-      "id": ${totalQuestionsGenerated + 1},
-      "q": "نص السؤال",
-      "options": ["خيار 1", "خيار 2", "خيار 3", "خيار 4"],
-      "answer": 0,
-      "explanations": {
-        "correct": "شرح",
-        "wrong1": "شرح",
-        "wrong2": "شرح",
-        "wrong3": "شرح"
-      },
-      "source": "المصدر",
-      "batch": ${currentBatch},
-      "questionType": "${questionType}",
-      "category": "التصنيف"
-    }
-  ]
-}`;
-
-                const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [{
-                                text: prompt
-                            }]
-                        }],
-                        generationConfig: {
-                            temperature: 0.8,
-                            topK: 40,
-                            topP: 0.95,
-                            maxOutputTokens: 4096,
-                        }
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`خطأ: ${response.status}`);
-                }
-
-                const data = await response.json();
-                const responseText = data.candidates[0].content.parts[0].text;
-                const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-                
-                if (!jsonMatch) {
-                    throw new Error('تعذر استخراج البيانات');
-                }
-
-                const newQuizData = JSON.parse(jsonMatch[0]);
-                
-                if (!newQuizData.questions || !Array.isArray(newQuizData.questions)) {
-                    throw new Error('لم يتم توليد الأسئلة');
-                }
-
-                // التحقق من عدم التكرار
-                const uniqueNewQuestions = newQuizData.questions.filter(newQ => {
-                    return !existingQuestions.some(existingQ => 
-                        existingQ.q === newQ.q
-                    );
-                });
-
-                if (uniqueNewQuestions.length === 0) {
-                    throw new Error('الأسئلة مكررة');
-                }
-
-                // إضافة الأسئلة الجديدة
-                questions = [...questions, ...uniqueNewQuestions];
-                existingQuestions = questions;
-                allQuestionsHistory = [...allQuestionsHistory, ...uniqueNewQuestions];
-                totalQuestionsGenerated += uniqueNewQuestions.length;
-
-                // تحديث واجهة المستخدم
-                const currentTitle = document.getElementById('current-quiz-title');
-                currentTitle.textContent = `${pdfFile.name.replace('.pdf', '')} - ${totalQuestionsGenerated} سؤالاً`;
-
-                // إعادة تهيئة متغيرات المستخدم للأسئلة الجديدة فقط
-                userAnswers = [...userAnswers, ...Array(uniqueNewQuestions.length).fill(null)];
-                answerLocked = [...answerLocked, ...Array(uniqueNewQuestions.length).fill(false)];
-                
-                // إعادة خلط جميع الأسئلة
-                shuffledQuestions = questions.map(q => shuffleOptions(q));
-
-                // إعادة تحميل الاختبار
-                if (document.getElementById('quiz-section').style.display !== 'none') {
-                    loadQuiz();
-                }
-
-                // تحديث وقت الاختبار
-                timeLeft = questions.length * 60;
-                updateTimerDisplay();
-
-                showSuccessMessage(`تم إضافة ${uniqueNewQuestions.length} سؤالاً في الدفعة ${currentBatch}!`);
-
-            } catch (error) {
-                showError(`خطأ: ${error.message}`);
-                console.error('Error:', error);
-            } finally {
-                document.getElementById('loading').style.display = 'none';
-            }
-        }
-
-        // إضافة أسئلة بعد الانتهاء من الاختبار
-        function addMoreQuestionsAfterTest() {
-            document.getElementById('result-box').style.display = 'none';
-            document.getElementById('quiz-section').style.display = 'block';
-            document.getElementById('add-more-section').style.display = 'block';
-            loadQuiz();
-            showSuccessMessage('يمكنك إضافة المزيد من الأسئلة!');
-        }
-
         // إنهاء الاختبار
         function finishQuiz() {
             clearInterval(timerInterval);
@@ -2522,9 +3034,14 @@ ${pdfContext.substring(0, 7000)}
 
             // عرض النتائج
             document.getElementById("result-box").style.display = "block";
-            document.getElementById("result").innerHTML = `${score.evaluationIcon} النتيجة: ${score.correct} من ${score.total}`;
-            document.getElementById("percentage").innerHTML = `النسبة: ${score.percentage}%`;
-            document.getElementById("evaluation").innerHTML = `التقييم: ${score.evaluation}`;
+            
+            let resultText = currentLanguage === 'ar' ? 'النتيجة' : 'Result';
+            let percentageText = currentLanguage === 'ar' ? 'النسبة' : 'Percentage';
+            let evaluationText = currentLanguage === 'ar' ? 'التقييم' : 'Evaluation';
+            
+            document.getElementById("result").innerHTML = `${score.evaluationIcon} ${resultText}: ${score.correct} ${currentLanguage === 'ar' ? 'من' : 'of'} ${score.total}`;
+            document.getElementById("percentage").innerHTML = `${percentageText}: ${score.percentage}%`;
+            document.getElementById("evaluation").innerHTML = `${evaluationText}: ${score.evaluation}`;
 
             // إخفاء الاختبار
             document.getElementById("quiz").style.display = "none";
@@ -2544,32 +3061,217 @@ ${pdfContext.substring(0, 7000)}
             const unansweredCount = questions.length - answeredCount;
             const markedCount = markedQuestions.length;
             
+            let scoreText = currentLanguage === 'ar' ? 'الدرجة' : 'Score';
+            let percentageText = currentLanguage === 'ar' ? 'النسبة' : 'Percentage';
+            let answeredText = currentLanguage === 'ar' ? 'تم الإجابة' : 'Answered';
+            let unansweredText = currentLanguage === 'ar' ? 'لم تتم الإجابة' : 'Unanswered';
+            let flaggedText = currentLanguage === 'ar' ? 'معلمة' : 'Flagged';
+            
             statsContainer.innerHTML = `
                 <div class="stat-card">
                     <div class="stat-value">${score.correct}/${score.total}</div>
-                    <div class="stat-label">الدرجة</div>
+                    <div class="stat-label">${scoreText}</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value">${score.percentage}%</div>
-                    <div class="stat-label">النسبة</div>
+                    <div class="stat-label">${percentageText}</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value">${answeredCount}</div>
-                    <div class="stat-label">تم الإجابة</div>
+                    <div class="stat-label">${answeredText}</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value">${unansweredCount}</div>
-                    <div class="stat-label">لم تتم الإجابة</div>
+                    <div class="stat-label">${unansweredText}</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value">${markedCount}</div>
-                    <div class="stat-label">معلمة</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">${currentBatch}</div>
-                    <div class="stat-label">الدفعات</div>
+                    <div class="stat-label">${flaggedText}</div>
                 </div>
             `;
+        }
+
+        // إضافة المزيد من الأسئلة
+        async function addMoreQuestions() {
+            if (!apiKey) {
+                showError(currentLanguage === 'ar' ? 'الرجاء إدخال مفتاح API' : 'Please enter API key');
+                return;
+            }
+
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('loading-details').textContent = currentLanguage === 'ar' ?
+                'جارٍ توليد 5 أسئلة إضافية...' :
+                'Generating 5 additional questions...';
+
+            try {
+                let prompt;
+                
+                // اكتشاف لغة الأسئلة الموجودة
+                const existingLanguage = questions.length > 0 ? detectTextLanguage(questions[0].q) : currentLanguage;
+                
+                if (currentMethod === 'manual') {
+                    const quizTitleInput = document.getElementById('quiz-title').value.trim();
+                    const quizTopicInput = document.getElementById('quiz-topic').value.trim();
+                    
+                    if (existingLanguage === 'en') {
+                        prompt = `I already have ${existingQuestions.length} questions on the following topic:
+
+Title: ${quizTitleInput}
+${quizTopicInput ? `Details: ${quizTopicInput}` : ''}
+
+Please create 5 additional questions different from previous ones. All questions must be in English.
+
+Required format:
+{
+  "questions": [
+    {
+      "id": ${existingQuestions.length + 1},
+      "q": "Question text here",
+      "options": ["Option 1", "Option 2", "Option 3", "Option 4"],
+      "answer": 0,
+      "explanations": {
+        "correct": "Explanation of correct answer",
+        "wrong1": "Explanation of first wrong answer",
+        "wrong2": "Explanation of second wrong answer",
+        "wrong3": "Explanation of third wrong answer"
+      }
+    }
+  ]
+}`;
+                    } else {
+                        prompt = `لدي بالفعل ${existingQuestions.length} سؤالاً حول الموضوع التالي:
+
+العنوان: ${quizTitleInput}
+${quizTopicInput ? `التفاصيل: ${quizTopicInput}` : ''}
+
+الرجاء إنشاء 5 أسئلة إضافية مختلفة عن الأسئلة السابقة. يجب أن تكون جميع الأسئلة باللغة العربية.
+
+التنسيق المطلوب:
+{
+  "questions": [
+    {
+      "id": ${existingQuestions.length + 1},
+      "q": "نص السؤال هنا",
+      "options": ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"],
+      "answer": 0,
+      "explanations": {
+        "correct": "شرح الإجابة الصحيحة",
+        "wrong1": "شرح الخطأ الأول",
+        "wrong2": "شرح الخطأ الثاني",
+        "wrong3": "شرح الخطأ الثالث"
+      }
+    }
+  ]
+}`;
+                    }
+                } else {
+                    // للـ PDF
+                    if (!pdfFile) {
+                        throw new Error(currentLanguage === 'ar' ? 'لم يتم رفع ملف PDF' : 'No PDF file uploaded');
+                    }
+                    
+                    // الحصول على إرشادات اللغة
+                    const languageInstructions = getLanguageInstructions(quizLanguage, pdfFile.name);
+                    
+                    if (languageInstructions.languageCode === 'en') {
+                        prompt = `I already have ${existingQuestions.length} questions from this PDF file.
+Please create 5 additional questions different from previous ones. All questions must be in English.`;
+                    } else {
+                        prompt = `لدي بالفعل ${existingQuestions.length} سؤالاً من ملف PDF هذا.
+الرجاء إنشاء 5 أسئلة إضافية مختلفة عن الأسئلة السابقة. يجب أن تكون جميع الأسئلة باللغة العربية.`;
+                    }
+                }
+
+                const requestBody = {
+                    contents: [{
+                        parts: [{
+                            text: prompt
+                        }]
+                    }],
+                    generationConfig: {
+                        temperature: 0.8,
+                        topK: 40,
+                        topP: 0.95,
+                        maxOutputTokens: 2048,
+                    }
+                };
+
+                const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                if (!data.candidates || !data.candidates[0] || !data.candidates[0].content || !data.candidates[0].content.parts[0]) {
+                    throw new Error('Invalid API response');
+                }
+
+                const responseText = data.candidates[0].content.parts[0].text;
+                const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+                
+                if (!jsonMatch) {
+                    throw new Error('Could not extract data');
+                }
+
+                const newQuestionsData = JSON.parse(jsonMatch[0]);
+                
+                if (!newQuestionsData.questions || !Array.isArray(newQuestionsData.questions)) {
+                    throw new Error('No questions generated');
+                }
+
+                // إضافة الأسئلة الجديدة
+                const newQuestions = newQuestionsData.questions;
+                const updatedIds = newQuestions.map((q, idx) => ({
+                    ...q,
+                    id: existingQuestions.length + idx + 1
+                }));
+                
+                questions = [...questions, ...updatedIds];
+                existingQuestions = questions;
+                totalQuestionsGenerated = questions.length;
+                
+                // تحديث متغيرات المستخدم
+                userAnswers = [...userAnswers, ...Array(updatedIds.length).fill(null)];
+                answerLocked = [...answerLocked, ...Array(updatedIds.length).fill(false)];
+                shuffledQuestions = questions.map(q => shuffleOptions(q));
+                
+                // تحديث وقت الاختبار
+                timeLeft = questions.length * 60;
+                updateTimerDisplay();
+                
+                // إعادة تحميل الاختبار
+                loadQuiz();
+                
+                showSuccessMessage(currentLanguage === 'ar' ?
+                    `تم إضافة ${updatedIds.length} سؤالاً جديداً!` :
+                    `Added ${updatedIds.length} new questions!`);
+
+            } catch (error) {
+                showError(currentLanguage === 'ar' ? 
+                    `خطأ في إضافة الأسئلة: ${error.message}` : 
+                    `Error adding questions: ${error.message}`);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        // إضافة أسئلة بعد الانتهاء من الاختبار
+        function addMoreQuestionsAfterTest() {
+            document.getElementById('result-box').style.display = 'none';
+            document.getElementById('quiz-section').style.display = 'block';
+            document.getElementById('add-more-section').style.display = 'block';
+            loadQuiz();
+            showSuccessMessage(currentLanguage === 'ar' ? 
+                'يمكنك إضافة المزيد من الأسئلة!' : 
+                'You can add more questions!');
         }
 
         // الرجوع إلى الإعدادات
@@ -2583,10 +3285,11 @@ ${pdfContext.substring(0, 7000)}
             existingQuestions = [];
             currentBatch = 1;
             totalQuestionsGenerated = 0;
-            allQuestionsHistory = [];
-            pdfContext = "";
+            quizLanguage = "auto";
             
-            removePDF();
+            if (pdfFile) {
+                removePDF();
+            }
             
             document.getElementById('result-box').style.display = 'none';
             document.getElementById('advanced-results').style.display = 'none';
@@ -2596,7 +3299,6 @@ ${pdfContext.substring(0, 7000)}
             
             document.getElementById('quiz-title').value = '';
             document.getElementById('quiz-topic').value = '';
-            document.getElementById('api-key').value = '';
         }
 
         // إعادة تشغيل الاختبار
@@ -2627,7 +3329,9 @@ ${pdfContext.substring(0, 7000)}
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             
-            doc.setR2L(true);
+            if (currentLanguage === 'ar') {
+                doc.setR2L(true);
+            }
             
             doc.setFontSize(24);
             doc.setTextColor(26, 95, 122);
@@ -2635,27 +3339,38 @@ ${pdfContext.substring(0, 7000)}
             
             doc.setFontSize(16);
             doc.setTextColor(21, 152, 149);
-            doc.text('تقرير نتائج الاختبار', 105, 30, null, null, 'center');
+            let reportTitle = currentLanguage === 'ar' ? 'تقرير نتائج الاختبار' : 'Quiz Results Report';
+            doc.text(reportTitle, 105, 30, null, null, 'center');
             
             doc.setFontSize(12);
             doc.setTextColor(100, 100, 100);
-            doc.text(`تاريخ: ${new Date().toLocaleDateString('ar-SA')}`, 105, 40, null, null, 'center');
+            let dateText = currentLanguage === 'ar' ? 'تاريخ' : 'Date';
+            doc.text(`${dateText}: ${new Date().toLocaleDateString()}`, 105, 40, null, null, 'center');
             
             doc.setFontSize(18);
             doc.setTextColor(30, 30, 30);
-            doc.text('النتائج', 20, 60);
+            let resultsText = currentLanguage === 'ar' ? 'النتائج' : 'Results';
+            doc.text(resultsText, 20, 60);
+            
+            let scoreText = currentLanguage === 'ar' ? 'الدرجة' : 'Score';
+            let percentageText = currentLanguage === 'ar' ? 'النسبة' : 'Percentage';
+            let evaluationText = currentLanguage === 'ar' ? 'التقييم' : 'Evaluation';
+            let answeredText = currentLanguage === 'ar' ? 'المجاب' : 'Answered';
+            let totalText = currentLanguage === 'ar' ? 'الإجمالي' : 'Total';
             
             doc.setFontSize(14);
-            doc.text(`الدرجة: ${score.correct} من ${score.total}`, 20, 75);
-            doc.text(`النسبة: ${score.percentage}%`, 20, 85);
-            doc.text(`التقييم: ${score.evaluation}`, 20, 95);
-            doc.text(`المجاب: ${answeredCount} من ${questions.length}`, 20, 105);
-            doc.text(`الدفعات: ${currentBatch}`, 20, 115);
-            doc.text(`الإجمالي: ${totalQuestionsGenerated}`, 20, 125);
+            doc.text(`${scoreText}: ${score.correct} ${currentLanguage === 'ar' ? 'من' : 'of'} ${score.total}`, 20, 75);
+            doc.text(`${percentageText}: ${score.percentage}%`, 20, 85);
+            doc.text(`${evaluationText}: ${score.evaluation}`, 20, 95);
+            doc.text(`${answeredText}: ${answeredCount} ${currentLanguage === 'ar' ? 'من' : 'of'} ${questions.length}`, 20, 105);
+            doc.text(`${totalText}: ${totalQuestionsGenerated}`, 20, 115);
             
-            doc.save(`نتيجة-${currentQuizTitle.replace(/\s+/g, '-')}.pdf`);
+            let filename = currentLanguage === 'ar' ? 'نتيجة' : 'result';
+            doc.save(`${filename}-${currentQuizTitle.replace(/\s+/g, '-')}.pdf`);
             
-            showSuccessMessage('تم إنشاء تقرير PDF!');
+            showSuccessMessage(currentLanguage === 'ar' ? 
+                'تم إنشاء تقرير PDF!' : 
+                'PDF report created!');
         }
 
         // التهيئة الأولية
@@ -2689,13 +3404,18 @@ ${pdfContext.substring(0, 7000)}
                     };
                     handlePDFUpload(event);
                 } else {
-                    showError('الرجاء رفع ملف PDF فقط');
+                    showError(currentLanguage === 'ar' ? 
+                        'الرجاء رفع ملف PDF فقط' : 
+                        'Please upload PDF files only');
                 }
             });
 
             document.getElementById('api-key').addEventListener('input', function() {
                 if (this.value.trim()) {
                     this.style.borderColor = 'var(--secondary)';
+                    // إخفاء حالة API عند تغيير المفتاح
+                    document.getElementById('api-key-status').style.display = 'none';
+                    isAPIKeyValid = false;
                 }
             });
         }
