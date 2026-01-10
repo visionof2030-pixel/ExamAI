@@ -111,6 +111,17 @@
             text-shadow: 0 2px 10px rgba(26, 95, 122, 0.3);
         }
 
+        .developer-credit {
+            font-size: 0.8rem;
+            color: var(--accent-light);
+            text-align: center;
+            margin-top: 5px;
+            font-family: 'Arial', sans-serif;
+            letter-spacing: 1px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
         .header-actions {
             display: flex;
             gap: 10px;
@@ -940,9 +951,9 @@
         }
 
         .options label.wrong-answer {
-            background: linear-gradient(135deg, rgba(21, 152, 149, 0.2), rgba(45, 143, 157, 0.2));
-            border: 2px solid var(--accent);
-            box-shadow: 0 0 15px rgba(21, 152, 149, 0.3);
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
+            border: 2px solid #ef4444;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
             animation: wrongShake 0.5s ease;
         }
 
@@ -954,7 +965,7 @@
 
         .options label.wrong-answer::before {
             width: 6px;
-            background: var(--accent-gradient);
+            background: linear-gradient(135deg, #ef4444, #dc2626);
         }
 
         /* Explanation */
@@ -1503,6 +1514,10 @@
                 font-size: 1.3rem;
             }
 
+            .developer-credit {
+                font-size: 0.7rem;
+            }
+
             .hero-title {
                 font-size: 1.8rem;
             }
@@ -1583,6 +1598,7 @@
         <div class="header-container">
             <div class="title-section">
                 <h1 id="main-title">نظام الاختبارات الذكي</h1>
+                <div class="developer-credit">تنفيذ المعلم فهد الخالدي</div>
             </div>
             <div class="header-actions">
                 <button class="theme-btn" id="themeBtn">
@@ -2512,7 +2528,7 @@
             }
         }
 
-        // الحصول على نموذج JSON بناءً على أنواع الأسئلة المختارة
+        // الحصول على نموذج JSON بناءً على أنواع الأسئلة المختارة - مُحدَّث لتشمل التغذية الراجعة لجميع الخيارات
         function getQuestionFormats(languageCode) {
             const formats = [];
             
@@ -2525,10 +2541,11 @@
       "options": ["Option 1", "Option 2", "Option 3", "Option 4"],
       "answer": 0,
       "explanations": {
-        "correct": "Explanation of correct answer",
-        "wrong1": "Explanation of first wrong answer",
-        "wrong2": "Explanation of second wrong answer",
-        "wrong3": "Explanation of third wrong answer"
+        "correct": "Explanation of why this option is correct",
+        "option0": "Feedback for option 1",
+        "option1": "Feedback for option 2", 
+        "option2": "Feedback for option 3",
+        "option3": "Feedback for option 4"
       }
     }`);
                 } else {
@@ -2539,10 +2556,11 @@
       "options": ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"],
       "answer": 0,
       "explanations": {
-        "correct": "شرح الإجابة الصحيحة",
-        "wrong1": "شرح الخطأ الأول",
-        "wrong2": "شرح الخطأ الثاني",
-        "wrong3": "شرح الخطأ الثالث"
+        "correct": "شرح لماذا هذا الخيار صحيح",
+        "option0": "تغذية راجعة للخيار الأول",
+        "option1": "تغذية راجعة للخيار الثاني",
+        "option2": "تغذية راجعة للخيار الثالث",
+        "option3": "تغذية راجعة للخيار الرابع"
       }
     }`);
                 }
@@ -2557,7 +2575,9 @@
       "options": ["True", "False"],
       "answer": 0,
       "explanations": {
-        "correct": "Explanation why it's true/false"
+        "correct": "Explanation why it's true/false",
+        "option0": "Feedback for True option",
+        "option1": "Feedback for False option"
       }
     }`);
                 } else {
@@ -2568,7 +2588,9 @@
       "options": ["صح", "خطأ"],
       "answer": 0,
       "explanations": {
-        "correct": "شرح لماذا هي صح/خطأ"
+        "correct": "شرح لماذا هي صح/خطأ",
+        "option0": "تغذية راجعة لخيار صح",
+        "option1": "تغذية راجعة لخيار خطأ"
       }
     }`);
                 }
@@ -2582,7 +2604,13 @@
       "q": "Complete the sentence: The capital of France is _____",
       "answer": "Paris",
       "explanations": {
-        "correct": "Paris is the capital of France"
+        "correct": "Paris is the capital of France. Other possible answers might include: 'Paris, France' or 'The capital is Paris'.",
+        "common_mistakes": ["London", "Berlin", "Madrid"],
+        "mistake_feedback": {
+          "London": "London is the capital of the United Kingdom, not France",
+          "Berlin": "Berlin is the capital of Germany",
+          "Madrid": "Madrid is the capital of Spain"
+        }
       }
     }`);
                 } else {
@@ -2592,7 +2620,13 @@
       "q": "أكمل الجملة: عاصمة فرنسا هي _____",
       "answer": "باريس",
       "explanations": {
-        "correct": "باريس هي عاصمة فرنسا"
+        "correct": "باريس هي عاصمة فرنسا. إجابات أخرى محتملة: 'باريس، فرنسا' أو 'العاصمة هي باريس'.",
+        "common_mistakes": ["لندن", "برلين", "مدريد"],
+        "mistake_feedback": {
+          "لندن": "لندن هي عاصمة المملكة المتحدة، وليست فرنسا",
+          "برلين": "برلين هي عاصمة ألمانيا",
+          "مدريد": "مدريد هي عاصمة إسبانيا"
+        }
       }
     }`);
                 }
@@ -2601,7 +2635,7 @@
             return formats;
         }
 
-        // توليد الاختبار باستخدام الذكاء الاصطناعي
+        // توليد الاختبار باستخدام الذكاء الاصطناعي - مع تحسين البرومبت ليشمل التغذية الراجعة لجميع الخيارات
         async function generateQuiz() {
             if (!isAPIKeyValid) {
                 showError(currentLanguage === 'ar' ? 
@@ -2616,6 +2650,11 @@
             const languageInstructions = getLanguageInstructions(quizLanguage);
             const selectedTypesText = getSelectedQuestionTypesText(languageInstructions.languageCode);
             const questionFormats = getQuestionFormats(languageInstructions.languageCode);
+
+            // برومبت محسّن مع تأكيد على التغذية الراجعة لجميع الخيارات
+            const feedbackInstruction = languageInstructions.languageCode === 'en' 
+                ? `CRITICAL REQUIREMENT: For each question, you MUST provide detailed feedback for EVERY option, not just the correct answer. For multiple choice questions, provide feedback for option0, option1, option2, option3. For true/false questions, provide feedback for both True and False options. For fill-in-the-blank questions, include common mistakes and feedback for each mistake. This is essential for the learning experience.`
+                : `متطلب مهم جداً: لكل سؤال، يجب أن تقدم تغذية راجعة مفصلة لكل الخيارات، وليس فقط للإجابة الصحيحة. بالنسبة لأسئلة الاختيار المتعدد، قدم تغذية راجعة لـ option0, option1, option2, option3. بالنسبة لأسئلة صح/خطأ، قدم تغذية راجعة لكلا الخيارين. بالنسبة لأسئلة املأ الفراغ، أضف الأخطاء الشائعة وتغذية راجعة لكل خطأ. هذا ضروري لتجربة التعلم.`;
 
             if (currentMethod === 'manual') {
                 const quizTitleInput = document.getElementById('quiz-title').value.trim();
@@ -2642,6 +2681,8 @@ Details: ${quizTopicInput}
 
 I want a quiz with ${numQuestions} questions of the following types: ${selectedTypesText}.
 
+${feedbackInstruction}
+
 IMPORTANT: Generate a mix of the selected question types. For example, if multiple types are selected, include questions from each type.
 
 ${languageInstructions.formatInstructions}
@@ -2660,6 +2701,8 @@ ${questionFormats.join(',\n')}
 التفاصيل: ${quizTopicInput}
 
 أرغب في اختبار مكون من ${numQuestions} أسئلة من الأنواع التالية: ${selectedTypesText}.
+
+${feedbackInstruction}
 
 مهم: قم بإنشاء مزيج من أنواع الأسئلة المختارة. على سبيل المثال، إذا تم اختيار أنواع متعددة، قم بتضمين أسئلة من كل نوع.
 
@@ -2702,6 +2745,8 @@ I need ${numQuestions} questions based on the text in the provided image.
 
 Question types to include: ${selectedTypesText}
 
+${feedbackInstruction}
+
 IMPORTANT: Analyze the text in the image and generate questions based on the content. Generate a mix of the selected question types.
 
 ${languageInstructions.formatInstructions}
@@ -2719,6 +2764,8 @@ ${questionFormats.join(',\n')}
 أحتاج إلى ${numQuestions} أسئلة بناءً على النص في الصورة المرفوعة.
 
 أنواع الأسئلة المطلوبة: ${selectedTypesText}
+
+${feedbackInstruction}
 
 مهم: قم بتحليل النص في الصورة وإنشاء أسئلة بناءً على المحتوى. قم بإنشاء مزيج من أنواع الأسئلة المختارة.
 
@@ -2772,6 +2819,8 @@ I need ${numQuestions} questions based on the content of the PDF file.
 
 Question types to include: ${selectedTypesText}
 
+${feedbackInstruction}
+
 IMPORTANT: Analyze the PDF content and generate questions based on the text. Generate a mix of the selected question types.
 
 ${languageInstructions.formatInstructions}
@@ -2789,6 +2838,8 @@ ${questionFormats.join(',\n')}
 أحتاج إلى ${numQuestions} أسئلة بناءً على محتوى ملف PDF.
 
 أنواع الأسئلة المطلوبة: ${selectedTypesText}
+
+${feedbackInstruction}
 
 مهم: قم بتحليل محتوى PDF وإنشاء أسئلة بناءً على النص. قم بإنشاء مزيج من أنواع الأسئلة المختارة.
 
@@ -2941,10 +2992,21 @@ ${questionFormats.join(',\n')}
             const shuffledOptions = shuffledIndices.map(idx => options[idx]);
             const newAnswer = shuffledIndices.indexOf(answer);
             
+            // إعادة ترتيب الشروح وفقاً للترتيب الجديد
+            const shuffledExplanations = { ...question.explanations };
+            if (shuffledExplanations.option0 || shuffledExplanations.option1 || 
+                shuffledExplanations.option2 || shuffledExplanations.option3) {
+                for (let i = 0; i < shuffledIndices.length; i++) {
+                    const originalIndex = shuffledIndices[i];
+                    shuffledExplanations[`option${i}`] = question.explanations[`option${originalIndex}`] || '';
+                }
+            }
+            
             return {
                 ...question,
                 options: shuffledOptions,
-                answer: newAnswer
+                answer: newAnswer,
+                explanations: shuffledExplanations
             };
         }
 
@@ -3123,6 +3185,9 @@ ${questionFormats.join(',\n')}
             if (userAnswers[currentQuestionIndex] !== null) {
                 showExplanation();
             }
+            
+            // التحقق إذا كان هذا آخر سؤال وتمت الإجابة عليه
+            checkIfLastQuestionAnswered();
         }
 
         // اختيار إجابة
@@ -3145,6 +3210,7 @@ ${questionFormats.join(',\n')}
             });
 
             showExplanation();
+            checkIfLastQuestionAnswered();
         }
 
         // اختيار إجابة لسؤال املأ الفراغ
@@ -3158,6 +3224,30 @@ ${questionFormats.join(',\n')}
 
             document.getElementById('fillBlankAnswer').disabled = true;
             showExplanation();
+            checkIfLastQuestionAnswered();
+        }
+
+        // التحقق مما إذا كان آخر سؤال تمت الإجابة عليه
+        function checkIfLastQuestionAnswered() {
+            const allAnswered = userAnswers.every(answer => answer !== null);
+            const lastQuestionIndex = questions.length - 1;
+            const isLastQuestion = currentQuestionIndex === lastQuestionIndex;
+            const lastQuestionAnswered = userAnswers[lastQuestionIndex] !== null;
+            
+            // إذا كان هذا هو السؤال الأخير وتمت الإجابة عليه، إنهاء الاختبار تلقائياً
+            if (isLastQuestion && lastQuestionAnswered) {
+                setTimeout(() => {
+                    if (currentLanguage === 'ar') {
+                        showSuccessMessage('تمت الإجابة على جميع الأسئلة! جاري إنهاء الاختبار...');
+                    } else {
+                        showSuccessMessage('All questions answered! Finishing quiz...');
+                    }
+                    
+                    setTimeout(() => {
+                        finishQuiz();
+                    }, 2000);
+                }, 1000);
+            }
         }
 
         // عرض الشرح
@@ -3174,7 +3264,8 @@ ${questionFormats.join(',\n')}
                 let correctText = questionLanguage === 'en' ? 'Correct answer!' : 'إجابة صحيحة!';
                 let wrongText = questionLanguage === 'en' ? 'Wrong answer' : 'إجابة خاطئة';
                 let correctAnswerText = questionLanguage === 'en' ? 'Correct answer' : 'الإجابة الصحيحة';
-                let explanationText = questionLanguage === 'en' ? 'Correct Explanation' : 'التفسير الصحيح';
+                let explanationText = questionLanguage === 'en' ? 'Feedback' : 'التغذية الراجعة';
+                let yourAnswerText = questionLanguage === 'en' ? 'Your answer' : 'إجابتك';
 
                 let resultHTML = "";
                 let isCorrect = false;
@@ -3196,6 +3287,43 @@ ${questionFormats.join(',\n')}
                         <p style="color: var(--secondary);">${correctAnswerText}: ${question.answer}</p>
                         `;
                     }
+                    
+                    // عرض التغذية الراجعة المناسبة
+                    if (isCorrect && question.explanations && question.explanations.correct) {
+                        resultHTML += `
+                        <div style="margin-top: 15px; padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 8px;">
+                            <strong>📚 ${explanationText}:</strong><br>
+                            ${question.explanations.correct}
+                        </div>
+                        `;
+                    } else if (!isCorrect && question.explanations && question.explanations.mistake_feedback) {
+                        // البحث عن تغذية راجعة للخطأ المحدد
+                        const userAnswerLower = userAnswer.toString().toLowerCase().trim();
+                        let foundFeedback = '';
+                        
+                        for (const [mistake, feedback] of Object.entries(question.explanations.mistake_feedback)) {
+                            if (mistake.toLowerCase().trim() === userAnswerLower) {
+                                foundFeedback = feedback;
+                                break;
+                            }
+                        }
+                        
+                        if (foundFeedback) {
+                            resultHTML += `
+                            <div style="margin-top: 15px; padding: 10px; background: rgba(239, 68, 68, 0.1); border-radius: 8px;">
+                                <strong>📚 ${explanationText}:</strong><br>
+                                ${foundFeedback}
+                            </div>
+                            `;
+                        } else if (question.explanations.correct) {
+                            resultHTML += `
+                            <div style="margin-top: 15px; padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 8px;">
+                                <strong>📚 ${explanationText}:</strong><br>
+                                ${question.explanations.correct}
+                            </div>
+                            `;
+                        }
+                    }
                 } else {
                     if (userAnswer === question.answer) {
                         resultHTML = `<p style="color: var(--secondary);"><i class="fas fa-check-circle"></i> ${correctText}</p>`;
@@ -3206,16 +3334,37 @@ ${questionFormats.join(',\n')}
                         <p style="color: var(--secondary);">${correctAnswerText}: ${question.options[question.answer]}</p>
                         `;
                     }
-                }
-
-                // إضافة الشروح
-                if (question.explanations && question.explanations.correct) {
-                    resultHTML += `
-                    <div style="margin-top: 15px; padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 8px;">
-                        <strong>📚 ${explanationText}:</strong><br>
-                        ${question.explanations.correct}
-                    </div>
-                    `;
+                    
+                    // عرض التغذية الراجعة لجميع الخيارات
+                    if (question.explanations) {
+                        resultHTML += `
+                        <div style="margin-top: 15px;">
+                            <strong>📚 ${explanationText}:</strong><br><br>
+                        `;
+                        
+                        // التغذية الراجعة للخيار الصحيح
+                        if (question.explanations.correct) {
+                            resultHTML += `
+                            <div style="padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 8px; margin-bottom: 8px;">
+                                <strong>✅ ${correctAnswerText}:</strong> ${question.explanations.correct}
+                            </div>
+                            `;
+                        }
+                        
+                        // التغذية الراجعة للخيار الذي اختاره المستخدم
+                        const userChoiceText = questionLanguage === 'en' ? 'Your choice' : 'اختيارك';
+                        if (question.explanations[`option${userAnswer}`]) {
+                            const bgColor = isCorrect ? 'rgba(76, 175, 80, 0.1)' : 'rgba(239, 68, 68, 0.1)';
+                            const icon = isCorrect ? '✅' : '❌';
+                            resultHTML += `
+                            <div style="padding: 10px; background: ${bgColor}; border-radius: 8px; margin-bottom: 8px;">
+                                <strong>${icon} ${yourAnswerText}:</strong> ${question.explanations[`option${userAnswer}`]}
+                            </div>
+                            `;
+                        }
+                        
+                        resultHTML += `</div>`;
+                    }
                 }
 
                 explanationDiv.innerHTML = resultHTML;
@@ -3227,6 +3376,11 @@ ${questionFormats.join(',\n')}
             if (currentQuestionIndex < questions.length - 1) {
                 currentQuestionIndex++;
                 loadQuiz();
+            } else {
+                // إذا كان هذا هو السؤال الأخير، التحقق مما إذا تمت الإجابة عليه
+                if (userAnswers[currentQuestionIndex] !== null) {
+                    finishQuiz();
+                }
             }
         }
 
