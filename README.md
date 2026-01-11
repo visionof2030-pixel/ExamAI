@@ -1,3 +1,8 @@
+نظام الاختبارات الذكي - تلخيص المحتوى بأسلوب Bites
+
+بعد تحديث البرومبت الخاص بأسلوب Bites التعليمي، سأقدم لك الملف HTML الكامل مع نظام التلخيص المحسّن:
+
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -2323,182 +2328,439 @@
             font-size: 0.9rem;
         }
         
-        /* Summary Hierarchy Styles */
+        /* Summary Hierarchy Styles - تم التحديث */
         .summary-hierarchy {
             direction: rtl;
             text-align: right;
+            font-family: 'Tajawal', sans-serif;
         }
         
         .summary-main-title {
             color: var(--primary);
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             font-weight: 800;
             margin-bottom: 30px;
             padding-bottom: 15px;
-            border-bottom: 3px solid var(--accent);
+            border-bottom: 4px solid var(--accent);
             text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
-        .summary-chapter {
-            background: rgba(26, 95, 122, 0.05);
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 25px;
-            border: 2px solid rgba(26, 95, 122, 0.1);
+        /* تحسين أسلوب Bites */
+        .bites-summary {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 15px 35px rgba(26, 95, 122, 0.1);
+            border: 1px solid rgba(26, 95, 122, 0.1);
         }
         
-        .summary-chapter-title {
+        .bites-main-title {
             color: var(--primary);
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            padding-right: 15px;
-            border-right: 4px solid var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 3px solid rgba(26, 95, 122, 0.2);
         }
         
-        .summary-section {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(21, 152, 149, 0.1);
-        }
-        
-        .summary-section-title {
-            color: var(--accent);
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            padding-right: 15px;
-            border-right: 3px solid var(--accent);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .summary-subsection {
-            margin-bottom: 15px;
-            padding-right: 20px;
-        }
-        
-        .summary-subsection-title {
-            color: var(--summary-blue);
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            padding-right: 15px;
-            border-right: 2px solid var(--summary-blue);
-        }
-        
-        .summary-points {
-            list-style: none;
-            padding-right: 30px;
-            margin-top: 10px;
-        }
-        
-        .summary-point {
-            margin-bottom: 12px;
-            padding-right: 20px;
-            position: relative;
-            line-height: 1.7;
+        .bites-overview {
+            background: linear-gradient(135deg, rgba(26, 95, 122, 0.05), rgba(21, 152, 149, 0.05));
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-right: 4px solid var(--accent);
+            font-size: 1.2rem;
+            line-height: 1.8;
             color: var(--text);
         }
         
-        .summary-point:before {
-            content: "•";
-            position: absolute;
-            right: 0;
-            color: var(--secondary);
-            font-size: 1.5rem;
-            font-weight: bold;
+        .bites-section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(26, 95, 122, 0.1);
         }
         
-        .summary-key-concept {
-            background: rgba(76, 175, 80, 0.05);
-            border-right: 4px solid var(--secondary);
+        .bites-section-title {
+            color: var(--accent);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(21, 152, 149, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .bites-section-title i {
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+        
+        .bites-explanation {
+            color: var(--text);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
             padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
+            background: rgba(26, 95, 122, 0.03);
+            border-radius: 10px;
+        }
+        
+        .bites-points {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        
+        .bites-point {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            background: white;
+            border-left: 4px solid var(--secondary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .bites-point:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .bites-point-title {
+            color: var(--primary);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .bites-point-title i {
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+        
+        .bites-point-explanation {
+            color: var(--text);
+            font-size: 1.05rem;
+            line-height: 1.6;
+            padding-right: 25px;
+        }
+        
+        .bites-conclusion {
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.05), rgba(255, 193, 7, 0.05));
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+            border-right: 4px solid var(--tertiary);
+            font-size: 1.15rem;
+            font-style: italic;
+            text-align: center;
+            color: var(--text);
+        }
+        
+        /* أسلوب التفاصيل العميقة */
+        .detailed-summary-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 15px 35px rgba(26, 95, 122, 0.1);
+            border: 1px solid rgba(26, 95, 122, 0.1);
+        }
+        
+        .detailed-main-title {
+            color: var(--primary);
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 40px;
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 3px solid rgba(26, 95, 122, 0.2);
+        }
+        
+        .chapter-container {
+            margin-bottom: 50px;
+        }
+        
+        .chapter-title {
+            color: var(--primary);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(26, 95, 122, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .chapter-title i {
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+        
+        .section-container {
+            margin-bottom: 35px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-title {
+            color: var(--accent);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(21, 152, 149, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .section-title i {
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+        
+        .subsection-container {
+            margin-bottom: 25px;
+        }
+        
+        .subsection-title {
+            color: var(--summary-blue);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .subsection-title i {
+            color: var(--summary-blue);
+            font-size: 1.1rem;
+        }
+        
+        .content-block {
+            margin-bottom: 20px;
+            padding: 18px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(26, 95, 122, 0.1);
+        }
+        
+        .key-point {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.05), rgba(76, 175, 80, 0.02));
+            border-right: 4px solid var(--secondary);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        
+        .key-point-title {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .definition {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.05), rgba(33, 150, 243, 0.02));
+            border-right: 4px solid var(--summary-blue);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        
+        .definition-title {
+            color: var(--summary-blue);
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .important-note {
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.05), rgba(255, 152, 0, 0.02));
+            border-right: 4px solid var(--tertiary);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        
+        .important-note-title {
+            color: var(--tertiary);
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .conclusion-box {
+            background: linear-gradient(135deg, rgba(156, 39, 176, 0.05), rgba(156, 39, 176, 0.02));
+            border-right: 4px solid var(--flashcard-purple);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        .summary-table th {
+            background: var(--accent-gradient);
+            color: white;
+            padding: 15px;
+            text-align: right;
+            font-weight: 600;
+            border: none;
+        }
+        
+        .summary-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(26, 95, 122, 0.1);
+            color: var(--text);
+        }
+        
+        .summary-table tr:hover {
+            background: rgba(26, 95, 122, 0.03);
+        }
+        
+        /* تنسيقات النصوص */
+        .summary-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text);
+            margin-bottom: 15px;
+        }
+        
+        .highlighted-text {
+            background: linear-gradient(120deg, rgba(255, 193, 7, 0.2) 0%, rgba(255, 193, 7, 0.1) 100%);
+            padding: 3px 8px;
+            border-radius: 4px;
             font-weight: 500;
         }
         
-        .summary-definition {
-            background: rgba(33, 150, 243, 0.05);
-            border-right: 4px solid var(--summary-blue);
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
+        .emphasized-text {
+            color: var(--primary);
+            font-weight: 600;
+            font-style: normal;
         }
         
-        .summary-note {
-            background: rgba(255, 152, 0, 0.05);
-            border-right: 4px solid var(--tertiary);
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            font-style: italic;
-        }
-        
-        .summary-important {
-            background: rgba(156, 39, 176, 0.05);
-            border-right: 4px solid var(--flashcard-purple);
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            font-weight: bold;
-        }
-        
-        /* English mode for summary hierarchy */
-        body.english-mode .summary-hierarchy {
-            direction: ltr;
+        /* English mode for Bites style */
+        body.english-mode .bites-summary,
+        body.english-mode .detailed-summary-container {
             text-align: left;
         }
         
-        body.english-mode .summary-chapter-title {
-            padding-left: 15px;
-            padding-right: 0;
-            border-left: 4px solid var(--primary);
-            border-right: none;
-        }
-        
-        body.english-mode .summary-section-title {
-            padding-left: 15px;
-            padding-right: 0;
-            border-left: 3px solid var(--accent);
-            border-right: none;
-        }
-        
-        body.english-mode .summary-subsection-title {
-            padding-left: 15px;
-            padding-right: 0;
-            border-left: 2px solid var(--summary-blue);
-            border-right: none;
-        }
-        
-        body.english-mode .summary-points {
-            padding-left: 30px;
-            padding-right: 0;
-        }
-        
-        body.english-mode .summary-point {
-            padding-left: 20px;
-            padding-right: 0;
-        }
-        
-        body.english-mode .summary-point:before {
-            left: 0;
-            right: auto;
-        }
-        
-        body.english-mode .summary-key-concept,
-        body.english-mode .summary-definition,
-        body.english-mode .summary-note,
-        body.english-mode .summary-important {
+        body.english-mode .bites-overview,
+        body.english-mode .bites-conclusion,
+        body.english-mode .key-point,
+        body.english-mode .definition,
+        body.english-mode .important-note,
+        body.english-mode .conclusion-box {
             border-left: 4px solid;
             border-right: none;
+        }
+        
+        body.english-mode .bites-point {
+            border-right: 4px solid var(--secondary);
+            border-left: none;
+        }
+        
+        body.english-mode .summary-table th {
+            text-align: left;
+        }
+        
+        /* تحسين ألوان العناوين */
+        .section-header {
+            color: var(--primary);
+            font-size: 2rem;
+            font-weight: 800;
+            text-align: center;
+            margin: 30px 0;
+            background: linear-gradient(135deg, var(--primary) 30%, var(--accent) 70%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-subheader {
+            color: var(--accent);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 25px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(21, 152, 149, 0.2);
+        }
+        
+        /* تحسين حجم الخطوط للعناوين */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        h3 {
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        
+        h4 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--summary-blue);
+        }
+        
+        h5 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--flashcard-purple);
+        }
+        
+        h6 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--tertiary);
         }
     </style>
 </head>
@@ -2573,7 +2835,7 @@
                             <i class="fas fa-file-alt"></i>
                         </div>
                         <div class="method-title" id="summarize-title">تلخيص المحتوى</div>
-                        <div class="method-desc" id="summarize-desc">تلخيص النصوص والملفات بأسلوبين مختلفين</div>
+                        <div class="method-desc" id="summarize-desc">تلخيص النصوص والملفات بأسلوب Bites التعليمي</div>
                     </div>
                     <div class="method-tab" onclick="selectMethod('flashcards')" id="flashcards-tab">
                         <div class="method-icon">
@@ -2959,7 +3221,7 @@
                             </div>
                             <div class="analysis-status" id="summary-analysis-status">
                                 <i class="fas fa-robot"></i>
-                                <p id="summary-analysis-status-text">سيقوم الذكاء الاصطناعي بتحليل الملف وإنشاء التلخيص</p>
+                                <p id="summary-analysis-status-text">سيقوم الذكاء الاصطناعي بتحليل الملف وإنشاء التلخيص بأسلوب Bites التعليمي</p>
                             </div>
                             <button class="remove-file-btn" onclick="removeSummaryFile()" id="remove-summary-btn">
                                 <i class="fas fa-trash"></i> <span id="remove-summary-text">إزالة الملف</span>
@@ -2967,7 +3229,7 @@
                         </div>
                     </div>
 
-                    <!-- نفس قسم تفاصيل PDF -->
+                    <!-- قسم تفاصيل PDF -->
                     <div class="pdf-details-section" id="summary-details-section">
                         <h4 style="color: var(--text); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
                             <i class="fas fa-filter"></i> <span>تحديد تفاصيل المحتوى</span>
@@ -3048,21 +3310,21 @@
                     </div>
 
                     <div class="input-group">
-                        <label><i class="fas fa-chart-pie"></i> <span id="summary-type-label">نوع التلخيص</span></label>
+                        <label><i class="fas fa-chart-pie"></i> <span id="summary-type-label">أسلوب التلخيص</span></label>
                         <div class="summary-type-selector">
-                            <div class="summary-type active" onclick="selectSummaryType('detailed')" id="detailed-summary">
+                            <div class="summary-type active" onclick="selectSummaryType('bites')" id="bites-summary">
+                                <div class="summary-type-icon">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <div class="summary-type-title" id="bites-summary-name">أسلوب Bites التعليمي</div>
+                                <div class="summary-type-desc" id="bites-summary-desc">ملخص مبسط بأسلوب تعليمي واضح ومباشر</div>
+                            </div>
+                            <div class="summary-type" onclick="selectSummaryType('detailed')" id="detailed-summary">
                                 <div class="summary-type-icon">
                                     <i class="fas fa-file-alt"></i>
                                 </div>
                                 <div class="summary-type-title" id="detailed-summary-name">تفاصيل عميقة</div>
                                 <div class="summary-type-desc" id="detailed-summary-desc">تلخيص مفصل مع جميع النقاط الرئيسية</div>
-                            </div>
-                            <div class="summary-type" onclick="selectSummaryType('quick')" id="quick-summary">
-                                <div class="summary-type-icon">
-                                    <i class="fas fa-bolt"></i>
-                                </div>
-                                <div class="summary-type-title" id="quick-summary-name">ملخص سريع</div>
-                                <div class="summary-type-desc" id="quick-summary-desc">نقاط رئيسية مركزة وسريعة القراءة</div>
                             </div>
                         </div>
                     </div>
@@ -3110,7 +3372,7 @@
                         </div>
                     </div>
 
-                    <!-- نفس قسم تفاصيل PDF -->
+                    <!-- قسم تفاصيل PDF -->
                     <div class="pdf-details-section" id="flashcards-details-section">
                         <h4 style="color: var(--text); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
                             <i class="fas fa-filter"></i> <span>تحديد تفاصيل المحتوى</span>
@@ -3290,14 +3552,14 @@
                 <div class="output-header">
                     <div class="output-title">
                         <i class="fas fa-file-alt"></i>
-                        <span id="summary-output-title">ملخص المحتوى</span>
+                        <span id="summary-output-title">ملخص المحتوى بأسلوب Bites التعليمي</span>
                     </div>
                     <button class="copy-btn" onclick="copyToClipboard('summary-content')" id="copy-summary-btn">
                         <i class="fas fa-copy"></i>
                         <span id="copy-summary-text">نسخ الملخص</span>
                     </button>
                 </div>
-                <div id="summary-content" class="summary-hierarchy"></div>
+                <div id="summary-content"></div>
             </div>
 
             <div class="navigation" style="margin-top: 30px;">
@@ -3518,7 +3780,7 @@
         let isAPIKeyValid = false;
         let contentLanguage = "ar";
         let soundEnabled = true;
-        let summaryType = "detailed";
+        let summaryType = "bites";
         let flashcardType = "concepts";
         
         // أنواع الأسئلة المختارة
@@ -3556,7 +3818,7 @@
             "pdf-title": "رفع ملف PDF",
             "pdf-desc": "تحميل ملف وتوليد محتوى باستخدام الذكاء الاصطناعي",
             "summarize-title": "تلخيص المحتوى",
-            "summarize-desc": "تلخيص النصوص والملفات بأسلوبين مختلفين",
+            "summarize-desc": "تلخيص النصوص والملفات بأسلوب Bites التعليمي",
             "flashcards-title": "بطاقات تعليمية",
             "flashcards-desc": "إنشاء بطاقات تعليمية تفاعلية للمراجعة",
             "api-key-label": "مفتاح Google Gemini API",
@@ -3605,7 +3867,7 @@
             "close-questions-text": "إغلاق القائمة",
             "analysis-status-text": "سيقوم الذكاء الاصطناعي بتحليل الملف وتوليد المحتوى",
             "image-analysis-status-text": "سيقوم الذكاء الاصطناعي بتحليل الصورة وتوليد المحتوى",
-            "summary-analysis-status-text": "سيقوم الذكاء الاصطناعي بتحليل الملف وإنشاء التلخيص",
+            "summary-analysis-status-text": "سيقوم الذكاء الاصطناعي بتحليل الملف وإنشاء التلخيص بأسلوب Bites التعليمي",
             "flashcards-analysis-status-text": "سيقوم الذكاء الاصطناعي بتحليل الملف وإنشاء البطاقات التعليمية",
             "language-label": "اختر لغة المحتوى",
             "arabic-language-name": "العربية",
@@ -3627,13 +3889,13 @@
             "units-list-hint": "اذكر العناوين الرئيسية للوحدات أو الفصول التي تريد التركيز عليها.",
             "topics-list-label": "المواضيع المطلوبة",
             "topics-list-hint": "اذكر المواضيع أو المفاهيم المحددة التي تريد التركيز عليها في التحليل.",
-            "summary-type-label": "نوع التلخيص",
+            "summary-type-label": "أسلوب التلخيص",
+            "bites-summary-name": "أسلوب Bites التعليمي",
+            "bites-summary-desc": "ملخص مبسط بأسلوب تعليمي واضح ومباشر",
             "detailed-summary-name": "تفاصيل عميقة",
             "detailed-summary-desc": "تلخيص مفصل مع جميع النقاط الرئيسية",
-            "quick-summary-name": "ملخص سريع",
-            "quick-summary-desc": "نقاط رئيسية مركزة وسريعة القراءة",
             "summary-length-label": "طول التلخيص",
-            "summary-output-title": "ملخص المحتوى",
+            "summary-output-title": "ملخص المحتوى بأسلوب Bites التعليمي",
             "copy-summary-text": "نسخ الملخص",
             "back-summary-text": "العودة للقائمة الرئيسية",
             "download-summary-text": "تحميل الملخص",
@@ -3667,7 +3929,7 @@
             "pdf-title": "Upload PDF File",
             "pdf-desc": "Upload file and generate content using AI",
             "summarize-title": "Content Summary",
-            "summarize-desc": "Summarize texts and files in two different styles",
+            "summarize-desc": "Summarize texts and files in Bites educational style",
             "flashcards-title": "Flashcards",
             "flashcards-desc": "Create interactive flashcards for review",
             "api-key-label": "Google Gemini API Key",
@@ -3716,7 +3978,7 @@
             "close-questions-text": "Close List",
             "analysis-status-text": "AI will analyze the file and generate content",
             "image-analysis-status-text": "AI will analyze the image and generate content",
-            "summary-analysis-status-text": "AI will analyze the file and create summary",
+            "summary-analysis-status-text": "AI will analyze the file and create summary in Bites educational style",
             "flashcards-analysis-status-text": "AI will analyze the file and create flashcards",
             "language-label": "Choose Content Language",
             "arabic-language-name": "Arabic",
@@ -3738,13 +4000,13 @@
             "units-list-hint": "List the main headings of units or chapters you want to focus on.",
             "topics-list-label": "Required Topics",
             "topics-list-hint": "List the specific topics or concepts you want to focus on in the analysis.",
-            "summary-type-label": "Summary Type",
+            "summary-type-label": "Summary Style",
+            "bites-summary-name": "Bites Educational Style",
+            "bites-summary-desc": "Simplified summary in clear, direct educational style",
             "detailed-summary-name": "Details and In-depth",
             "detailed-summary-desc": "Detailed summary with all key points",
-            "quick-summary-name": "Quick and Concise",
-            "quick-summary-desc": "Focused key points for quick reading",
             "summary-length-label": "Summary Length",
-            "summary-output-title": "Content Summary",
+            "summary-output-title": "Content Summary in Bites Educational Style",
             "copy-summary-text": "Copy Summary",
             "back-summary-text": "Back to Main Menu",
             "download-summary-text": "Download Summary",
@@ -3767,94 +4029,15 @@
             "download-flashcards-text": "Download Flashcards"
         };
 
-        // ==================== دوال تأخير وإعادة المحاولة ====================
-        function delayBetweenRequests() {
-            const now = Date.now();
-            const timeSinceLastRequest = now - lastRequestTime;
-            
-            if (timeSinceLastRequest < MIN_REQUEST_INTERVAL) {
-                const delayTime = MIN_REQUEST_INTERVAL - timeSinceLastRequest;
-                return new Promise(resolve => setTimeout(resolve, delayTime));
-            }
-            
-            lastRequestTime = now;
-            return Promise.resolve();
-        }
-
-        async function makeAPIRequest(url, options, retryNumber = 0) {
-            await delayBetweenRequests();
-            
-            try {
-                // إضافة timeout للطلب
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
-                
-                const response = await fetch(url, {
-                    ...options,
-                    signal: controller.signal
-                });
-                
-                clearTimeout(timeoutId);
-                
-                if (response.status === 429) {
-                    // Too Many Requests - انتظر ثم حاول مرة أخرى
-                    const retryAfter = response.headers.get('Retry-After') || 5;
-                    const waitTime = parseInt(retryAfter) * 1000;
-                    
-                    if (retryNumber < MAX_RETRIES) {
-                        document.getElementById('loading-details').textContent = 
-                            currentLanguage === 'ar' ?
-                            `محاولة ${retryNumber + 1}/${MAX_RETRIES} - الانتظار ${retryAfter} ثانية...` :
-                            `Retry ${retryNumber + 1}/${MAX_RETRIES} - Waiting ${retryAfter} seconds...`;
-                        
-                        await new Promise(resolve => setTimeout(resolve, waitTime));
-                        return makeAPIRequest(url, options, retryNumber + 1);
-                    } else {
-                        throw new Error(currentLanguage === 'ar' ?
-                            'تم تجاوز الحد الأقصى للطلبات. حاول مرة أخرى بعد قليل.' :
-                            'Rate limit exceeded. Please try again later.');
-                    }
-                }
-                
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(`HTTP ${response.status}: ${errorData.error?.message || response.statusText}`);
-                }
-                
-                return await response.json();
-            } catch (error) {
-                if (error.name === 'AbortError') {
-                    throw new Error(currentLanguage === 'ar' ?
-                        'انتهت مهلة الطلب. تحقق من اتصالك بالإنترنت وحاول مرة أخرى.' :
-                        'Request timeout. Check your internet connection and try again.');
-                }
-                
-                if (retryNumber < MAX_RETRIES) {
-                    const waitTime = 2000 * Math.pow(2, retryNumber); // Exponential backoff
-                    document.getElementById('loading-details').textContent = 
-                        currentLanguage === 'ar' ?
-                        `محاولة ${retryNumber + 1}/${MAX_RETRIES} - الانتظار ${waitTime/1000} ثانية...` :
-                        `Retry ${retryNumber + 1}/${MAX_RETRIES} - Waiting ${waitTime/1000} seconds...`;
-                    
-                    await new Promise(resolve => setTimeout(resolve, waitTime));
-                    return makeAPIRequest(url, options, retryNumber + 1);
-                } else {
-                    throw error;
-                }
-            }
-        }
-
         // ==================== وظائف اللغة ====================
         function switchLanguage(lang) {
             currentLanguage = lang;
             
-            // تحديث أزرار اللغة
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
             document.querySelector(`.lang-btn[onclick="switchLanguage('${lang}')"]`).classList.add('active');
             
-            // تغيير اتجاه الصفحة
             if (lang === 'en') {
                 document.body.classList.add('english-mode');
                 document.documentElement.setAttribute('dir', 'ltr');
@@ -3865,19 +4048,14 @@
                 document.documentElement.setAttribute('lang', 'ar');
             }
             
-            // تحديث النصوص
             updateTexts(lang);
-            
-            // تحديث نصوص الحقول النصية
             updatePlaceholders(lang);
             
-            // إذا كان هناك محتوى معروض، إعادة تحميله
             if (document.getElementById('quiz-section').style.display !== 'none') {
                 loadQuiz();
             } else if (document.getElementById('summary-section').style.display !== 'none') {
-                // إعادة تحميل الملخص إذا كان معروضاً
                 const summaryContent = document.getElementById('summary-content').innerHTML;
-                document.getElementById('summary-content').innerHTML = summaryContent; // إعادة التنسيق
+                document.getElementById('summary-content').innerHTML = summaryContent;
             } else if (document.getElementById('flashcards-section-main').style.display !== 'none') {
                 loadFlashcard(currentFlashcardIndex);
             }
@@ -3893,7 +4071,6 @@
                 }
             }
             
-            // تحديث خيارات القائمة المنسدلة
             updateDropdownOptions(lang);
         }
 
@@ -4011,7 +4188,6 @@
                 ]
             };
 
-            // تحديث قوائم الأسئلة
             ['manual', 'image', 'pdf'].forEach(type => {
                 const element = document.getElementById(`num-questions-${type}`);
                 if (element) {
@@ -4021,7 +4197,6 @@
                 }
             });
 
-            // تحديث قائمة البطاقات التعليمية
             const flashcardsElement = document.getElementById('num-flashcards');
             if (flashcardsElement) {
                 flashcardsElement.innerHTML = options.flashcards.map(opt => 
@@ -4029,7 +4204,6 @@
                 ).join('');
             }
 
-            // تحديث قائمة طول التلخيص
             const summaryLengthElement = document.getElementById('summary-length');
             if (summaryLengthElement) {
                 summaryLengthElement.innerHTML = options.summaryLength.map(opt => 
@@ -4037,7 +4211,6 @@
                 ).join('');
             }
 
-            // تحديث قائمة مستوى الصعوبة
             const difficultyElement = document.getElementById('flashcard-difficulty');
             if (difficultyElement) {
                 difficultyElement.innerHTML = options.difficulty.map(opt => 
@@ -4050,7 +4223,6 @@
         function selectMethod(method) {
             currentMethod = method;
             
-            // تحديث التبويبات
             document.getElementById('manual-tab').classList.remove('active');
             document.getElementById('image-tab').classList.remove('active');
             document.getElementById('pdf-tab').classList.remove('active');
@@ -4058,20 +4230,17 @@
             document.getElementById('flashcards-tab').classList.remove('active');
             document.getElementById(`${method}-tab`).classList.add('active');
             
-            // إظهار/إخفاء الأقسام
             document.getElementById('manual-section').style.display = method === 'manual' ? 'block' : 'none';
             document.getElementById('image-section').style.display = method === 'image' ? 'block' : 'none';
             document.getElementById('pdf-section').style.display = method === 'pdf' ? 'block' : 'none';
             document.getElementById('summarize-section').style.display = method === 'summarize' ? 'block' : 'none';
             document.getElementById('flashcards-section').style.display = method === 'flashcards' ? 'block' : 'none';
             
-            // إظهار/إخفاء خيارات إضافية
             if (method === 'image' || method === 'pdf') {
                 const quizOptionsId = `${method}-quiz-options`;
                 document.getElementById(quizOptionsId).style.display = 'block';
             }
             
-            // إظهار أو إخفاء قسم تفاصيل PDF
             const detailsSectionId = `${method}-details-section`;
             const detailsSection = document.getElementById(detailsSectionId);
             if (detailsSection && (method === 'pdf' || method === 'summarize' || method === 'flashcards')) {
@@ -4080,7 +4249,6 @@
                 }
             }
             
-            // تحديث نص زر التوليد
             const generateBtn = document.getElementById('generate-btn');
             const generateText = document.getElementById('generate-text');
             if (method === 'summarize') {
@@ -4104,11 +4272,9 @@
         }
 
         function selectPDFDetailsTab(tab) {
-            // إزالة النشاط من جميع التبويبات
             document.querySelectorAll('.pdf-details-tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.pdf-details-content').forEach(c => c.classList.remove('active'));
             
-            // إضافة النشاط للتبويب المحدد
             const tabId = currentMethod === 'summarize' ? `summary-${tab}-tab` : 
                          currentMethod === 'flashcards' ? `flashcards-${tab}-tab` : `${tab}-tab`;
             const contentId = currentMethod === 'summarize' ? `summary-${tab}-content` : 
@@ -4121,8 +4287,8 @@
         function selectSummaryType(type) {
             summaryType = type;
             
+            document.getElementById('bites-summary').classList.remove('active');
             document.getElementById('detailed-summary').classList.remove('active');
-            document.getElementById('quick-summary').classList.remove('active');
             
             document.getElementById(`${type}-summary`).classList.add('active');
         }
@@ -4149,7 +4315,6 @@
                 option.classList.remove('active');
             }
             
-            // التأكد من اختيار نوع واحد على الأقل
             const hasSelectedType = Object.values(selectedQuestionTypes).some(value => value);
             if (!hasSelectedType) {
                 selectedQuestionTypes[type] = true;
@@ -4177,7 +4342,6 @@
                 icon.classList.add('fa-moon');
             }
             
-            // التحقق من تفضيل الصوت
             const soundPref = localStorage.getItem('soundEnabled');
             if (soundPref !== null) {
                 soundEnabled = soundPref === 'true';
@@ -4204,7 +4368,6 @@
             localStorage.setItem('soundEnabled', soundEnabled);
             updateSoundButton();
             
-            // تشغيل صوت تجريبي عند تشغيل الصوت
             if (soundEnabled) {
                 playSound('correct');
             }
@@ -4317,7 +4480,6 @@
 
             imageFile = file;
 
-            // عرض معلومات الصورة
             document.getElementById('image-filename').textContent = file.name;
             document.getElementById('image-filesize').textContent = currentLanguage === 'ar' ? 
                 `الحجم: ${(file.size / 1024 / 1024).toFixed(2)} MB` : 
@@ -4325,7 +4487,6 @@
             
             document.getElementById('image-preview').classList.add('active');
             
-            // عرض معاينة الصورة
             const reader = new FileReader();
             reader.onload = function(e) {
                 document.getElementById('preview-image').src = e.target.result;
@@ -4514,7 +4675,6 @@
             if (languageCode === 'en') {
                 instructions = "IMPORTANT: You MUST focus ONLY on the following specified content. Ignore all other content.\n\n";
                 
-                // إضافة تعليمات الصفحات
                 if (details.pages.startPage || details.pages.endPage || details.pages.specificPages) {
                     instructions += "PAGE RANGE INSTRUCTIONS:\n";
                     instructions += "You are REQUIRED to analyze ONLY these pages:\n";
@@ -4535,7 +4695,6 @@
                     instructions += "- IGNORE all text, images, and information from other pages\n\n";
                 }
                 
-                // إضافة تعليمات الوحدات
                 if (details.units) {
                     instructions += "SPECIFIC UNITS/CHAPTERS INSTRUCTIONS:\n";
                     instructions += "You MUST focus ONLY on these specific units/chapters:\n";
@@ -4550,7 +4709,6 @@
                     instructions += "- Ignore all other units and chapters\n\n";
                 }
                 
-                // إضافة تعليمات المواضيع
                 if (details.topics) {
                     instructions += "SPECIFIC TOPICS/CONCEPTS INSTRUCTIONS:\n";
                     instructions += "You MUST focus ONLY on these specific topics:\n";
@@ -4575,7 +4733,6 @@
             } else {
                 instructions = "هام جداً: يجب أن تركز فقط على المحتوى المحدد التالي. تجاهل جميع المحتويات الأخرى.\n\n";
                 
-                // إضافة تعليمات الصفحات
                 if (details.pages.startPage || details.pages.endPage || details.pages.specificPages) {
                     instructions += "تعليمات نطاق الصفحات:\n";
                     instructions += "يجب عليك تحليل هذه الصفحات فقط:\n";
@@ -4596,7 +4753,6 @@
                     instructions += "- تجاهل كل النصوص والصور والمعلومات من الصفحات الأخرى\n\n";
                 }
                 
-                // إضافة تعليمات الوحدات
                 if (details.units) {
                     instructions += "تعليمات الوحدات/الفصول المحددة:\n";
                     instructions += "يجب أن تركز فقط على هذه الوحدات/الفصول المحددة:\n";
@@ -4611,7 +4767,6 @@
                     instructions += "- تجاهل جميع الوحدات والفصول الأخرى\n\n";
                 }
                 
-                // إضافة تعليمات المواضيع
                 if (details.topics) {
                     instructions += "تعليمات المواضيع/المفاهيم المحددة:\n";
                     instructions += "يجب أن تركز فقط على هذه المواضيع المحددة:\n";
@@ -4661,6 +4816,81 @@
             }, 3000);
         }
 
+        // ==================== وظائف تأخير وإعادة المحاولة ====================
+        function delayBetweenRequests() {
+            const now = Date.now();
+            const timeSinceLastRequest = now - lastRequestTime;
+            
+            if (timeSinceLastRequest < MIN_REQUEST_INTERVAL) {
+                const delayTime = MIN_REQUEST_INTERVAL - timeSinceLastRequest;
+                return new Promise(resolve => setTimeout(resolve, delayTime));
+            }
+            
+            lastRequestTime = now;
+            return Promise.resolve();
+        }
+
+        async function makeAPIRequest(url, options, retryNumber = 0) {
+            await delayBetweenRequests();
+            
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
+                
+                const response = await fetch(url, {
+                    ...options,
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                
+                if (response.status === 429) {
+                    const retryAfter = response.headers.get('Retry-After') || 5;
+                    const waitTime = parseInt(retryAfter) * 1000;
+                    
+                    if (retryNumber < MAX_RETRIES) {
+                        document.getElementById('loading-details').textContent = 
+                            currentLanguage === 'ar' ?
+                            `محاولة ${retryNumber + 1}/${MAX_RETRIES} - الانتظار ${retryAfter} ثانية...` :
+                            `Retry ${retryNumber + 1}/${MAX_RETRIES} - Waiting ${retryAfter} seconds...`;
+                        
+                        await new Promise(resolve => setTimeout(resolve, waitTime));
+                        return makeAPIRequest(url, options, retryNumber + 1);
+                    } else {
+                        throw new Error(currentLanguage === 'ar' ?
+                            'تم تجاوز الحد الأقصى للطلبات. حاول مرة أخرى بعد قليل.' :
+                            'Rate limit exceeded. Please try again later.');
+                    }
+                }
+                
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(`HTTP ${response.status}: ${errorData.error?.message || response.statusText}`);
+                }
+                
+                return await response.json();
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    throw new Error(currentLanguage === 'ar' ?
+                        'انتهت مهلة الطلب. تحقق من اتصالك بالإنترنت وحاول مرة أخرى.' :
+                        'Request timeout. Check your internet connection and try again.');
+                }
+                
+                if (retryNumber < MAX_RETRIES) {
+                    const waitTime = 2000 * Math.pow(2, retryNumber);
+                    document.getElementById('loading-details').textContent = 
+                        currentLanguage === 'ar' ?
+                        `محاولة ${retryNumber + 1}/${MAX_RETRIES} - الانتظار ${waitTime/1000} ثانية...` :
+                        `Retry ${retryNumber + 1}/${MAX_RETRIES} - Waiting ${waitTime/1000} seconds...`;
+                    
+                    await new Promise(resolve => setTimeout(resolve, waitTime));
+                    return makeAPIRequest(url, options, retryNumber + 1);
+                } else {
+                    throw error;
+                }
+            }
+        }
+
         // ==================== وظائف المحتوى ====================
         async function generateContent() {
             if (!isAPIKeyValid) {
@@ -4670,7 +4900,6 @@
                 return;
             }
 
-            // إعادة تعيين عدد المحاولات
             retryCount = 0;
             lastRequestTime = 0;
 
@@ -4684,7 +4913,6 @@
         }
 
         async function generateQuiz() {
-            // التحقق من وجود الملفات المطلوبة
             if ((currentMethod === 'image' && !imageFile) || 
                 (currentMethod === 'pdf' && !pdfFile)) {
                 showError(currentLanguage === 'ar' ? 
@@ -4708,13 +4936,19 @@
                 }
             }
 
-            // الحصول على عدد الأسئلة المطلوب
             const numQuestions = parseInt(document.getElementById(`num-questions-${currentMethod}`).value);
             
-            // تحسين الأداء: تقليل حجم الاستجابة للأسئلة الكثيرة
-            const maxTokens = numQuestions > 20 ? 6144 : numQuestions > 15 ? 4096 : 2048;
+            let maxTokens;
+            if (numQuestions > 30) {
+                maxTokens = 8192;
+            } else if (numQuestions > 20) {
+                maxTokens = 6144;
+            } else if (numQuestions > 15) {
+                maxTokens = 4096;
+            } else {
+                maxTokens = 2048;
+            }
             
-            // إعداد واجهة التحميل
             document.getElementById('loading').style.display = 'block';
             document.getElementById('error-message').style.display = 'none';
             document.getElementById('loading-details').textContent = currentLanguage === 'ar' ?
@@ -4795,7 +5029,6 @@
                     };
                 }
 
-                // استخدام دالة makeAPIRequest الجديدة
                 const data = await makeAPIRequest(`${GEMINI_API_URL}?key=${apiKey}`, {
                     method: 'POST',
                     headers: {
@@ -4806,7 +5039,6 @@
 
                 const responseText = data.candidates[0].content.parts[0].text;
                 
-                // تحسين استخراج JSON من الاستجابة
                 const jsonMatch = extractJSONFromText(responseText);
                 if (!jsonMatch) {
                     console.error("Full response:", responseText);
@@ -4822,14 +5054,13 @@
                     console.error("JSON parsing error:", error);
                     console.error("JSON string:", jsonMatch);
                     
-                    // محاولة إصلاح JSON
                     const cleanedJson = jsonMatch
-                        .replace(/'/g, '"') // استبدال علامات التنصيص المفردة
-                        .replace(/(\w+):/g, '"$1":') // إضافة علامات تنصيص للمفاتيح
-                        .replace(/,\s*}/g, '}') // إزالة الفواصل الزائدة قبل الأقواس
-                        .replace(/,\s*]/g, ']') // إزالة الفواصل الزائدة قبل الأقواس المعقوفة
-                        .replace(/\n/g, ' ') // إزالة الأسطر الجديدة
-                        .replace(/\s+/g, ' '); // إزالة المسافات الزائدة
+                        .replace(/'/g, '"')
+                        .replace(/(\w+):/g, '"$1":')
+                        .replace(/,\s*}/g, '}')
+                        .replace(/,\s*]/g, ']')
+                        .replace(/\n/g, ' ')
+                        .replace(/\s+/g, ' ');
                     
                     try {
                         quizData = JSON.parse(cleanedJson);
@@ -4847,7 +5078,6 @@
                         'No questions found in response');
                 }
 
-                // معالجة الأسئلة
                 questions = quizData.questions.map((q, index) => ({
                     ...q,
                     id: q.id || index + 1,
@@ -4863,7 +5093,6 @@
                 currentQuestionIndex = 0;
                 markedQuestions = [];
 
-                // إعداد العنوان
                 currentQuizTitle = currentMethod === 'manual' ? 
                     document.getElementById('quiz-title').value.trim() :
                     (currentMethod === 'image' ? imageFile.name.replace(/\.[^/.]+$/, '') : 
@@ -4872,11 +5101,9 @@
                 document.getElementById('main-title').textContent = currentQuizTitle;
                 document.getElementById('current-quiz-title').textContent = currentQuizTitle;
 
-                // إخفاء قسم الإعداد وإظهار قسم الاختبار
                 document.getElementById('setup-section').style.display = 'none';
                 document.getElementById('quiz-section').style.display = 'block';
 
-                // بدء المؤقت وتحميل الاختبار
                 clearInterval(timerInterval);
                 startTimer();
                 loadQuiz();
@@ -4903,12 +5130,12 @@
                 return;
             }
 
-            // إعداد واجهة التحميل
             document.getElementById('loading').style.display = 'block';
             document.getElementById('error-message').style.display = 'none';
+            const summaryLength = document.getElementById('summary-length').value;
             document.getElementById('loading-details').textContent = currentLanguage === 'ar' ?
-                'جارٍ إنشاء الملخص...' :
-                'Creating summary...';
+                `جارٍ إنشاء الملخص بأسلوب Bites التعليمي (${summaryLength === 'short' ? 'مختصر' : summaryLength === 'long' ? 'مفصل' : 'متوسط'})...` :
+                `Creating summary in Bites educational style (${summaryLength})...`;
 
             try {
                 const fileBase64 = await convertFileToBase64(summaryFile);
@@ -4920,11 +5147,18 @@
                     return;
                 }
                 
-                const prompt = generateSummaryPrompt(contentLanguage, summaryType, pdfDetails);
+                const prompt = generateSummaryPrompt(contentLanguage, summaryType, pdfDetails, summaryLength);
                 const mimeType = summaryFile.type === 'application/pdf' ? 'application/pdf' : 
                                 summaryFile.type.startsWith('image/') ? summaryFile.type : 'text/plain';
                 
-                const maxTokens = summaryType === 'detailed' ? 4096 : 2048;
+                let maxTokens;
+                if (summaryLength === 'long') {
+                    maxTokens = 8192;
+                } else if (summaryLength === 'medium') {
+                    maxTokens = 4096;
+                } else {
+                    maxTokens = 2048;
+                }
                 
                 const requestBody = {
                     contents: [{
@@ -4946,7 +5180,6 @@
                     }
                 };
 
-                // استخدام دالة makeAPIRequest الجديدة
                 const data = await makeAPIRequest(`${GEMINI_API_URL}?key=${apiKey}`, {
                     method: 'POST',
                     headers: {
@@ -4957,14 +5190,13 @@
 
                 const summaryText = data.candidates[0].content.parts[0].text;
                 
-                // إظهار الملخص
                 document.getElementById('setup-section').style.display = 'none';
                 document.getElementById('summary-section').style.display = 'block';
-                document.getElementById('summary-content').innerHTML = formatSummary(summaryText, contentLanguage);
+                document.getElementById('summary-content').innerHTML = formatSummary(summaryText, contentLanguage, summaryType);
 
                 showSuccessMessage(currentLanguage === 'ar' ?
-                    'تم إنشاء الملخص بنجاح!' :
-                    'Summary created successfully!');
+                    'تم إنشاء الملخص بنجاح بأسلوب Bites التعليمي!' :
+                    'Summary created successfully in Bites educational style!');
 
             } catch (error) {
                 console.error('Error in generateSummary:', error);
@@ -4984,7 +5216,6 @@
                 return;
             }
 
-            // إعداد واجهة التحميل
             document.getElementById('loading').style.display = 'block';
             document.getElementById('error-message').style.display = 'none';
             document.getElementById('loading-details').textContent = currentLanguage === 'ar' ?
@@ -5007,6 +5238,15 @@
                 const mimeType = flashcardsFile.type === 'application/pdf' ? 'application/pdf' : 
                                 flashcardsFile.type.startsWith('image/') ? flashcardsFile.type : 'text/plain';
                 
+                let maxTokens;
+                if (numFlashcards > 30) {
+                    maxTokens = 8192;
+                } else if (numFlashcards > 20) {
+                    maxTokens = 6144;
+                } else {
+                    maxTokens = 4096;
+                }
+                
                 const requestBody = {
                     contents: [{
                         parts: [
@@ -5023,11 +5263,10 @@
                         temperature: 0.7,
                         topK: 40,
                         topP: 0.95,
-                        maxOutputTokens: 4096,
+                        maxOutputTokens: maxTokens,
                     }
                 };
 
-                // استخدام دالة makeAPIRequest الجديدة
                 const data = await makeAPIRequest(`${GEMINI_API_URL}?key=${apiKey}`, {
                     method: 'POST',
                     headers: {
@@ -5038,7 +5277,6 @@
 
                 const responseText = data.candidates[0].content.parts[0].text;
                 
-                // استخراج JSON من الاستجابة
                 const jsonMatch = extractJSONFromText(responseText);
                 if (!jsonMatch) {
                     throw new Error(currentLanguage === 'ar' ? 
@@ -5068,7 +5306,6 @@
                         'No flashcards found in response');
                 }
 
-                // معالجة البطاقات
                 flashcards = flashcardsData.flashcards.map((card, index) => ({
                     ...card,
                     id: card.id || index + 1,
@@ -5082,11 +5319,9 @@
                 masteredFlashcards.clear();
                 reviewFlashcards.clear();
 
-                // إظهار قسم البطاقات التعليمية
                 document.getElementById('setup-section').style.display = 'none';
                 document.getElementById('flashcards-section-main').style.display = 'block';
                 
-                // تحميل البطاقة الأولى
                 loadFlashcard(currentFlashcardIndex);
                 updateFlashcardStats();
                 updateNavigationDots();
@@ -5105,9 +5340,7 @@
             }
         }
 
-        // دالة مساعدة لاستخراج JSON من النص
         function extractJSONFromText(text) {
-            // محاولة العثور على JSON في النص
             const jsonPatterns = [
                 /\{[\s\S]*"flashcards"[\s\S]*\}/,
                 /\{[\s\S]*"questions"[\s\S]*\}/,
@@ -5122,7 +5355,6 @@
                 }
             }
             
-            // إذا لم يتم العثور، محاولة العثور على جزء JSON
             const startIndex = text.indexOf('{');
             const endIndex = text.lastIndexOf('}');
             
@@ -5151,10 +5383,11 @@ IMPORTANT:
 - Generate concise questions and options
 - Ensure JSON is valid and properly formatted
 
-CRITICAL: For large question sets (more than 15 questions):
+CRITICAL: For large question sets (more than 20 questions):
 - Use minimal text for explanations
 - Keep options short
 - Prioritize clarity over verbosity
+- Use simpler language for readability
 
 Please follow this JSON format EXACTLY:
 
@@ -5188,10 +5421,11 @@ Please follow this JSON format EXACTLY:
 - أنشئ أسئلة وخيارات مركزة
 - تأكد من أن JSON صالح ومنسق بشكل صحيح
 
-مهم جداً: لمجموعات الأسئلة الكبيرة (أكثر من 15 سؤال):
+مهم جداً: لمجموعات الأسئلة الكبيرة (أكثر من 20 سؤال):
 - استخدم نصاً محدوداً للشروحات
 - حافظ على الخيارات قصيرة
 - ركز على الوضوح بدلاً من التفصيل المفرط
+- استخدم لغة أبسط للقراءة
 
 الرجاء الالتزام بتنسيق JSON التالي بالضبط:
 
@@ -5217,7 +5451,6 @@ Please follow this JSON format EXACTLY:
 
         function generateImageQuizPrompt(numQuestions, language) {
             const selectedTypesText = getSelectedQuestionTypesText(language);
-            const questionFormats = getQuestionFormats(language);
             
             if (language === 'en') {
                 return `Please generate exactly ${numQuestions} questions based on the text in the provided image.
@@ -5227,10 +5460,11 @@ Question types to include: ${selectedTypesText}
 Extract key information from the image and create clear, concise questions.
 Keep JSON response minimal and focused.
 
-CRITICAL: For large question sets (more than 15 questions):
+CRITICAL: For large question sets (more than 20 questions):
 - Use minimal text for explanations
 - Keep options short
 - Extract only essential information from image
+- Focus on main concepts
 
 Please follow this JSON format EXACTLY:
 
@@ -5259,10 +5493,11 @@ Please follow this JSON format EXACTLY:
 استخرج المعلومات الرئيسية من الصورة وأنشئ أسئلة واضحة ومركزة.
 حافظ على استجابة JSON بسيطة ومركزة.
 
-مهم جداً: لمجموعات الأسئلة الكبيرة (أكثر من 15 سؤال):
+مهم جداً: لمجموعات الأسئلة الكبيرة (أكثر من 20 سؤال):
 - استخدم نصاً محدوداً للشروحات
 - حافظ على الخيارات قصيرة
 - استخرج فقط المعلومات الأساسية من الصورة
+- ركز على المفاهيم الرئيسية
 
 الرجاء الالتزام بتنسيق JSON التالي بالضبط:
 
@@ -5300,10 +5535,11 @@ Question types to include: ${selectedTypesText}
 Generate clear, concise questions that accurately reflect ONLY the specified content.
 Keep explanations brief and JSON response minimal.
 
-CRITICAL: For large question sets (more than 15 questions):
+CRITICAL: For large question sets (more than 20 questions):
 - Use minimal text for explanations
 - Keep options short
 - Focus on key concepts only
+- Simplify language for better readability
 
 Please follow this JSON format EXACTLY:
 
@@ -5334,10 +5570,11 @@ ${pdfDetailsInstructions}
 أنشئ أسئلة واضحة ومركزة تعكس بدقة المحتوى المحدد فقط.
 حافظ على الشروحات موجزة واستجابة JSON بسيطة.
 
-مهم جداً: لمجموعات الأسئلة الكبيرة (أكثر من 15 سؤال):
+مهم جداً: لمجموعات الأسئلة الكبيرة (أكثر من 20 سؤال):
 - استخدم نصاً محدوداً للشروحات
 - حافظ على الخيارات قصيرة
 - ركز على المفاهيم الأساسية فقط
+- بسّط اللغة لتحسين القراءة
 
 الرجاء الالتزام بتنسيق JSON التالي بالضبط:
 
@@ -5361,94 +5598,114 @@ ${pdfDetailsInstructions}
             }
         }
 
-        function generateSummaryPrompt(language, type, pdfDetails) {
-            const summaryLength = document.getElementById('summary-length').value;
+        function generateSummaryPrompt(language, type, pdfDetails, summaryLength) {
             const pdfDetailsInstructions = generatePDFDetailsInstructions(pdfDetails, language);
             
-            let lengthInstruction = '';
-            if (summaryLength === 'short') {
-                lengthInstruction = language === 'en' ? 
-                    "Keep the summary brief, focusing only on the most important points (3-5 key points maximum)." :
-                    "حافظ على الملخص موجزاً، وركز فقط على النقاط الأهم (3-5 نقاط رئيسية كحد أقصى).";
-            } else if (summaryLength === 'long') {
-                lengthInstruction = language === 'en' ?
-                    "Provide a comprehensive and detailed summary covering all important aspects with hierarchical structure (chapters, sections, subsections)." :
-                    "قدم ملخصاً شاملاً ومفصلاً يغطي جميع الجوانب المهمة مع هيكل هرمي (فصول، أقسام، أقسام فرعية).";
-            } else {
-                lengthInstruction = language === 'en' ?
-                    "Provide a balanced summary that covers the main points with clear hierarchy without being too brief or too detailed." :
-                    "قدم ملخصاً متوازناً يغطي النقاط الرئيسية مع هيكل واضح دون أن يكون موجزاً جداً أو مفصلاً جداً.";
-            }
-            
-            if (type === 'detailed') {
+            if (type === 'bites') {
                 if (language === 'en') {
-                    return `Please provide a comprehensive hierarchical summary of the document.
+                    return `You are a rapid understanding summarization tool in the style of Bites.
+
+Your task: Convert unit content into a short mental summary
+that helps the learner understand the general idea without educational details.
+
+STRICT RULES:
+- Do not write as if you are explaining a lesson.
+- Do not mention separate definitions or vocabulary.
+- Do not mention anything that could be a test question.
+- Delete all unnecessary details.
+- Focus on meaning, not information.
+
+Output method:
+1) Unit title.
+2) Short paragraph (maximum two sentences) explaining the major idea of the unit.
+3) 3 to 5 understanding axes, each:
+   - Short title
+   - Explanation in one sentence only.
+4) Conclusion in one sentence giving a general overview.
+
+Style:
+- Simple
+- Direct
+- Non-educational
+- Non-academic.
 
 ${pdfDetailsInstructions}
 
-${lengthInstruction}
+Summary length: ${summaryLength}
+- If short: Focus only on essential points (3-4 axes max)
+- If medium: Balanced with 4-5 axes
+- If long: Comprehensive with examples
 
-CRITICAL: Structure the summary hierarchically:
-1. Main Title
-2. Chapters/Sections
-3. Subsections within each chapter
-4. Key points under each subsection
-5. Important concepts, definitions, and notes
-
-Formatting requirements:
-- Use clear hierarchical structure
-- Highlight key concepts
-- Include important definitions
-- Add notes for critical information
-- Make it easy to read and navigate`;
+IMPORTANT: Use clear, direct language. Avoid academic jargon.`;
                 } else {
-                    return `يرجى تقديم ملخص هرمي شاملاً للمستند.
+                    return `أنت أداة تلخيص للفهم السريع بأسلوب مشابه لتطبيق Bites.
+
+مهمتك هي تحويل محتوى الوحدة إلى ملخص ذهني قصير
+يساعد المتعلم على فهم الفكرة العامة دون تفاصيل مدرسية.
+
+قواعد صارمة:
+- لا تكتب كأنك تشرح درسًا.
+- لا تذكر تعريفات أو مفردات منفصلة.
+- لا تذكر أي شيء يمكن أن يكون سؤال اختبار.
+- احذف كل التفاصيل غير الضرورية.
+- ركّز على المعنى، لا المعلومات.
+
+طريقة الإخراج:
+1) عنوان الوحدة.
+2) فقرة قصيرة (جملتان كحد أقصى) تشرح الفكرة الكبرى للوحدة.
+3) 3 إلى 5 محاور فهم، كل محور:
+   - عنوان قصير
+   - شرح بجملة واحدة فقط.
+4) خاتمة بجملة واحدة تعطي تصورًا عامًا.
+
+الأسلوب:
+- بسيط
+- مباشر
+- غير مدرسي
+- غير أكاديمي.
 
 ${pdfDetailsInstructions}
 
-${lengthInstruction}
+طول التلخيص: ${summaryLength}
+- إذا كان مختصراً: ركز على النقاط الأساسية فقط (3-4 محاور كحد أقصى)
+- إذا كان متوسطاً: متوازن مع 4-5 محاور
+- إذا كان مفصلاً: شامل مع أمثلة
 
-مهم جداً: قم بتنظيم الملخص بشكل هرمي:
-1. عنوان رئيسي
-2. فصول/أقسام
-3. أقسام فرعية داخل كل فصل
-4. نقاط رئيسية تحت كل قسم فرعي
-5. مفاهيم وتعريفات وملاحظات مهمة
-
-متطلبات التنسيق:
-- استخدم هيكلاً هرمياً واضحاً
-- سلط الضوء على المفاهيم الأساسية
-- أدرج التعريفات المهمة
-- أضف ملاحظات للمعلومات الحاسمة
-- اجعله سهل القراءة والتنقل`;
+مهم: استخدم لغة واضحة ومباشرة. تجنب المصطلحات الأكاديمية.`;
                 }
             } else {
                 if (language === 'en') {
-                    return `Please provide a quick hierarchical summary of the document.
+                    return `Please provide a comprehensive, detailed summary of the document.
 
 ${pdfDetailsInstructions}
 
-${lengthInstruction}
+Focus on creating a well-structured summary with clear hierarchy and organization.
 
-Focus only on:
-1. Most important chapters
-2. Key sections within chapters
-3. Essential points within sections
+Please follow this structure:
+1. Main Title
+2. Chapters/Sections with clear headings
+3. Subsections under each section
+4. Key points and concepts
+5. Important definitions and explanations
+6. Summary notes and insights
 
-Structure hierarchically with clear levels.`;
+Make it comprehensive and detailed, but well-organized and easy to read.`;
                 } else {
-                    return `يرجى تقديم ملخص هرمي سريع للمستند.
+                    return `يرجى تقديم ملخص شامل ومفصل للمستند.
 
 ${pdfDetailsInstructions}
 
-${lengthInstruction}
+ركز على إنشاء ملخص منظم جيداً مع هرمية وتنظيم واضح.
 
-ركز فقط على:
-1. الفصول الأهم
-2. الأقسام الرئيسية داخل الفصول
-3. النقاط الأساسية داخل الأقسام
+الرجاء اتباع الهيكل التالي:
+1. العنوان الرئيسي
+2. الفصول/الأقسام مع عناوين واضحة
+3. الأقسام الفرعية تحت كل قسم
+4. النقاط والمفاهيم الرئيسية
+5. التعريفات والشروحات المهمة
+6. ملاحظات ورؤى تلخيصية
 
-قم بتنظيمها هرمياً بمستويات واضحة.`;
+اجعله شاملاً ومفصلاً، لكن منظم وسهل القراءة.`;
                 }
             }
         }
@@ -5649,194 +5906,216 @@ ${difficultyInstruction}
             return formats;
         }
 
-        function formatSummary(summaryText, language) {
-            // تحويل النص إلى تنسيق HTML هرمي
-            let formattedText = '<div class="summary-hierarchy">';
+        function formatSummary(summaryText, language, type) {
+            if (type === 'bites') {
+                return formatBitesSummary(summaryText, language);
+            } else {
+                return formatDetailedSummary(summaryText, language);
+            }
+        }
+
+        function formatBitesSummary(summaryText, language) {
+            let formattedText = '<div class="bites-summary">';
             
-            // إضافة عنوان رئيسي
-            formattedText += `<h1 class="summary-main-title">
-                <i class="fas fa-book"></i>
-                ${currentLanguage === 'ar' ? 'ملخص المحتوى' : 'Content Summary'}
-            </h1>`;
-            
-            // تقسيم النص إلى أقسام
             const lines = summaryText.split('\n').filter(line => line.trim());
-            
-            let currentChapter = null;
-            let currentSection = null;
-            let currentSubsection = null;
-            let inPointsList = false;
-            let currentPoints = [];
+            let inAxes = false;
+            let axesCount = 0;
             
             for (let i = 0; i < lines.length; i++) {
                 const line = lines[i].trim();
                 
-                // الكشف عن الفصول الرئيسية (مستوى 1)
-                if (line.match(/^(الفصل|القسم|الجزء|Chapter|Part|Section)[\s:]+[١-٩0-9IVX]/i) || 
-                    line.match(/^[IVX]+\.\s+(.+)$/) ||
-                    line.match(/^[١-٩]+\.\s+(.+)$/) ||
-                    (line.length < 100 && (line.includes(':') || line.endsWith(':')))) {
-                    
-                    // إنهاء القسم السابق إذا كان موجوداً
-                    if (currentSection && currentPoints.length > 0) {
-                        formattedText += '<ul class="summary-points">';
-                        currentPoints.forEach(point => {
-                            formattedText += `<li class="summary-point">${point}</li>`;
-                        });
-                        formattedText += '</ul>';
-                        currentPoints = [];
+                if (line.match(/^[0-9]\)/)) {
+                    if (!inAxes) {
+                        formattedText += '<div class="bites-section">';
+                        formattedText += '<h3 class="bites-section-title"><i class="fas fa-bullseye"></i> ';
+                        formattedText += language === 'ar' ? 'محاور الفهم' : 'Understanding Axes';
+                        formattedText += '</h3>';
+                        inAxes = true;
                     }
                     
-                    if (currentSection) {
-                        formattedText += '</div>'; // إغلاق القسم
-                        currentSection = null;
-                    }
+                    const content = line.replace(/^[0-9]\)\s*/, '');
+                    axesCount++;
                     
-                    if (currentChapter) {
-                        formattedText += '</div>'; // إغلاق الفصل
-                    }
-                    
-                    const title = line.replace(/^(الفصل|القسم|الجزء|Chapter|Part|Section)[\s:]+/i, '')
-                                     .replace(/^[IVX]+\.\s+/, '')
-                                     .replace(/^[١-٩]+\.\s+/, '')
-                                     .replace(/:$/, '')
-                                     .trim();
-                    
-                    currentChapter = title;
-                    formattedText += `<div class="summary-chapter">
-                        <h2 class="summary-chapter-title">
-                            <i class="fas fa-bookmark"></i>
-                            ${title}
-                        </h2>`;
+                    formattedText += `<div class="bites-point">
+                        <div class="bites-point-title">
+                            <i class="fas fa-chevron-left"></i>
+                            ${language === 'ar' ? `محور ${axesCount}` : `Axis ${axesCount}`}
+                        </div>
+                        <div class="bites-point-explanation">${content}</div>
+                    </div>`;
                 }
-                // الكشف عن الأقسام الفرعية (مستوى 2)
-                else if (line.match(/^[A-Z]\.\s+(.+)$/) || 
-                        line.match(/^[أ-ي]\.\s+(.+)$/) ||
-                        (line.length < 80 && line.includes(':'))) {
-                    
-                    // إنهاء القائمة السابقة إذا كانت موجودة
-                    if (currentPoints.length > 0) {
-                        formattedText += '<ul class="summary-points">';
-                        currentPoints.forEach(point => {
-                            formattedText += `<li class="summary-point">${point}</li>`;
-                        });
-                        formattedText += '</ul>';
-                        currentPoints = [];
-                    }
-                    
-                    if (currentSection) {
-                        formattedText += '</div>'; // إغلاق القسم السابق
-                    }
-                    
-                    const sectionTitle = line.replace(/^[A-Z]\.\s+/, '')
-                                           .replace(/^[أ-ي]\.\s+/, '')
-                                           .replace(/:$/, '')
-                                           .trim();
-                    
-                    currentSection = sectionTitle;
-                    formattedText += `<div class="summary-section">
-                        <h3 class="summary-section-title">
-                            <i class="fas fa-cube"></i>
-                            ${sectionTitle}
-                        </h3>`;
+                else if (line.match(/^(عنوان الوحدة|Unit title)/i)) {
+                    const title = lines[i+1] ? lines[i+1].trim() : (language === 'ar' ? 'عنوان الوحدة' : 'Unit Title');
+                    formattedText += `<h2 class="bites-main-title"><i class="fas fa-book"></i> ${title}</h2>`;
+                    i++;
                 }
-                // الكشف عن الأقسام الفرعية من المستوى الثالث
-                else if (line.match(/^[0-9]+\.[0-9]+\s+(.+)$/) || 
-                        line.match(/^[١-٩]+\.[١-٩]+\s+(.+)$/) ||
-                        (line.length < 60 && line.includes('-'))) {
-                    
-                    if (currentPoints.length > 0) {
-                        formattedText += '<ul class="summary-points">';
-                        currentPoints.forEach(point => {
-                            formattedText += `<li class="summary-point">${point}</li>`;
-                        });
-                        formattedText += '</ul>';
-                        currentPoints = [];
-                    }
-                    
-                    const subsectionTitle = line.replace(/^[0-9]+\.[0-9]+\s+/, '')
-                                              .replace(/^[١-٩]+\.[١-٩]+\s+/, '')
-                                              .trim();
-                    
-                    currentSubsection = subsectionTitle;
-                    formattedText += `<div class="summary-subsection">
-                        <h4 class="summary-subsection-title">
-                            <i class="fas fa-circle"></i>
-                            ${subsectionTitle}
-                        </h4>`;
-                }
-                // الكشف عن النقاط الرئيسية
-                else if (line.match(/^[•\-]\s+(.+)$/) || 
-                        line.match(/^[٠-٩]+\)\s+(.+)$/) ||
-                        line.match(/^[0-9]+\)\s+(.+)$/)) {
-                    
-                    const point = line.replace(/^[•\-]\s+/, '')
-                                    .replace(/^[٠-٩]+\)\s+/, '')
-                                    .replace(/^[0-9]+\)\s+/, '')
-                                    .trim();
-                    
-                    currentPoints.push(point);
-                }
-                // الكشف عن المفاهيم الأساسية
-                else if (line.match(/^(مفهوم|تعريف|ملاحظة|هام|Concept|Definition|Note|Important)[\s:]/i)) {
-                    
-                    if (currentPoints.length > 0) {
-                        formattedText += '<ul class="summary-points">';
-                        currentPoints.forEach(point => {
-                            formattedText += `<li class="summary-point">${point}</li>`;
-                        });
-                        formattedText += '</ul>';
-                        currentPoints = [];
-                    }
-                    
-                    const content = line.replace(/^(مفهوم|تعريف|ملاحظة|هام|Concept|Definition|Note|Important)[\s:]+/i, '').trim();
-                    
-                    if (line.match(/^مفهوم|^Concept/i)) {
-                        formattedText += `<div class="summary-key-concept">
-                            <strong><i class="fas fa-lightbulb"></i> ${currentLanguage === 'ar' ? 'مفهوم أساسي:' : 'Key Concept:'}</strong> ${content}
+                else if (line.match(/^(فقرة قصيرة|Short paragraph)/i)) {
+                    const content = lines[i+1] ? lines[i+1].trim() : '';
+                    if (content) {
+                        formattedText += `<div class="bites-overview">
+                            <i class="fas fa-lightbulb"></i> 
+                            <strong>${language === 'ar' ? 'الفكرة الكبرى:' : 'Major Idea:'}</strong> 
+                            ${content}
                         </div>`;
-                    } else if (line.match(/^تعريف|^Definition/i)) {
-                        formattedText += `<div class="summary-definition">
-                            <strong><i class="fas fa-book"></i> ${currentLanguage === 'ar' ? 'تعريف:' : 'Definition:'}</strong> ${content}
-                        </div>`;
-                    } else if (line.match(/^ملاحظة|^Note/i)) {
-                        formattedText += `<div class="summary-note">
-                            <strong><i class="fas fa-sticky-note"></i> ${currentLanguage === 'ar' ? 'ملاحظة:' : 'Note:'}</strong> ${content}
-                        </div>`;
-                    } else if (line.match(/^هام|^Important/i)) {
-                        formattedText += `<div class="summary-important">
-                            <strong><i class="fas fa-exclamation-circle"></i> ${currentLanguage === 'ar' ? 'هام:' : 'Important:'}</strong> ${content}
-                        </div>`;
+                        i++;
                     }
                 }
-                // النص العادي (فقرات)
-                else if (line.length > 20) {
-                    if (currentPoints.length > 0) {
-                        formattedText += '<ul class="summary-points">';
-                        currentPoints.forEach(point => {
-                            formattedText += `<li class="summary-point">${point}</li>`;
-                        });
-                        formattedText += '</ul>';
-                        currentPoints = [];
+                else if (line.match(/^(خاتمة|Conclusion)/i)) {
+                    const content = lines[i+1] ? lines[i+1].trim() : '';
+                    if (content) {
+                        if (inAxes) {
+                            formattedText += '</div>';
+                            inAxes = false;
+                        }
+                        formattedText += `<div class="bites-conclusion">
+                            <i class="fas fa-flag-checkered"></i> 
+                            ${content}
+                        </div>`;
+                        i++;
                     }
-                    
-                    formattedText += `<p class="summary-paragraph">${line}</p>`;
+                }
+                else if (line.length > 30 && !line.match(/^(محاور|Axes|الفهم|Understanding)/i)) {
+                    if (!inAxes) {
+                        formattedText += `<div class="bites-explanation">${line}</div>`;
+                    }
                 }
             }
             
-            // إنهاء أي قائمة متبقية
-            if (currentPoints.length > 0) {
-                formattedText += '<ul class="summary-points">';
-                currentPoints.forEach(point => {
-                    formattedText += `<li class="summary-point">${point}</li>`;
-                });
-                formattedText += '</ul>';
-            }
-            
-            // إغلاق الأقسام المفتوحة
-            if (currentSubsection) {
+            if (inAxes) {
                 formattedText += '</div>';
             }
+            
+            formattedText += '</div>';
+            return formattedText;
+        }
+
+        function formatDetailedSummary(summaryText, language) {
+            let formattedText = '<div class="detailed-summary-container">';
+            
+            const lines = summaryText.split('\n').filter(line => line.trim());
+            let currentChapter = null;
+            let currentSection = null;
+            let inTable = false;
+            let tableContent = [];
+            
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+                
+                if (line.match(/^#\s+(.+)/)) {
+                    const title = line.replace(/^#\s+/, '');
+                    formattedText += `<h2 class="detailed-main-title"><i class="fas fa-book"></i> ${title}</h2>`;
+                }
+                else if (line.match(/^##\s+(.+)/)) {
+                    if (currentSection) {
+                        formattedText += '</div>';
+                    }
+                    if (currentChapter) {
+                        formattedText += '</div>';
+                    }
+                    
+                    const title = line.replace(/^##\s+/, '');
+                    currentChapter = title;
+                    formattedText += `<div class="chapter-container">
+                        <h3 class="chapter-title"><i class="fas fa-bookmark"></i> ${title}</h3>`;
+                }
+                else if (line.match(/^###\s+(.+)/)) {
+                    if (currentSection) {
+                        formattedText += '</div>';
+                    }
+                    
+                    const title = line.replace(/^###\s+/, '');
+                    currentSection = title;
+                    formattedText += `<div class="section-container">
+                        <h4 class="section-title"><i class="fas fa-cube"></i> ${title}</h4>`;
+                }
+                else if (line.match(/^####\s+(.+)/)) {
+                    const title = line.replace(/^####\s+/, '');
+                    formattedText += `<div class="subsection-container">
+                        <h5 class="subsection-title"><i class="fas fa-circle"></i> ${title}</h5>`;
+                }
+                else if (line.match(/^\|(.+)\|$/)) {
+                    if (!inTable) {
+                        inTable = true;
+                        tableContent = [];
+                    }
+                    tableContent.push(line);
+                }
+                else if (inTable && !line.includes('|')) {
+                    inTable = false;
+                    formattedText += formatTable(tableContent);
+                    tableContent = [];
+                }
+                else if (line.match(/^(مفهوم أساسي|Key concept)/i)) {
+                    const content = line.replace(/^(مفهوم أساسي|Key concept):?\s*/i, '');
+                    formattedText += `<div class="key-point">
+                        <div class="key-point-title">
+                            <i class="fas fa-lightbulb"></i>
+                            ${language === 'ar' ? 'مفهوم أساسي' : 'Key Concept'}
+                        </div>
+                        <div class="summary-text">${content}</div>
+                    </div>`;
+                }
+                else if (line.match(/^(تعريف|Definition)/i)) {
+                    const content = line.replace(/^(تعريف|Definition):?\s*/i, '');
+                    formattedText += `<div class="definition">
+                        <div class="definition-title">
+                            <i class="fas fa-book"></i>
+                            ${language === 'ar' ? 'تعريف' : 'Definition'}
+                        </div>
+                        <div class="summary-text">${content}</div>
+                    </div>`;
+                }
+                else if (line.match(/^(ملاحظة مهمة|Important note)/i)) {
+                    const content = line.replace(/^(ملاحظة مهمة|Important note):?\s*/i, '');
+                    formattedText += `<div class="important-note">
+                        <div class="important-note-title">
+                            <i class="fas fa-exclamation-circle"></i>
+                            ${language === 'ar' ? 'ملاحظة مهمة' : 'Important Note'}
+                        </div>
+                        <div class="summary-text">${content}</div>
+                    </div>`;
+                }
+                else if (line.match(/^(خاتمة|Conclusion)/i)) {
+                    const content = lines[i+1] ? lines[i+1].trim() : '';
+                    if (content) {
+                        if (currentSection) {
+                            formattedText += '</div>';
+                            currentSection = null;
+                        }
+                        if (currentChapter) {
+                            formattedText += '</div>';
+                            currentChapter = null;
+                        }
+                        formattedText += `<div class="conclusion-box">
+                            <i class="fas fa-flag-checkered"></i> 
+                            ${content}
+                        </div>`;
+                        i++;
+                    }
+                }
+                else if (line.length > 10 && !line.match(/^(-+|=+)/)) {
+                    if (line.includes('**')) {
+                        const highlightedText = line.replace(/\*\*(.+?)\*\*/g, '<span class="highlighted-text">$1</span>');
+                        formattedText += `<div class="content-block">
+                            <div class="summary-text">${highlightedText}</div>
+                        </div>`;
+                    } else if (line.includes('*')) {
+                        const emphasizedText = line.replace(/\*(.+?)\*/g, '<span class="emphasized-text">$1</span>');
+                        formattedText += `<div class="content-block">
+                            <div class="summary-text">${emphasizedText}</div>
+                        </div>`;
+                    } else {
+                        formattedText += `<div class="content-block">
+                            <div class="summary-text">${line}</div>
+                        </div>`;
+                    }
+                }
+            }
+            
+            if (inTable) {
+                formattedText += formatTable(tableContent);
+            }
+            
             if (currentSection) {
                 formattedText += '</div>';
             }
@@ -5845,8 +6124,35 @@ ${difficultyInstruction}
             }
             
             formattedText += '</div>';
-            
             return formattedText;
+        }
+
+        function formatTable(tableContent) {
+            if (tableContent.length < 2) return '';
+            
+            let tableHTML = '<div class="table-container"><table class="summary-table">';
+            
+            tableContent.forEach((row, index) => {
+                const cells = row.split('|').filter(cell => cell.trim() !== '');
+                
+                if (cells.length > 0) {
+                    tableHTML += '<tr>';
+                    
+                    cells.forEach(cell => {
+                        const content = cell.trim();
+                        if (index === 0) {
+                            tableHTML += `<th>${content}</th>`;
+                        } else {
+                            tableHTML += `<td>${content}</td>`;
+                        }
+                    });
+                    
+                    tableHTML += '</tr>';
+                }
+            });
+            
+            tableHTML += '</table></div>';
+            return tableHTML;
         }
 
         // ==================== وظائف مساعدة ====================
@@ -5959,7 +6265,6 @@ ${difficultyInstruction}
                     <span><i class="fas fa-flag"></i> ${flaggedText}: ${markedQuestions.length}</span>
                 </div>`;
 
-            // إضافة معلومات المحتوى المحدد لملفات PDF
             if (currentMethod === 'pdf') {
                 const pdfDetails = getPDFDetails();
                 const hasSpecifiedContent = pdfDetails.pages.startPage || 
@@ -6057,7 +6362,6 @@ ${difficultyInstruction}
                 `;
             }
 
-            // إضافة زر المراجعة الفورية
             if (question.type !== 'fill_blank' && question.explanations && Object.keys(question.explanations).length > 0) {
                 html += `
                 <div class="instant-review" id="instant-review-${currentQuestionIndex}">
