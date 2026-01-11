@@ -20,6 +20,10 @@
             --tertiary: #FF9800;
             --tertiary-glow: #FFB74D;
             --tertiary-light: #FFCC80;
+            --summary-blue: #2196F3;
+            --summary-blue-glow: #64B5F6;
+            --flashcard-purple: #9C27B0;
+            --flashcard-purple-glow: #BA68C8;
             --islamic-green: #228B22;
             --islamic-blue: #1A5F7A;
             --islamic-gold: #D4AF37;
@@ -29,12 +33,16 @@
             --accent-gradient: linear-gradient(135deg, var(--accent) 0%, var(--accent-glow) 50%, var(--islamic-teal) 100%);
             --secondary-gradient: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-glow) 50%, var(--islamic-green) 100%);
             --tertiary-gradient: linear-gradient(135deg, var(--tertiary) 0%, var(--tertiary-glow) 50%, var(--islamic-gold) 100%);
+            --summary-gradient: linear-gradient(135deg, var(--summary-blue) 0%, var(--summary-blue-glow) 50%, var(--accent-light) 100%);
+            --flashcard-gradient: linear-gradient(135deg, var(--flashcard-purple) 0%, var(--flashcard-purple-glow) 50%, var(--primary-light) 100%);
             --islamic-gradient: linear-gradient(135deg, var(--islamic-blue) 0%, var(--islamic-teal) 50%, var(--islamic-green) 100%);
 
             --glow-primary: 0 0 20px rgba(26, 95, 122, 0.7), 0 0 40px rgba(26, 95, 122, 0.5), 0 0 60px rgba(26, 95, 122, 0.3);
             --glow-accent: 0 0 20px rgba(21, 152, 149, 0.7), 0 0 40px rgba(21, 152, 149, 0.5), 0 0 60px rgba(21, 152, 149, 0.3);
             --glow-secondary: 0 0 20px rgba(76, 175, 80, 0.7), 0 0 40px rgba(76, 175, 80, 0.5), 0 0 60px rgba(76, 175, 80, 0.3);
             --glow-tertiary: 0 0 20px rgba(255, 152, 0, 0.7), 0 0 40px rgba(255, 152, 0, 0.5), 0 0 60px rgba(255, 152, 0, 0.3);
+            --glow-summary: 0 0 20px rgba(33, 150, 243, 0.7), 0 0 40px rgba(33, 150, 243, 0.5), 0 0 60px rgba(33, 150, 243, 0.3);
+            --glow-flashcard: 0 0 20px rgba(156, 39, 176, 0.7), 0 0 40px rgba(156, 39, 176, 0.5), 0 0 60px rgba(156, 39, 176, 0.3);
             --glow-islamic: 0 0 20px rgba(26, 95, 122, 0.8), 0 0 40px rgba(21, 152, 149, 0.6), 0 0 60px rgba(34, 139, 34, 0.4);
 
             --bg: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
@@ -183,7 +191,7 @@
         }
 
         main {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 30px auto;
             padding: 0 20px;
         }
@@ -704,6 +712,20 @@
             border: 2px solid rgba(255, 255, 255, 0.3);
         }
 
+        .btn-summary {
+            background: var(--summary-gradient);
+            color: white;
+            box-shadow: var(--glow-summary), 0 8px 25px rgba(33, 150, 243, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-flashcard {
+            background: var(--flashcard-gradient);
+            color: white;
+            box-shadow: var(--glow-flashcard), 0 8px 25px rgba(156, 39, 176, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
         .btn-islamic {
             background: var(--islamic-gradient);
             color: white;
@@ -765,6 +787,14 @@
 
         .btn-secondary:hover {
             box-shadow: var(--glow-primary), 0 15px 40px rgba(26, 95, 122, 0.6);
+        }
+
+        .btn-summary:hover {
+            box-shadow: var(--glow-summary), 0 15px 40px rgba(33, 150, 243, 0.6);
+        }
+
+        .btn-flashcard:hover {
+            box-shadow: var(--glow-flashcard), 0 15px 40px rgba(156, 39, 176, 0.6);
         }
 
         .btn:disabled {
@@ -881,7 +911,7 @@
         }
 
         /* Quiz Section */
-        #quiz-section {
+        #quiz-section, #summary-section, #flashcards-section {
             display: none;
         }
 
@@ -1706,6 +1736,279 @@
             font-size: 1rem;
         }
 
+        /* Summary Section Styles */
+        .summary-content {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summary-content::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--summary-gradient);
+        }
+
+        .summary-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--summary-blue);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .summary-section {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .summary-section:last-child {
+            border-bottom: none;
+        }
+
+        .summary-section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .summary-point {
+            margin-bottom: 10px;
+            padding-right: 15px;
+            position: relative;
+        }
+
+        .summary-point:before {
+            content: "•";
+            position: absolute;
+            right: 0;
+            color: var(--summary-blue);
+            font-weight: bold;
+        }
+
+        .summary-note {
+            background: rgba(33, 150, 243, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-right: 3px solid var(--summary-blue);
+        }
+
+        /* Flashcards Section Styles */
+        .flashcard-container {
+            perspective: 1000px;
+            width: 100%;
+            height: 400px;
+            margin: 20px auto;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .flashcard-front {
+            background: var(--card-bg);
+            border: 2px solid var(--flashcard-purple);
+            box-shadow: 0 10px 30px rgba(156, 39, 176, 0.2);
+        }
+
+        .flashcard-back {
+            background: var(--card-bg);
+            border: 2px solid var(--summary-blue);
+            box-shadow: 0 10px 30px rgba(33, 150, 243, 0.2);
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-icon {
+            font-size: 3rem;
+            color: var(--flashcard-purple);
+            margin-bottom: 20px;
+        }
+
+        .flashcard-content {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: var(--text);
+            max-width: 800px;
+        }
+
+        .flashcard-index {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--flashcard-gradient);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .flashcard-category {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(156, 39, 176, 0.1);
+            color: var(--flashcard-purple);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .flashcard-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .flashcard-progress {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+            background: rgba(156, 39, 176, 0.1);
+            padding: 15px;
+            border-radius: 15px;
+        }
+
+        .progress-label {
+            font-weight: 600;
+            color: var(--flashcard-purple);
+        }
+
+        .flashcard-stats {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .flashcard-stat {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .flashcard-stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--flashcard-purple);
+            margin-bottom: 5px;
+        }
+
+        .flashcard-stat-label {
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* Mastery Level Indicators */
+        .mastery-level {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .mastery-beginner {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+        }
+
+        .mastery-intermediate {
+            background: rgba(255, 152, 0, 0.1);
+            color: #f59e0b;
+        }
+
+        .mastery-advanced {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
+        }
+
+        .mastery-expert {
+            background: rgba(156, 39, 176, 0.1);
+            color: var(--flashcard-purple);
+        }
+
+        /* Flashcard Actions */
+        .flashcard-actions {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .flashcard-action-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .flashcard-action-btn:hover {
+            background: var(--flashcard-purple);
+            color: white;
+            transform: translateY(-3px);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             body {
@@ -1734,8 +2037,16 @@
                 font-size: 1rem;
             }
 
-            .card, .question-box {
+            .card, .question-box, .summary-content {
                 padding: 25px;
+            }
+
+            .flashcard-container {
+                height: 300px;
+            }
+
+            .flashcard-content {
+                font-size: 1.1rem;
             }
 
             .controls {
@@ -1808,6 +2119,15 @@
             .pdf-details-tabs {
                 flex-direction: column;
             }
+
+            .flashcard-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .flashcard-stat {
+                min-width: 120px;
+            }
         }
 
         /* Sound Animation */
@@ -1852,6 +2172,334 @@
             animation: none;
             transform: scaleY(0.5);
         }
+
+        /* Content Sections */
+        .content-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .content-section h3 {
+            color: var(--text);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Output Container */
+        .output-container {
+            margin-top: 30px;
+            padding: 25px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .output-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .copy-btn {
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(21, 152, 149, 0.3);
+        }
+
+        .copy-btn.copied {
+            background: var(--secondary-gradient);
+        }
+
+        /* Navigation Dots */
+        .navigation-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: var(--accent);
+            transform: scale(1.2);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Summary Types */
+        .summary-type-selector {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .summary-type {
+            flex: 1;
+            min-width: 200px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .summary-type:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .summary-type.active {
+            background: rgba(33, 150, 243, 0.2);
+            border-color: var(--summary-blue);
+            box-shadow: 0 0 20px rgba(33, 150, 243, 0.3);
+        }
+
+        .summary-type-icon {
+            font-size: 2rem;
+            color: var(--summary-blue);
+            margin-bottom: 10px;
+        }
+
+        .summary-type-title {
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 5px;
+        }
+
+        .summary-type-desc {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        /* Summary Hierarchy Styles */
+        .summary-hierarchy {
+            direction: rtl;
+            text-align: right;
+        }
+        
+        .summary-main-title {
+            color: var(--primary);
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--accent);
+            text-align: center;
+        }
+        
+        .summary-chapter {
+            background: rgba(26, 95, 122, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 2px solid rgba(26, 95, 122, 0.1);
+        }
+        
+        .summary-chapter-title {
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-right: 15px;
+            border-right: 4px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .summary-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(21, 152, 149, 0.1);
+        }
+        
+        .summary-section-title {
+            color: var(--accent);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-right: 15px;
+            border-right: 3px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .summary-subsection {
+            margin-bottom: 15px;
+            padding-right: 20px;
+        }
+        
+        .summary-subsection-title {
+            color: var(--summary-blue);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            padding-right: 15px;
+            border-right: 2px solid var(--summary-blue);
+        }
+        
+        .summary-points {
+            list-style: none;
+            padding-right: 30px;
+            margin-top: 10px;
+        }
+        
+        .summary-point {
+            margin-bottom: 12px;
+            padding-right: 20px;
+            position: relative;
+            line-height: 1.7;
+            color: var(--text);
+        }
+        
+        .summary-point:before {
+            content: "•";
+            position: absolute;
+            right: 0;
+            color: var(--secondary);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .summary-key-concept {
+            background: rgba(76, 175, 80, 0.05);
+            border-right: 4px solid var(--secondary);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-weight: 500;
+        }
+        
+        .summary-definition {
+            background: rgba(33, 150, 243, 0.05);
+            border-right: 4px solid var(--summary-blue);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        
+        .summary-note {
+            background: rgba(255, 152, 0, 0.05);
+            border-right: 4px solid var(--tertiary);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-style: italic;
+        }
+        
+        .summary-important {
+            background: rgba(156, 39, 176, 0.05);
+            border-right: 4px solid var(--flashcard-purple);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+        
+        /* English mode for summary hierarchy */
+        body.english-mode .summary-hierarchy {
+            direction: ltr;
+            text-align: left;
+        }
+        
+        body.english-mode .summary-chapter-title {
+            padding-left: 15px;
+            padding-right: 0;
+            border-left: 4px solid var(--primary);
+            border-right: none;
+        }
+        
+        body.english-mode .summary-section-title {
+            padding-left: 15px;
+            padding-right: 0;
+            border-left: 3px solid var(--accent);
+            border-right: none;
+        }
+        
+        body.english-mode .summary-subsection-title {
+            padding-left: 15px;
+            padding-right: 0;
+            border-left: 2px solid var(--summary-blue);
+            border-right: none;
+        }
+        
+        body.english-mode .summary-points {
+            padding-left: 30px;
+            padding-right: 0;
+        }
+        
+        body.english-mode .summary-point {
+            padding-left: 20px;
+            padding-right: 0;
+        }
+        
+        body.english-mode .summary-point:before {
+            left: 0;
+            right: auto;
+        }
+        
+        body.english-mode .summary-key-concept,
+        body.english-mode .summary-definition,
+        body.english-mode .summary-note,
+        body.english-mode .summary-important {
+            border-left: 4px solid;
+            border-right: none;
+        }
     </style>
 </head>
 <body>
@@ -1895,7 +2543,7 @@
         <section id="setup-section" class="hero-section">
             <div class="hero-content">
                 <h1 class="hero-title" id="hero-title">نظام الاختبارات الذكي التفاعلي</h1>
-                <p class="hero-subtitle" id="hero-subtitle">أنشئ اختبارات مخصصة في أي مجال باستخدام الذكاء الاصطناعي</p>
+                <p class="hero-subtitle" id="hero-subtitle">أنشئ اختبارات وملخصات وبطاقات تعليمية باستخدام الذكاء الاصطناعي</p>
                 
                 <!-- طريقة الاختيار -->
                 <div class="method-selector">
@@ -1911,31 +2559,45 @@
                             <i class="fas fa-image"></i>
                         </div>
                         <div class="method-title" id="image-title">رفع صورة</div>
-                        <div class="method-desc" id="image-desc">تحميل صورة وتوليد أسئلة باستخدام الذكاء الاصطناعي</div>
+                        <div class="method-desc" id="image-desc">تحميل صورة وتوليد محتوى باستخدام الذكاء الاصطناعي</div>
                     </div>
                     <div class="method-tab" onclick="selectMethod('pdf')" id="pdf-tab">
                         <div class="method-icon">
                             <i class="fas fa-file-pdf"></i>
                         </div>
                         <div class="method-title" id="pdf-title">رفع ملف PDF</div>
-                        <div class="method-desc" id="pdf-desc">تحميل ملف وتوليد أسئلة باستخدام الذكاء الاصطناعي</div>
+                        <div class="method-desc" id="pdf-desc">تحميل ملف وتوليد محتوى باستخدام الذكاء الاصطناعي</div>
+                    </div>
+                    <div class="method-tab" onclick="selectMethod('summarize')" id="summarize-tab">
+                        <div class="method-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="method-title" id="summarize-title">تلخيص المحتوى</div>
+                        <div class="method-desc" id="summarize-desc">تلخيص النصوص والملفات بأسلوبين مختلفين</div>
+                    </div>
+                    <div class="method-tab" onclick="selectMethod('flashcards')" id="flashcards-tab">
+                        <div class="method-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <div class="method-title" id="flashcards-title">بطاقات تعليمية</div>
+                        <div class="method-desc" id="flashcards-desc">إنشاء بطاقات تعليمية تفاعلية للمراجعة</div>
                     </div>
                 </div>
 
-                <!-- اختيار لغة الاختبار -->
-                <div id="quiz-language-section">
+                <!-- اختيار لغة المحتوى -->
+                <div id="content-language-section">
                     <div class="input-group">
-                        <label><i class="fas fa-globe"></i> <span id="language-label">اختر لغة الاختبار</span></label>
+                        <label><i class="fas fa-globe"></i> <span id="language-label">اختر لغة المحتوى</span></label>
                         <div class="language-selector">
-                            <div class="language-option active" onclick="selectQuizLanguage('ar')" id="arabic-language">
+                            <div class="language-option active" onclick="selectContentLanguage('ar')" id="arabic-language">
                                 <div class="language-flag">🇸🇦</div>
                                 <div class="language-name" id="arabic-language-name">العربية</div>
-                                <div class="language-desc" id="arabic-language-desc">أسئلة باللغة العربية</div>
+                                <div class="language-desc" id="arabic-language-desc">محتوى باللغة العربية</div>
                             </div>
-                            <div class="language-option" onclick="selectQuizLanguage('en')" id="english-language">
+                            <div class="language-option" onclick="selectContentLanguage('en')" id="english-language">
                                 <div class="language-flag">🇺🇸</div>
                                 <div class="language-name" id="english-language-name">English</div>
-                                <div class="language-desc" id="english-language-desc">Questions in English</div>
+                                <div class="language-desc" id="english-language-desc">Content in English</div>
                             </div>
                         </div>
                     </div>
@@ -1968,41 +2630,40 @@
                     </div>
                 </div>
 
-                <!-- قسم اختيار نوع الأسئلة -->
-                <div class="question-type-selector">
-                    <div class="input-group">
-                        <label><i class="fas fa-list-check"></i> <span id="question-type-label-main">اختر نوع الأسئلة المطلوبة</span></label>
-                        <div class="question-type-options">
-                            <div class="question-type-option active" onclick="toggleQuestionType('multipleChoice')" id="multiple-choice-option">
-                                <input type="checkbox" id="multipleChoiceCheckbox" checked>
-                                <div class="question-type-icon">
-                                    <i class="fas fa-check-circle"></i>
-                                </div>
-                                <div class="question-type-name" id="multiple-choice-text">أسئلة اختيار متعدد</div>
-                            </div>
-                            <div class="question-type-option active" onclick="toggleQuestionType('trueFalse')" id="true-false-option">
-                                <input type="checkbox" id="trueFalseCheckbox" checked>
-                                <div class="question-type-icon">
-                                    <i class="fas fa-balance-scale"></i>
-                                </div>
-                                <div class="question-type-name" id="true-false-text">أسئلة (صح/ خطأ)</div>
-                            </div>
-                            <div class="question-type-option active" onclick="toggleQuestionType('fillBlank')" id="fill-blank-option">
-                                <input type="checkbox" id="fillBlankCheckbox" checked>
-                                <div class="question-type-icon">
-                                    <i class="fas fa-pen-to-square"></i>
-                                </div>
-                                <div class="question-type-name" id="fill-blank-text">املأ الفراغ</div>
-                            </div>
-                        </div>
-                        <p style="margin-top: 15px; color: var(--light-text); font-size: 0.9rem; text-align: center;" id="question-type-desc">
-                            يمكنك اختيار جميع أنواع الأسئلة أو اختيار نوع واحد فقط
-                        </p>
-                    </div>
-                </div>
-
-                <!-- قسم الإدخال اليدوي -->
+                <!-- قسم الإدخال اليدوي (للاستخدام في الاختبارات فقط) -->
                 <div id="manual-section">
+                    <div class="question-type-selector">
+                        <div class="input-group">
+                            <label><i class="fas fa-list-check"></i> <span id="question-type-label-main">اختر نوع الأسئلة المطلوبة</span></label>
+                            <div class="question-type-options">
+                                <div class="question-type-option active" onclick="toggleQuestionType('multipleChoice')" id="multiple-choice-option">
+                                    <input type="checkbox" id="multipleChoiceCheckbox" checked>
+                                    <div class="question-type-icon">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div class="question-type-name" id="multiple-choice-text">أسئلة اختيار متعدد</div>
+                                </div>
+                                <div class="question-type-option active" onclick="toggleQuestionType('trueFalse')" id="true-false-option">
+                                    <input type="checkbox" id="trueFalseCheckbox" checked>
+                                    <div class="question-type-icon">
+                                        <i class="fas fa-balance-scale"></i>
+                                    </div>
+                                    <div class="question-type-name" id="true-false-text">أسئلة (صح/ خطأ)</div>
+                                </div>
+                                <div class="question-type-option active" onclick="toggleQuestionType('fillBlank')" id="fill-blank-option">
+                                    <input type="checkbox" id="fillBlankCheckbox" checked>
+                                    <div class="question-type-icon">
+                                        <i class="fas fa-pen-to-square"></i>
+                                    </div>
+                                    <div class="question-type-name" id="fill-blank-text">املأ الفراغ</div>
+                                </div>
+                            </div>
+                            <p style="margin-top: 15px; color: var(--light-text); font-size: 0.9rem; text-align: center;" id="question-type-desc">
+                                يمكنك اختيار جميع أنواع الأسئلة أو اختيار نوع واحد فقط
+                            </p>
+                        </div>
+                    </div>
+
                     <div class="input-group">
                         <label for="quiz-title"><i class="fas fa-heading"></i> <span id="quiz-title-label">عنوان الاختبار</span></label>
                         <input type="text" id="quiz-title" class="input-field" 
@@ -2055,7 +2716,7 @@
                             </div>
                             <div class="analysis-status" id="image-analysis-status">
                                 <i class="fas fa-robot"></i>
-                                <p id="image-analysis-status-text">سيقوم الذكاء الاصطناعي بتحليل الصورة وتوليد الأسئلة</p>
+                                <p id="image-analysis-status-text">سيقوم الذكاء الاصطناعي بتحليل الصورة وتوليد المحتوى</p>
                             </div>
                             <div id="image-preview-container" class="image-preview-container">
                                 <img id="preview-image" class="image-preview" alt="معاينة الصورة">
@@ -2066,18 +2727,50 @@
                         </div>
                     </div>
 
-                    <div class="input-group">
-                        <label for="num-questions-image"><i class="fas fa-question-circle"></i> <span id="num-questions-label-image">عدد الأسئلة المطلوبة</span></label>
-                        <select id="num-questions-image" class="input-field">
-                            <option value="5">5 أسئلة</option>
-                            <option value="10" selected>10 أسئلة</option>
-                            <option value="15">15 أسئلة</option>
-                            <option value="20">20 أسئلة</option>
-                            <option value="25">25 أسئلة</option>
-                            <option value="30">30 أسئلة</option>
-                            <option value="35">35 أسئلة</option>
-                            <option value="40">40 أسئلة</option>
-                        </select>
+                    <!-- خيارات إضافية حسب الطريقة -->
+                    <div id="image-quiz-options" style="display: none;">
+                        <div class="question-type-selector">
+                            <div class="input-group">
+                                <label><i class="fas fa-list-check"></i> <span>اختر نوع الأسئلة المطلوبة</span></label>
+                                <div class="question-type-options">
+                                    <div class="question-type-option active" onclick="toggleQuestionType('multipleChoice')" id="image-multiple-choice-option">
+                                        <input type="checkbox" id="imageMultipleChoiceCheckbox" checked>
+                                        <div class="question-type-icon">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <div class="question-type-name">أسئلة اختيار متعدد</div>
+                                    </div>
+                                    <div class="question-type-option active" onclick="toggleQuestionType('trueFalse')" id="image-true-false-option">
+                                        <input type="checkbox" id="imageTrueFalseCheckbox" checked>
+                                        <div class="question-type-icon">
+                                            <i class="fas fa-balance-scale"></i>
+                                        </div>
+                                        <div class="question-type-name">أسئلة (صح/ خطأ)</div>
+                                    </div>
+                                    <div class="question-type-option active" onclick="toggleQuestionType('fillBlank')" id="image-fill-blank-option">
+                                        <input type="checkbox" id="imageFillBlankCheckbox" checked>
+                                        <div class="question-type-icon">
+                                            <i class="fas fa-pen-to-square"></i>
+                                        </div>
+                                        <div class="question-type-name">املأ الفراغ</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="num-questions-image"><i class="fas fa-question-circle"></i> <span id="num-questions-label-image">عدد الأسئلة المطلوبة</span></label>
+                            <select id="num-questions-image" class="input-field">
+                                <option value="5">5 أسئلة</option>
+                                <option value="10" selected>10 أسئلة</option>
+                                <option value="15">15 أسئلة</option>
+                                <option value="20">20 أسئلة</option>
+                                <option value="25">25 أسئلة</option>
+                                <option value="30">30 أسئلة</option>
+                                <option value="35">35 أسئلة</option>
+                                <option value="40">40 أسئلة</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
@@ -2106,7 +2799,7 @@
                             </div>
                             <div class="analysis-status" id="analysis-status">
                                 <i class="fas fa-robot"></i>
-                                <p id="analysis-status-text">سيقوم الذكاء الاصطناعي بتحليل الملف وتوليد الأسئلة</p>
+                                <p id="analysis-status-text">سيقوم الذكاء الاصطناعي بتحليل الملف وتوليد المحتوى</p>
                             </div>
                             <button class="remove-file-btn" onclick="removePDF()" id="remove-file-btn">
                                 <i class="fas fa-trash"></i> <span id="remove-file-text">إزالة الملف</span>
@@ -2194,29 +2887,359 @@
                         </div>
                     </div>
 
+                    <!-- خيارات إضافية حسب الطريقة -->
+                    <div id="pdf-quiz-options" style="display: none;">
+                        <div class="question-type-selector">
+                            <div class="input-group">
+                                <label><i class="fas fa-list-check"></i> <span>اختر نوع الأسئلة المطلوبة</span></label>
+                                <div class="question-type-options">
+                                    <div class="question-type-option active" onclick="toggleQuestionType('multipleChoice')" id="pdf-multiple-choice-option">
+                                        <input type="checkbox" id="pdfMultipleChoiceCheckbox" checked>
+                                        <div class="question-type-icon">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <div class="question-type-name">أسئلة اختيار متعدد</div>
+                                    </div>
+                                    <div class="question-type-option active" onclick="toggleQuestionType('trueFalse')" id="pdf-true-false-option">
+                                        <input type="checkbox" id="pdfTrueFalseCheckbox" checked>
+                                        <div class="question-type-icon">
+                                            <i class="fas fa-balance-scale"></i>
+                                        </div>
+                                        <div class="question-type-name">أسئلة (صح/ خطأ)</div>
+                                    </div>
+                                    <div class="question-type-option active" onclick="toggleQuestionType('fillBlank')" id="pdf-fill-blank-option">
+                                        <input type="checkbox" id="pdfFillBlankCheckbox" checked>
+                                        <div class="question-type-icon">
+                                            <i class="fas fa-pen-to-square"></i>
+                                        </div>
+                                        <div class="question-type-name">املأ الفراغ</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="num-questions-pdf"><i class="fas fa-question-circle"></i> <span id="num-questions-label-pdf">عدد الأسئلة المطلوبة</span></label>
+                            <select id="num-questions-pdf" class="input-field">
+                                <option value="5">5 أسئلة</option>
+                                <option value="10" selected>10 أسئلة</option>
+                                <option value="15">15 أسئلة</option>
+                                <option value="20">20 أسئلة</option>
+                                <option value="25">25 أسئلة</option>
+                                <option value="30">30 أسئلة</option>
+                                <option value="35">35 أسئلة</option>
+                                <option value="40">40 أسئلة</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- قسم تلخيص المحتوى -->
+                <div id="summarize-section" style="display: none;">
+                    <div class="file-upload-container">
+                        <label for="summary-file" class="file-upload-label">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h4 id="summary-upload-title">انقر لرفع ملف للتلخيص</h4>
+                            <p id="summary-upload-subtitle">أو اسحب وأفلت الملف هنا</p>
+                            <p style="font-size: 0.8rem; color: var(--light-text); margin-top: 10px;" id="summary-upload-size">
+                                الأنواع المسموحة: PDF, TXT, DOC, DOCX, JPG, PNG
+                            </p>
+                        </label>
+                        <input type="file" id="summary-file" class="file-input" accept=".pdf,.txt,.doc,.docx,.jpg,.jpeg,.png" onchange="handleSummaryUpload(event)">
+                        
+                        <div class="file-preview" id="summary-preview">
+                            <div class="file-info">
+                                <div class="file-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div class="file-details">
+                                    <h5 id="summary-filename"></h5>
+                                    <p id="summary-filesize"></p>
+                                </div>
+                            </div>
+                            <div class="analysis-status" id="summary-analysis-status">
+                                <i class="fas fa-robot"></i>
+                                <p id="summary-analysis-status-text">سيقوم الذكاء الاصطناعي بتحليل الملف وإنشاء التلخيص</p>
+                            </div>
+                            <button class="remove-file-btn" onclick="removeSummaryFile()" id="remove-summary-btn">
+                                <i class="fas fa-trash"></i> <span id="remove-summary-text">إزالة الملف</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- نفس قسم تفاصيل PDF -->
+                    <div class="pdf-details-section" id="summary-details-section">
+                        <h4 style="color: var(--text); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-filter"></i> <span>تحديد تفاصيل المحتوى</span>
+                        </h4>
+                        <p style="color: var(--light-text); margin-bottom: 20px; font-size: 0.95rem;">
+                            يمكنك تحديد نطاق محدد من الملف لتحليله. اترك الحقول فارغة لتحليل الملف بالكامل.
+                        </p>
+                        
+                        <div class="pdf-details-tabs">
+                            <div class="pdf-details-tab active" onclick="selectPDFDetailsTab('pages')" id="summary-pages-tab">
+                                <i class="fas fa-file"></i> <span>الصفحات</span>
+                            </div>
+                            <div class="pdf-details-tab" onclick="selectPDFDetailsTab('units')" id="summary-units-tab">
+                                <i class="fas fa-layer-group"></i> <span>الوحدات</span>
+                            </div>
+                            <div class="pdf-details-tab" onclick="selectPDFDetailsTab('topics')" id="summary-topics-tab">
+                                <i class="fas fa-tags"></i> <span>المواضيع</span>
+                            </div>
+                        </div>
+                        
+                        <!-- محتوى الصفحات -->
+                        <div class="pdf-details-content active" id="summary-pages-content">
+                            <div class="details-input-group">
+                                <label for="summary-start-page"><i class="fas fa-arrows-alt-h"></i> <span>نطاق الصفحات</span></label>
+                                <div class="page-range-inputs">
+                                    <input type="number" id="summary-start-page" class="details-input" placeholder="الصفحة الأولى" min="1">
+                                    <div class="page-range-separator">إلى</div>
+                                    <input type="number" id="summary-end-page" class="details-input" placeholder="الصفحة الأخيرة">
+                                </div>
+                                <p class="hint-text">
+                                    اترك الحقول فارغة لتحليل جميع الصفحات. أدخل أرقام الصفحات فقط.
+                                </p>
+                            </div>
+                            
+                            <div class="details-input-group">
+                                <label for="summary-specific-pages"><i class="fas fa-hashtag"></i> <span>صفحات محددة</span></label>
+                                <input type="text" id="summary-specific-pages" class="details-input" 
+                                       placeholder="مثال: 1,3,5-8,10,12-15">
+                                <p class="hint-text">
+                                    يمكنك تحديد صفحات محددة باستخدام الفواصل والفواصل المنقوطة للنطاقات.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- محتوى الوحدات -->
+                        <div class="pdf-details-content" id="summary-units-content">
+                            <div class="details-input-group">
+                                <label for="summary-units-list"><i class="fas fa-list-ol"></i> <span>الوحدات المطلوبة</span></label>
+                                <textarea id="summary-units-list" class="details-input topics-textarea" 
+                                          placeholder="مثال: 
+- الوحدة الأولى: المدخل إلى علم الفقه
+- الوحدة الثانية: أحكام الطهارة
+- الوحدة الثالثة: أحكام الصلاة
+- الوحدة الرابعة: أحكام الصيام"></textarea>
+                                <p class="hint-text">
+                                    اذكر العناوين الرئيسية للوحدات أو الفصول التي تريد التركيز عليها.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- محتوى المواضيع -->
+                        <div class="pdf-details-content" id="summary-topics-content">
+                            <div class="details-input-group">
+                                <label for="summary-topics-list"><i class="fas fa-tags"></i> <span>المواضيع المطلوبة</span></label>
+                                <textarea id="summary-topics-list" class="details-input topics-textarea" 
+                                          placeholder="مثال: 
+- تعريف الصلاة وأركانها
+- شروط الصلاة
+- مكروهات الصلاة
+- مبطلات الصلاة
+- صلاة الجماعة
+- صلاة المريض"></textarea>
+                                <p class="hint-text">
+                                    اذكر المواضيع أو المفاهيم المحددة التي تريد التركيز عليها في التحليل.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="input-group">
-                        <label for="num-questions-pdf"><i class="fas fa-question-circle"></i> <span id="num-questions-label-pdf">عدد الأسئلة المطلوبة</span></label>
-                        <select id="num-questions-pdf" class="input-field">
-                            <option value="5">5 أسئلة</option>
-                            <option value="10" selected>10 أسئلة</option>
-                            <option value="15">15 أسئلة</option>
-                            <option value="20">20 أسئلة</option>
-                            <option value="25">25 أسئلة</option>
-                            <option value="30">30 أسئلة</option>
-                            <option value="35">35 أسئلة</option>
-                            <option value="40">40 أسئلة</option>
+                        <label><i class="fas fa-chart-pie"></i> <span id="summary-type-label">نوع التلخيص</span></label>
+                        <div class="summary-type-selector">
+                            <div class="summary-type active" onclick="selectSummaryType('detailed')" id="detailed-summary">
+                                <div class="summary-type-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div class="summary-type-title" id="detailed-summary-name">تفاصيل عميقة</div>
+                                <div class="summary-type-desc" id="detailed-summary-desc">تلخيص مفصل مع جميع النقاط الرئيسية</div>
+                            </div>
+                            <div class="summary-type" onclick="selectSummaryType('quick')" id="quick-summary">
+                                <div class="summary-type-icon">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                                <div class="summary-type-title" id="quick-summary-name">ملخص سريع</div>
+                                <div class="summary-type-desc" id="quick-summary-desc">نقاط رئيسية مركزة وسريعة القراءة</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="summary-length"><i class="fas fa-ruler"></i> <span id="summary-length-label">طول التلخيص</span></label>
+                        <select id="summary-length" class="input-field">
+                            <option value="short">مختصر (نقاط رئيسية)</option>
+                            <option value="medium" selected>متوسط (متوازن)</option>
+                            <option value="long">مفصل (شامل)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- قسم البطاقات التعليمية -->
+                <div id="flashcards-section" style="display: none;">
+                    <div class="file-upload-container">
+                        <label for="flashcards-file" class="file-upload-label">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h4 id="flashcards-upload-title">انقر لرفع ملف للبطاقات التعليمية</h4>
+                            <p id="flashcards-upload-subtitle">أو اسحب وأفلت الملف هنا</p>
+                            <p style="font-size: 0.8rem; color: var(--light-text); margin-top: 10px;" id="flashcards-upload-size">
+                                الأنواع المسموحة: PDF, TXT, DOC, DOCX, JPG, PNG
+                            </p>
+                        </label>
+                        <input type="file" id="flashcards-file" class="file-input" accept=".pdf,.txt,.doc,.docx,.jpg,.jpeg,.png" onchange="handleFlashcardsUpload(event)">
+                        
+                        <div class="file-preview" id="flashcards-preview">
+                            <div class="file-info">
+                                <div class="file-icon">
+                                    <i class="fas fa-layer-group"></i>
+                                </div>
+                                <div class="file-details">
+                                    <h5 id="flashcards-filename"></h5>
+                                    <p id="flashcards-filesize"></p>
+                                </div>
+                            </div>
+                            <div class="analysis-status" id="flashcards-analysis-status">
+                                <i class="fas fa-robot"></i>
+                                <p id="flashcards-analysis-status-text">سيقوم الذكاء الاصطناعي بتحليل الملف وإنشاء البطاقات التعليمية</p>
+                            </div>
+                            <button class="remove-file-btn" onclick="removeFlashcardsFile()" id="remove-flashcards-btn">
+                                <i class="fas fa-trash"></i> <span id="remove-flashcards-text">إزالة الملف</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- نفس قسم تفاصيل PDF -->
+                    <div class="pdf-details-section" id="flashcards-details-section">
+                        <h4 style="color: var(--text); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-filter"></i> <span>تحديد تفاصيل المحتوى</span>
+                        </h4>
+                        <p style="color: var(--light-text); margin-bottom: 20px; font-size: 0.95rem;">
+                            يمكنك تحديد نطاق محدد من الملف لتحليله. اترك الحقول فارغة لتحليل الملف بالكامل.
+                        </p>
+                        
+                        <div class="pdf-details-tabs">
+                            <div class="pdf-details-tab active" onclick="selectPDFDetailsTab('pages')" id="flashcards-pages-tab">
+                                <i class="fas fa-file"></i> <span>الصفحات</span>
+                            </div>
+                            <div class="pdf-details-tab" onclick="selectPDFDetailsTab('units')" id="flashcards-units-tab">
+                                <i class="fas fa-layer-group"></i> <span>الوحدات</span>
+                            </div>
+                            <div class="pdf-details-tab" onclick="selectPDFDetailsTab('topics')" id="flashcards-topics-tab">
+                                <i class="fas fa-tags"></i> <span>المواضيع</span>
+                            </div>
+                        </div>
+                        
+                        <!-- محتوى الصفحات -->
+                        <div class="pdf-details-content active" id="flashcards-pages-content">
+                            <div class="details-input-group">
+                                <label for="flashcards-start-page"><i class="fas fa-arrows-alt-h"></i> <span>نطاق الصفحات</span></label>
+                                <div class="page-range-inputs">
+                                    <input type="number" id="flashcards-start-page" class="details-input" placeholder="الصفحة الأولى" min="1">
+                                    <div class="page-range-separator">إلى</div>
+                                    <input type="number" id="flashcards-end-page" class="details-input" placeholder="الصفحة الأخيرة">
+                                </div>
+                                <p class="hint-text">
+                                    اترك الحقول فارغة لتحليل جميع الصفحات. أدخل أرقام الصفحات فقط.
+                                </p>
+                            </div>
+                            
+                            <div class="details-input-group">
+                                <label for="flashcards-specific-pages"><i class="fas fa-hashtag"></i> <span>صفحات محددة</span></label>
+                                <input type="text" id="flashcards-specific-pages" class="details-input" 
+                                       placeholder="مثال: 1,3,5-8,10,12-15">
+                                <p class="hint-text">
+                                    يمكنك تحديد صفحات محددة باستخدام الفواصل والفواصل المنقوطة للنطاقات.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- محتوى الوحدات -->
+                        <div class="pdf-details-content" id="flashcards-units-content">
+                            <div class="details-input-group">
+                                <label for="flashcards-units-list"><i class="fas fa-list-ol"></i> <span>الوحدات المطلوبة</span></label>
+                                <textarea id="flashcards-units-list" class="details-input topics-textarea" 
+                                          placeholder="مثال: 
+- الوحدة الأولى: المدخل إلى علم الفقه
+- الوحدة الثانية: أحكام الطهارة
+- الوحدة الثالثة: أحكام الصلاة
+- الوحدة الرابعة: أحكام الصيام"></textarea>
+                                <p class="hint-text">
+                                    اذكر العناوين الرئيسية للوحدات أو الفصول التي تريد التركيز عليها.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- محتوى المواضيع -->
+                        <div class="pdf-details-content" id="flashcards-topics-content">
+                            <div class="details-input-group">
+                                <label for="flashcards-topics-list"><i class="fas fa-tags"></i> <span>المواضيع المطلوبة</span></label>
+                                <textarea id="flashcards-topics-list" class="details-input topics-textarea" 
+                                          placeholder="مثال: 
+- تعريف الصلاة وأركانها
+- شروط الصلاة
+- مكروهات الصلاة
+- مبطلات الصلاة
+- صلاة الجماعة
+- صلاة المريض"></textarea>
+                                <p class="hint-text">
+                                    اذكر المواضيع أو المفاهيم المحددة التي تريد التركيز عليها في التحليل.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="num-flashcards"><i class="fas fa-layer-group"></i> <span id="num-flashcards-label">عدد البطاقات التعليمية</span></label>
+                        <select id="num-flashcards" class="input-field">
+                            <option value="10">10 بطاقات</option>
+                            <option value="20" selected>20 بطاقة</option>
+                            <option value="30">30 بطاقة</option>
+                            <option value="40">40 بطاقة</option>
+                            <option value="50">50 بطاقة</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label><i class="fas fa-brain"></i> <span id="flashcard-type-label">نوع البطاقات</span></label>
+                        <div class="summary-type-selector">
+                            <div class="summary-type active" onclick="selectFlashcardType('concepts')" id="concepts-flashcards">
+                                <div class="summary-type-icon">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                <div class="summary-type-title" id="concepts-flashcards-name">المفاهيم الأساسية</div>
+                                <div class="summary-type-desc" id="concepts-flashcards-desc">بطاقات تركز على التعريفات والمفاهيم</div>
+                            </div>
+                            <div class="summary-type" onclick="selectFlashcardType('qa')" id="qa-flashcards">
+                                <div class="summary-type-icon">
+                                    <i class="fas fa-question-circle"></i>
+                                </div>
+                                <div class="summary-type-title" id="qa-flashcards-name">أسئلة وأجوبة</div>
+                                <div class="summary-type-desc" id="qa-flashcards-desc">بطاقات بصيغة سؤال وجواب</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="flashcard-difficulty"><i class="fas fa-signal"></i> <span id="flashcard-difficulty-label">مستوى الصعوبة</span></label>
+                        <select id="flashcard-difficulty" class="input-field">
+                            <option value="easy">سهل (مبتدئ)</option>
+                            <option value="medium" selected>متوسط (متقدم)</option>
+                            <option value="hard">صعب (خبير)</option>
+                            <option value="mixed">مختلط (جميع المستويات)</option>
                         </select>
                     </div>
                 </div>
 
                 <!-- زر التوليد -->
-                <button class="btn btn-islamic" onclick="generateQuiz()" style="width: 100%; margin-top: 20px;" id="generate-btn">
-                    <i class="fas fa-robot"></i> <span id="generate-text">توليد اختبار باستخدام الذكاء الاصطناعي</span>
+                <button class="btn btn-islamic" onclick="generateContent()" style="width: 100%; margin-top: 20px;" id="generate-btn">
+                    <i class="fas fa-robot"></i> <span id="generate-text">توليد المحتوى باستخدام الذكاء الاصطناعي</span>
                 </button>
 
                 <div class="loading" id="loading">
                     <div class="loader"></div>
-                    <p id="loading-text">جارٍ توليد الأسئلة باستخدام الذكاء الاصطناعي...</p>
+                    <p id="loading-text">جارٍ توليد المحتوى باستخدام الذكاء الاصطناعي...</p>
                     <p style="font-size: 0.9rem; opacity: 0.7;" id="loading-details"></p>
                 </div>
 
@@ -2261,8 +3284,135 @@
             </div>
         </section>
 
-        <!-- Final Results -->
-        <div id="result-box" class="card">
+        <!-- Summary Section (Hidden Initially) -->
+        <section id="summary-section" style="display: none;">
+            <div class="output-container">
+                <div class="output-header">
+                    <div class="output-title">
+                        <i class="fas fa-file-alt"></i>
+                        <span id="summary-output-title">ملخص المحتوى</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyToClipboard('summary-content')" id="copy-summary-btn">
+                        <i class="fas fa-copy"></i>
+                        <span id="copy-summary-text">نسخ الملخص</span>
+                    </button>
+                </div>
+                <div id="summary-content" class="summary-hierarchy"></div>
+            </div>
+
+            <div class="navigation" style="margin-top: 30px;">
+                <button class="btn btn-secondary" onclick="backToSetup()" id="back-summary-btn">
+                    <i class="fas fa-arrow-right"></i>
+                    <span id="back-summary-text">العودة للقائمة الرئيسية</span>
+                </button>
+                <button class="btn btn-summary" onclick="downloadSummary()" id="download-summary-btn">
+                    <i class="fas fa-download"></i>
+                    <span id="download-summary-text">تحميل الملخص</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Flashcards Section (Hidden Initially) -->
+        <section id="flashcards-section-main" style="display: none;">
+            <div class="flashcard-stats">
+                <div class="flashcard-stat">
+                    <div class="flashcard-stat-value" id="current-card">1</div>
+                    <div class="flashcard-stat-label" id="total-cards-label">من إجمالي</div>
+                </div>
+                <div class="flashcard-stat">
+                    <div class="flashcard-stat-value" id="mastered-cards">0</div>
+                    <div class="flashcard-stat-label" id="mastered-label">تم إتقانها</div>
+                </div>
+                <div class="flashcard-stat">
+                    <div class="flashcard-stat-value" id="review-cards">0</div>
+                    <div class="flashcard-stat-label" id="review-label">تحتاج مراجعة</div>
+                </div>
+                <div class="flashcard-stat">
+                    <div class="flashcard-stat-value" id="mastery-percentage">0%</div>
+                    <div class="flashcard-stat-label" id="mastery-label">نسبة الإتقان</div>
+                </div>
+            </div>
+
+            <div class="flashcard-container">
+                <div class="flashcard" id="flashcard" onclick="flipCard()">
+                    <div class="flashcard-front">
+                        <div class="flashcard-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="flashcard-content" id="flashcard-front-content"></div>
+                        <div class="flashcard-index" id="flashcard-index">1</div>
+                        <div class="flashcard-category" id="flashcard-category">مفهوم</div>
+                        <div class="flashcard-actions">
+                            <div class="flashcard-action-btn" onclick="markAsMastered(event)">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="flashcard-action-btn" onclick="markForReview(event)">
+                                <i class="fas fa-flag"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flashcard-back">
+                        <div class="flashcard-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="flashcard-content" id="flashcard-back-content"></div>
+                        <div class="flashcard-index" id="flashcard-back-index">1</div>
+                        <div class="flashcard-category" id="flashcard-back-category">مفهوم</div>
+                        <div class="mastery-level" id="mastery-level">مبتدئ</div>
+                        <div class="flashcard-actions">
+                            <div class="flashcard-action-btn" onclick="markAsMastered(event)">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="flashcard-action-btn" onclick="markForReview(event)">
+                                <i class="fas fa-flag"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flashcard-controls">
+                <button class="btn btn-flashcard" onclick="previousCard()" id="prev-card-btn">
+                    <i class="fas fa-arrow-right"></i>
+                    <span id="prev-card-text">البطاقة السابقة</span>
+                </button>
+                <button class="btn btn-secondary" onclick="flipCard()" id="flip-card-btn">
+                    <i class="fas fa-sync-alt"></i>
+                    <span id="flip-card-text">قلب البطاقة</span>
+                </button>
+                <button class="btn btn-flashcard" onclick="nextCard()" id="next-card-btn">
+                    <span id="next-card-text">البطاقة التالية</span>
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+            </div>
+
+            <div class="flashcard-progress">
+                <div class="progress-bar" style="flex: 1; height: 10px;">
+                    <div class="progress" id="flashcard-progress" style="background: var(--flashcard-gradient);"></div>
+                </div>
+                <div class="progress-label" id="progress-text">التقدم: 0%</div>
+            </div>
+
+            <div class="navigation-dots" id="flashcard-dots"></div>
+
+            <div class="navigation" style="margin-top: 30px;">
+                <button class="btn btn-secondary" onclick="backToSetup()" id="back-flashcards-btn">
+                    <i class="fas fa-arrow-right"></i>
+                    <span id="back-flashcards-text">العودة للقائمة الرئيسية</span>
+                </button>
+                <button class="btn btn-flashcard" onclick="restartFlashcards()" id="restart-flashcards-btn">
+                    <i class="fas fa-redo"></i>
+                    <span id="restart-flashcards-text">إعادة البدء</span>
+                </button>
+                <button class="btn btn-primary" onclick="downloadFlashcards()" id="download-flashcards-btn">
+                    <i class="fas fa-download"></i>
+                    <span id="download-flashcards-text">تحميل البطاقات</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Final Results (for quizzes only) -->
+        <div id="result-box" class="card" style="display: none;">
             <h3 id="result" style="color: var(--text); margin-bottom: 20px;"></h3>
             <p id="percentage" style="font-size: 1.4rem; margin-bottom: 15px;"></p>
             <p id="evaluation" style="font-weight: bold; font-size: 1.3rem;"></p>
@@ -2340,9 +3490,12 @@
     <audio id="wrongSound" preload="auto">
         <source src="https://www.soundjay.com/buttons/button-3.mp3" type="audio/mpeg">
     </audio>
+    <audio id="flipSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-page-flip-914.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
-        // المتغيرات العامة
+        // ==================== المتغيرات العامة ====================
         let questions = [];
         let currentQuestionIndex = 0;
         let userAnswers = [];
@@ -2355,14 +3508,18 @@
         let apiKey = "";
         let pdfFile = null;
         let imageFile = null;
+        let summaryFile = null;
+        let flashcardsFile = null;
         let currentMethod = "manual";
         let existingQuestions = [];
         let currentBatch = 1;
         let totalQuestionsGenerated = 0;
         let currentLanguage = "ar";
         let isAPIKeyValid = false;
-        let quizLanguage = "ar";
+        let contentLanguage = "ar";
         let soundEnabled = true;
+        let summaryType = "detailed";
+        let flashcardType = "concepts";
         
         // أنواع الأسئلة المختارة
         let selectedQuestionTypes = {
@@ -2371,20 +3528,37 @@
             fillBlank: true
         };
 
+        // بيانات البطاقات التعليمية
+        let flashcards = [];
+        let currentFlashcardIndex = 0;
+        let masteredFlashcards = new Set();
+        let reviewFlashcards = new Set();
+
+        // إضافة متغيرات جديدة للتحكم في الطلبات
+        let lastRequestTime = 0;
+        const MIN_REQUEST_INTERVAL = 3000; // 3 ثانية بين الطلبات
+        let retryCount = 0;
+        const MAX_RETRIES = 3;
+        const REQUEST_TIMEOUT = 60000; // 60 ثانية timeout
+
         // تحديد نموذج Gemini المستخدم
         const GEMINI_MODEL = "gemini-2.5-flash-lite";
         const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent";
 
-        // نصوص اللغة العربية
+        // ==================== نصوص اللغة العربية ====================
         const arabicTexts = {
             "hero-title": "نظام الاختبارات الذكي التفاعلي",
-            "hero-subtitle": "أنشئ اختبارات مخصصة في أي مجال باستخدام الذكاء الاصطناعي",
+            "hero-subtitle": "أنشئ اختبارات وملخصات وبطاقات تعليمية باستخدام الذكاء الاصطناعي",
             "manual-title": "إدخال يدوي",
             "manual-desc": "أدخل عنوان وموضوع الاختبار",
             "image-title": "رفع صورة",
-            "image-desc": "تحميل صورة وتوليد أسئلة باستخدام الذكاء الاصطناعي",
+            "image-desc": "تحميل صورة وتوليد محتوى باستخدام الذكاء الاصطناعي",
             "pdf-title": "رفع ملف PDF",
-            "pdf-desc": "تحميل ملف وتوليد أسئلة باستخدام الذكاء الاصطناعي",
+            "pdf-desc": "تحميل ملف وتوليد محتوى باستخدام الذكاء الاصطناعي",
+            "summarize-title": "تلخيص المحتوى",
+            "summarize-desc": "تلخيص النصوص والملفات بأسلوبين مختلفين",
+            "flashcards-title": "بطاقات تعليمية",
+            "flashcards-desc": "إنشاء بطاقات تعليمية تفاعلية للمراجعة",
             "api-key-label": "مفتاح Google Gemini API",
             "verify-text": "تحقق",
             "api-info-text": "للحصول على مفتاح API:",
@@ -2399,16 +3573,25 @@
             "upload-subtitle": "أو اسحب وأفلت الملف هنا",
             "upload-size": "الحد الأقصى لحجم الملف: 100MB",
             "remove-file-text": "إزالة الملف",
+            "summary-upload-title": "انقر لرفع ملف للتلخيص",
+            "summary-upload-subtitle": "أو اسحب وأفلت الملف هنا",
+            "summary-upload-size": "الأنواع المسموحة: PDF, TXT, DOC, DOCX, JPG, PNG",
+            "remove-summary-text": "إزالة الملف",
+            "flashcards-upload-title": "انقر لرفع ملف للبطاقات التعليمية",
+            "flashcards-upload-subtitle": "أو اسحب وأفلت الملف هنا",
+            "flashcards-upload-size": "الأنواع المسموحة: PDF, TXT, DOC, DOCX, JPG, PNG",
+            "remove-flashcards-text": "إزالة الملف",
             "num-questions-label-manual": "عدد الأسئلة المطلوبة",
             "num-questions-label-image": "عدد الأسئلة المطلوبة",
             "num-questions-label-pdf": "عدد الأسئلة المطلوبة",
+            "num-flashcards-label": "عدد البطاقات التعليمية",
             "question-type-label-main": "اختر نوع الأسئلة المطلوبة",
             "multiple-choice-text": "أسئلة اختيار متعدد",
             "true-false-text": "أسئلة (صح/ خطأ)",
             "fill-blank-text": "املأ الفراغ",
             "question-type-desc": "يمكنك اختيار جميع أنواع الأسئلة أو اختيار نوع واحد فقط",
-            "generate-text": "توليد اختبار باستخدام الذكاء الاصطناعي",
-            "loading-text": "جارٍ توليد الأسئلة باستخدام الذكاء الاصطناعي...",
+            "generate-text": "توليد المحتوى باستخدام الذكاء الاصطناعي",
+            "loading-text": "جارٍ توليد المحتوى باستخدام الذكاء الاصطناعي...",
             "questions-list-text": "قائمة الأسئلة",
             "mark-review-text": "وضع علامة للمراجعة",
             "finish-quiz-text": "إنهاء الاختبار",
@@ -2420,13 +3603,15 @@
             "current-score-modal-title": "الدرجات الحالية",
             "questions-modal-title": "قائمة الأسئلة",
             "close-questions-text": "إغلاق القائمة",
-            "analysis-status-text": "سيقوم الذكاء الاصطناعي بتحليل الملف وتوليد الأسئلة",
-            "image-analysis-status-text": "سيقوم الذكاء الاصطناعي بتحليل الصورة وتوليد الأسئلة",
-            "language-label": "اختر لغة الاختبار",
+            "analysis-status-text": "سيقوم الذكاء الاصطناعي بتحليل الملف وتوليد المحتوى",
+            "image-analysis-status-text": "سيقوم الذكاء الاصطناعي بتحليل الصورة وتوليد المحتوى",
+            "summary-analysis-status-text": "سيقوم الذكاء الاصطناعي بتحليل الملف وإنشاء التلخيص",
+            "flashcards-analysis-status-text": "سيقوم الذكاء الاصطناعي بتحليل الملف وإنشاء البطاقات التعليمية",
+            "language-label": "اختر لغة المحتوى",
             "arabic-language-name": "العربية",
-            "arabic-language-desc": "أسئلة باللغة العربية",
+            "arabic-language-desc": "محتوى باللغة العربية",
             "english-language-name": "English",
-            "english-language-desc": "Questions in English",
+            "english-language-desc": "Content in English",
             "instant-review-title": "مراجعة فورية لجميع الخيارات",
             "instant-review-trigger": "انقر هنا لعرض مراجعة فورية لجميع الخيارات",
             "pdf-details-title": "تحديد تفاصيل المحتوى",
@@ -2441,19 +3626,50 @@
             "units-list-label": "الوحدات المطلوبة",
             "units-list-hint": "اذكر العناوين الرئيسية للوحدات أو الفصول التي تريد التركيز عليها.",
             "topics-list-label": "المواضيع المطلوبة",
-            "topics-list-hint": "اذكر المواضيع أو المفاهيم المحددة التي تريد التركيز عليها في التحليل."
+            "topics-list-hint": "اذكر المواضيع أو المفاهيم المحددة التي تريد التركيز عليها في التحليل.",
+            "summary-type-label": "نوع التلخيص",
+            "detailed-summary-name": "تفاصيل عميقة",
+            "detailed-summary-desc": "تلخيص مفصل مع جميع النقاط الرئيسية",
+            "quick-summary-name": "ملخص سريع",
+            "quick-summary-desc": "نقاط رئيسية مركزة وسريعة القراءة",
+            "summary-length-label": "طول التلخيص",
+            "summary-output-title": "ملخص المحتوى",
+            "copy-summary-text": "نسخ الملخص",
+            "back-summary-text": "العودة للقائمة الرئيسية",
+            "download-summary-text": "تحميل الملخص",
+            "flashcard-type-label": "نوع البطاقات",
+            "concepts-flashcards-name": "المفاهيم الأساسية",
+            "concepts-flashcards-desc": "بطاقات تركز على التعريفات والمفاهيم",
+            "qa-flashcards-name": "أسئلة وأجوبة",
+            "qa-flashcards-desc": "بطاقات بصيغة سؤال وجواب",
+            "flashcard-difficulty-label": "مستوى الصعوبة",
+            "total-cards-label": "من إجمالي",
+            "mastered-label": "تم إتقانها",
+            "review-label": "تحتاج مراجعة",
+            "mastery-label": "نسبة الإتقان",
+            "prev-card-text": "البطاقة السابقة",
+            "flip-card-text": "قلب البطاقة",
+            "next-card-text": "البطاقة التالية",
+            "progress-text": "التقدم",
+            "back-flashcards-text": "العودة للقائمة الرئيسية",
+            "restart-flashcards-text": "إعادة البدء",
+            "download-flashcards-text": "تحميل البطاقات"
         };
 
-        // نصوص اللغة الإنجليزية
+        // ==================== نصوص اللغة الإنجليزية ====================
         const englishTexts = {
             "hero-title": "Smart Interactive Quiz System",
-            "hero-subtitle": "Create customized quizzes in any field using AI",
+            "hero-subtitle": "Create quizzes, summaries, and flashcards using AI",
             "manual-title": "Manual Input",
             "manual-desc": "Enter quiz title and topic",
             "image-title": "Upload Image",
-            "image-desc": "Upload image and generate questions using AI",
+            "image-desc": "Upload image and generate content using AI",
             "pdf-title": "Upload PDF File",
-            "pdf-desc": "Upload file and generate questions using AI",
+            "pdf-desc": "Upload file and generate content using AI",
+            "summarize-title": "Content Summary",
+            "summarize-desc": "Summarize texts and files in two different styles",
+            "flashcards-title": "Flashcards",
+            "flashcards-desc": "Create interactive flashcards for review",
             "api-key-label": "Google Gemini API Key",
             "verify-text": "Verify",
             "api-info-text": "To get API key:",
@@ -2468,16 +3684,25 @@
             "upload-subtitle": "or drag and drop file here",
             "upload-size": "Max file size: 100MB",
             "remove-file-text": "Remove File",
+            "summary-upload-title": "Click to Upload File for Summary",
+            "summary-upload-subtitle": "or drag and drop file here",
+            "summary-upload-size": "Allowed types: PDF, TXT, DOC, DOCX, JPG, PNG",
+            "remove-summary-text": "Remove File",
+            "flashcards-upload-title": "Click to Upload File for Flashcards",
+            "flashcards-upload-subtitle": "or drag and drop file here",
+            "flashcards-upload-size": "Allowed types: PDF, TXT, DOC, DOCX, JPG, PNG",
+            "remove-flashcards-text": "Remove File",
             "num-questions-label-manual": "Number of Questions",
             "num-questions-label-image": "Number of Questions",
             "num-questions-label-pdf": "Number of Questions",
+            "num-flashcards-label": "Number of Flashcards",
             "question-type-label-main": "Select Question Types",
             "multiple-choice-text": "Multiple Choice Questions",
             "true-false-text": "True/False Questions",
             "fill-blank-text": "Fill in the Blank",
             "question-type-desc": "You can select all question types or only one type",
-            "generate-text": "Generate Quiz with AI",
-            "loading-text": "Generating questions using AI...",
+            "generate-text": "Generate Content with AI",
+            "loading-text": "Generating content using AI...",
             "questions-list-text": "Questions List",
             "mark-review-text": "Mark for Review",
             "finish-quiz-text": "Finish Quiz",
@@ -2489,13 +3714,15 @@
             "current-score-modal-title": "Current Score",
             "questions-modal-title": "Questions List",
             "close-questions-text": "Close List",
-            "analysis-status-text": "AI will analyze the file and generate questions",
-            "image-analysis-status-text": "AI will analyze the image and generate questions",
-            "language-label": "Choose Quiz Language",
+            "analysis-status-text": "AI will analyze the file and generate content",
+            "image-analysis-status-text": "AI will analyze the image and generate content",
+            "summary-analysis-status-text": "AI will analyze the file and create summary",
+            "flashcards-analysis-status-text": "AI will analyze the file and create flashcards",
+            "language-label": "Choose Content Language",
             "arabic-language-name": "Arabic",
-            "arabic-language-desc": "Questions in Arabic",
+            "arabic-language-desc": "Content in Arabic",
             "english-language-name": "English",
-            "english-language-desc": "Questions in English",
+            "english-language-desc": "Content in English",
             "instant-review-title": "Instant Review for All Options",
             "instant-review-trigger": "Click here to show instant review for all options",
             "pdf-details-title": "Specify Content Details",
@@ -2510,10 +3737,114 @@
             "units-list-label": "Required Units",
             "units-list-hint": "List the main headings of units or chapters you want to focus on.",
             "topics-list-label": "Required Topics",
-            "topics-list-hint": "List the specific topics or concepts you want to focus on in the analysis."
+            "topics-list-hint": "List the specific topics or concepts you want to focus on in the analysis.",
+            "summary-type-label": "Summary Type",
+            "detailed-summary-name": "Details and In-depth",
+            "detailed-summary-desc": "Detailed summary with all key points",
+            "quick-summary-name": "Quick and Concise",
+            "quick-summary-desc": "Focused key points for quick reading",
+            "summary-length-label": "Summary Length",
+            "summary-output-title": "Content Summary",
+            "copy-summary-text": "Copy Summary",
+            "back-summary-text": "Back to Main Menu",
+            "download-summary-text": "Download Summary",
+            "flashcard-type-label": "Flashcard Type",
+            "concepts-flashcards-name": "Basic Concepts",
+            "concepts-flashcards-desc": "Flashcards focusing on definitions and concepts",
+            "qa-flashcards-name": "Q&A Format",
+            "qa-flashcards-desc": "Flashcards in question and answer format",
+            "flashcard-difficulty-label": "Difficulty Level",
+            "total-cards-label": "of Total",
+            "mastered-label": "Mastered",
+            "review-label": "Need Review",
+            "mastery-label": "Mastery Percentage",
+            "prev-card-text": "Previous Card",
+            "flip-card-text": "Flip Card",
+            "next-card-text": "Next Card",
+            "progress-text": "Progress",
+            "back-flashcards-text": "Back to Main Menu",
+            "restart-flashcards-text": "Restart",
+            "download-flashcards-text": "Download Flashcards"
         };
 
-        // تحويل اللغة
+        // ==================== دوال تأخير وإعادة المحاولة ====================
+        function delayBetweenRequests() {
+            const now = Date.now();
+            const timeSinceLastRequest = now - lastRequestTime;
+            
+            if (timeSinceLastRequest < MIN_REQUEST_INTERVAL) {
+                const delayTime = MIN_REQUEST_INTERVAL - timeSinceLastRequest;
+                return new Promise(resolve => setTimeout(resolve, delayTime));
+            }
+            
+            lastRequestTime = now;
+            return Promise.resolve();
+        }
+
+        async function makeAPIRequest(url, options, retryNumber = 0) {
+            await delayBetweenRequests();
+            
+            try {
+                // إضافة timeout للطلب
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
+                
+                const response = await fetch(url, {
+                    ...options,
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                
+                if (response.status === 429) {
+                    // Too Many Requests - انتظر ثم حاول مرة أخرى
+                    const retryAfter = response.headers.get('Retry-After') || 5;
+                    const waitTime = parseInt(retryAfter) * 1000;
+                    
+                    if (retryNumber < MAX_RETRIES) {
+                        document.getElementById('loading-details').textContent = 
+                            currentLanguage === 'ar' ?
+                            `محاولة ${retryNumber + 1}/${MAX_RETRIES} - الانتظار ${retryAfter} ثانية...` :
+                            `Retry ${retryNumber + 1}/${MAX_RETRIES} - Waiting ${retryAfter} seconds...`;
+                        
+                        await new Promise(resolve => setTimeout(resolve, waitTime));
+                        return makeAPIRequest(url, options, retryNumber + 1);
+                    } else {
+                        throw new Error(currentLanguage === 'ar' ?
+                            'تم تجاوز الحد الأقصى للطلبات. حاول مرة أخرى بعد قليل.' :
+                            'Rate limit exceeded. Please try again later.');
+                    }
+                }
+                
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(`HTTP ${response.status}: ${errorData.error?.message || response.statusText}`);
+                }
+                
+                return await response.json();
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    throw new Error(currentLanguage === 'ar' ?
+                        'انتهت مهلة الطلب. تحقق من اتصالك بالإنترنت وحاول مرة أخرى.' :
+                        'Request timeout. Check your internet connection and try again.');
+                }
+                
+                if (retryNumber < MAX_RETRIES) {
+                    const waitTime = 2000 * Math.pow(2, retryNumber); // Exponential backoff
+                    document.getElementById('loading-details').textContent = 
+                        currentLanguage === 'ar' ?
+                        `محاولة ${retryNumber + 1}/${MAX_RETRIES} - الانتظار ${waitTime/1000} ثانية...` :
+                        `Retry ${retryNumber + 1}/${MAX_RETRIES} - Waiting ${waitTime/1000} seconds...`;
+                    
+                    await new Promise(resolve => setTimeout(resolve, waitTime));
+                    return makeAPIRequest(url, options, retryNumber + 1);
+                } else {
+                    throw error;
+                }
+            }
+        }
+
+        // ==================== وظائف اللغة ====================
         function switchLanguage(lang) {
             currentLanguage = lang;
             
@@ -2540,13 +3871,18 @@
             // تحديث نصوص الحقول النصية
             updatePlaceholders(lang);
             
-            // إذا كان هناك اختبار معروض، إعادة تحميله
+            // إذا كان هناك محتوى معروض، إعادة تحميله
             if (document.getElementById('quiz-section').style.display !== 'none') {
                 loadQuiz();
+            } else if (document.getElementById('summary-section').style.display !== 'none') {
+                // إعادة تحميل الملخص إذا كان معروضاً
+                const summaryContent = document.getElementById('summary-content').innerHTML;
+                document.getElementById('summary-content').innerHTML = summaryContent; // إعادة التنسيق
+            } else if (document.getElementById('flashcards-section-main').style.display !== 'none') {
+                loadFlashcard(currentFlashcardIndex);
             }
         }
 
-        // تحديث النصوص
         function updateTexts(lang) {
             const texts = lang === 'ar' ? arabicTexts : englishTexts;
             
@@ -2561,7 +3897,6 @@
             updateDropdownOptions(lang);
         }
 
-        // تحديث النصوص التوضيحية
         function updatePlaceholders(lang) {
             const apiSteps = document.getElementById('api-steps');
             if (lang === 'en') {
@@ -2615,101 +3950,152 @@
             }
         }
 
-        // تحديث خيارات القوائم المنسدلة
         function updateDropdownOptions(lang) {
-            if (lang === 'en') {
-                document.getElementById('num-questions-manual').innerHTML = `
-                    <option value="5">5 questions</option>
-                    <option value="10" selected>10 questions</option>
-                    <option value="15">15 questions</option>
-                    <option value="20">20 questions</option>
-                    <option value="25">25 questions</option>
-                    <option value="30">30 questions</option>
-                    <option value="35">35 questions</option>
-                    <option value="40">40 questions</option>
-                `;
-                
-                document.getElementById('num-questions-image').innerHTML = `
-                    <option value="5">5 questions</option>
-                    <option value="10" selected>10 questions</option>
-                    <option value="15">15 questions</option>
-                    <option value="20">20 questions</option>
-                    <option value="25">25 questions</option>
-                    <option value="30">30 questions</option>
-                    <option value="35">35 questions</option>
-                    <option value="40">40 questions</option>
-                `;
-                
-                document.getElementById('num-questions-pdf').innerHTML = `
-                    <option value="5">5 questions</option>
-                    <option value="10" selected>10 questions</option>
-                    <option value="15">15 questions</option>
-                    <option value="20">20 questions</option>
-                    <option value="25">25 questions</option>
-                    <option value="30">30 questions</option>
-                    <option value="35">35 questions</option>
-                    <option value="40">40 questions</option>
-                `;
-            } else {
-                document.getElementById('num-questions-manual').innerHTML = `
-                    <option value="5">5 أسئلة</option>
-                    <option value="10" selected>10 أسئلة</option>
-                    <option value="15">15 أسئلة</option>
-                    <option value="20">20 أسئلة</option>
-                    <option value="25">25 أسئلة</option>
-                    <option value="30">30 أسئلة</option>
-                    <option value="35">35 أسئلة</option>
-                    <option value="40">40 أسئلة</option>
-                `;
-                
-                document.getElementById('num-questions-image').innerHTML = `
-                    <option value="5">5 أسئلة</option>
-                    <option value="10" selected>10 أسئلة</option>
-                    <option value="15">15 أسئلة</option>
-                    <option value="20">20 أسئلة</option>
-                    <option value="25">25 أسئلة</option>
-                    <option value="30">30 أسئلة</option>
-                    <option value="35">35 أسئلة</option>
-                    <option value="40">40 أسئلة</option>
-                `;
-                
-                document.getElementById('num-questions-pdf').innerHTML = `
-                    <option value="5">5 أسئلة</option>
-                    <option value="10" selected>10 أسئلة</option>
-                    <option value="15">15 أسئلة</option>
-                    <option value="20">20 أسئلة</option>
-                    <option value="25">25 أسئلة</option>
-                    <option value="30">30 أسئلة</option>
-                    <option value="35">35 أسئلة</option>
-                    <option value="40">40 أسئلة</option>
-                `;
+            const options = lang === 'en' ? {
+                questions: [
+                    {value: "5", text: "5 questions"},
+                    {value: "10", text: "10 questions"},
+                    {value: "15", text: "15 questions"},
+                    {value: "20", text: "20 questions"},
+                    {value: "25", text: "25 questions"},
+                    {value: "30", text: "30 questions"},
+                    {value: "35", text: "35 questions"},
+                    {value: "40", text: "40 questions"}
+                ],
+                flashcards: [
+                    {value: "10", text: "10 flashcards"},
+                    {value: "20", text: "20 flashcards"},
+                    {value: "30", text: "30 flashcards"},
+                    {value: "40", text: "40 flashcards"},
+                    {value: "50", text: "50 flashcards"}
+                ],
+                summaryLength: [
+                    {value: "short", text: "Brief (key points)"},
+                    {value: "medium", text: "Medium (balanced)"},
+                    {value: "long", text: "Detailed (comprehensive)"}
+                ],
+                difficulty: [
+                    {value: "easy", text: "Easy (beginner)"},
+                    {value: "medium", text: "Medium (advanced)"},
+                    {value: "hard", text: "Hard (expert)"},
+                    {value: "mixed", text: "Mixed (all levels)"}
+                ]
+            } : {
+                questions: [
+                    {value: "5", text: "5 أسئلة"},
+                    {value: "10", text: "10 أسئلة"},
+                    {value: "15", text: "15 أسئلة"},
+                    {value: "20", text: "20 أسئلة"},
+                    {value: "25", text: "25 أسئلة"},
+                    {value: "30", text: "30 أسئلة"},
+                    {value: "35", text: "35 أسئلة"},
+                    {value: "40", text: "40 أسئلة"}
+                ],
+                flashcards: [
+                    {value: "10", text: "10 بطاقات"},
+                    {value: "20", text: "20 بطاقة"},
+                    {value: "30", text: "30 بطاقة"},
+                    {value: "40", text: "40 بطاقة"},
+                    {value: "50", text: "50 بطاقة"}
+                ],
+                summaryLength: [
+                    {value: "short", text: "مختصر (نقاط رئيسية)"},
+                    {value: "medium", text: "متوسط (متوازن)"},
+                    {value: "long", text: "مفصل (شامل)"}
+                ],
+                difficulty: [
+                    {value: "easy", text: "سهل (مبتدئ)"},
+                    {value: "medium", text: "متوسط (متقدم)"},
+                    {value: "hard", text: "صعب (خبير)"},
+                    {value: "mixed", text: "مختلط (جميع المستويات)"}
+                ]
+            };
+
+            // تحديث قوائم الأسئلة
+            ['manual', 'image', 'pdf'].forEach(type => {
+                const element = document.getElementById(`num-questions-${type}`);
+                if (element) {
+                    element.innerHTML = options.questions.map(opt => 
+                        `<option value="${opt.value}" ${opt.value === "10" ? "selected" : ""}>${opt.text}</option>`
+                    ).join('');
+                }
+            });
+
+            // تحديث قائمة البطاقات التعليمية
+            const flashcardsElement = document.getElementById('num-flashcards');
+            if (flashcardsElement) {
+                flashcardsElement.innerHTML = options.flashcards.map(opt => 
+                    `<option value="${opt.value}" ${opt.value === "20" ? "selected" : ""}>${opt.text}</option>`
+                ).join('');
+            }
+
+            // تحديث قائمة طول التلخيص
+            const summaryLengthElement = document.getElementById('summary-length');
+            if (summaryLengthElement) {
+                summaryLengthElement.innerHTML = options.summaryLength.map(opt => 
+                    `<option value="${opt.value}" ${opt.value === "medium" ? "selected" : ""}>${opt.text}</option>`
+                ).join('');
+            }
+
+            // تحديث قائمة مستوى الصعوبة
+            const difficultyElement = document.getElementById('flashcard-difficulty');
+            if (difficultyElement) {
+                difficultyElement.innerHTML = options.difficulty.map(opt => 
+                    `<option value="${opt.value}" ${opt.value === "medium" ? "selected" : ""}>${opt.text}</option>`
+                ).join('');
             }
         }
 
-        // اختيار طريقة الاختبار
+        // ==================== وظائف الطريقة المختارة ====================
         function selectMethod(method) {
             currentMethod = method;
             
+            // تحديث التبويبات
             document.getElementById('manual-tab').classList.remove('active');
             document.getElementById('image-tab').classList.remove('active');
             document.getElementById('pdf-tab').classList.remove('active');
+            document.getElementById('summarize-tab').classList.remove('active');
+            document.getElementById('flashcards-tab').classList.remove('active');
             document.getElementById(`${method}-tab`).classList.add('active');
             
+            // إظهار/إخفاء الأقسام
             document.getElementById('manual-section').style.display = method === 'manual' ? 'block' : 'none';
             document.getElementById('image-section').style.display = method === 'image' ? 'block' : 'none';
             document.getElementById('pdf-section').style.display = method === 'pdf' ? 'block' : 'none';
+            document.getElementById('summarize-section').style.display = method === 'summarize' ? 'block' : 'none';
+            document.getElementById('flashcards-section').style.display = method === 'flashcards' ? 'block' : 'none';
+            
+            // إظهار/إخفاء خيارات إضافية
+            if (method === 'image' || method === 'pdf') {
+                const quizOptionsId = `${method}-quiz-options`;
+                document.getElementById(quizOptionsId).style.display = 'block';
+            }
             
             // إظهار أو إخفاء قسم تفاصيل PDF
-            if (method === 'pdf' && pdfFile) {
-                document.getElementById('pdf-details-section').classList.add('active');
+            const detailsSectionId = `${method}-details-section`;
+            const detailsSection = document.getElementById(detailsSectionId);
+            if (detailsSection && (method === 'pdf' || method === 'summarize' || method === 'flashcards')) {
+                if ((method === 'pdf' && pdfFile) || (method === 'summarize' && summaryFile) || (method === 'flashcards' && flashcardsFile)) {
+                    detailsSection.classList.add('active');
+                }
+            }
+            
+            // تحديث نص زر التوليد
+            const generateBtn = document.getElementById('generate-btn');
+            const generateText = document.getElementById('generate-text');
+            if (method === 'summarize') {
+                generateText.textContent = currentLanguage === 'ar' ? 'توليد الملخص باستخدام الذكاء الاصطناعي' : 'Generate Summary with AI';
+            } else if (method === 'flashcards') {
+                generateText.textContent = currentLanguage === 'ar' ? 'توليد البطاقات التعليمية باستخدام الذكاء الاصطناعي' : 'Generate Flashcards with AI';
+            } else if (method === 'manual') {
+                generateText.textContent = currentLanguage === 'ar' ? 'توليد اختبار باستخدام الذكاء الاصطناعي' : 'Generate Quiz with AI';
             } else {
-                document.getElementById('pdf-details-section').classList.remove('active');
+                generateText.textContent = currentLanguage === 'ar' ? 'توليد المحتوى باستخدام الذكاء الاصطناعي' : 'Generate Content with AI';
             }
         }
 
-        // اختيار لغة الاختبار
-        function selectQuizLanguage(lang) {
-            quizLanguage = lang;
+        function selectContentLanguage(lang) {
+            contentLanguage = lang;
             
             document.getElementById('arabic-language').classList.remove('active');
             document.getElementById('english-language').classList.remove('active');
@@ -2717,24 +4103,39 @@
             document.getElementById(`${lang}-language`).classList.add('active');
         }
 
-        // اختيار تبويب تفاصيل PDF
         function selectPDFDetailsTab(tab) {
             // إزالة النشاط من جميع التبويبات
-            document.getElementById('pages-tab').classList.remove('active');
-            document.getElementById('units-tab').classList.remove('active');
-            document.getElementById('topics-tab').classList.remove('active');
-            
-            // إخفاء جميع المحتويات
-            document.getElementById('pages-content').classList.remove('active');
-            document.getElementById('units-content').classList.remove('active');
-            document.getElementById('topics-content').classList.remove('active');
+            document.querySelectorAll('.pdf-details-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.pdf-details-content').forEach(c => c.classList.remove('active'));
             
             // إضافة النشاط للتبويب المحدد
-            document.getElementById(`${tab}-tab`).classList.add('active');
-            document.getElementById(`${tab}-content`).classList.add('active');
+            const tabId = currentMethod === 'summarize' ? `summary-${tab}-tab` : 
+                         currentMethod === 'flashcards' ? `flashcards-${tab}-tab` : `${tab}-tab`;
+            const contentId = currentMethod === 'summarize' ? `summary-${tab}-content` : 
+                            currentMethod === 'flashcards' ? `flashcards-${tab}-content` : `${tab}-content`;
+            
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById(contentId).classList.add('active');
         }
 
-        // تبديل نوع السؤال
+        function selectSummaryType(type) {
+            summaryType = type;
+            
+            document.getElementById('detailed-summary').classList.remove('active');
+            document.getElementById('quick-summary').classList.remove('active');
+            
+            document.getElementById(`${type}-summary`).classList.add('active');
+        }
+
+        function selectFlashcardType(type) {
+            flashcardType = type;
+            
+            document.getElementById('concepts-flashcards').classList.remove('active');
+            document.getElementById('qa-flashcards').classList.remove('active');
+            
+            document.getElementById(`${type}-flashcards`).classList.add('active');
+        }
+
         function toggleQuestionType(type) {
             selectedQuestionTypes[type] = !selectedQuestionTypes[type];
             const checkbox = document.getElementById(`${type}Checkbox`);
@@ -2761,7 +4162,7 @@
             }
         }
 
-        // التحقق من تفضيل الوضع الداكن
+        // ==================== وظائف الواجهة ====================
         function checkDarkModePreference() {
             const darkMode = localStorage.getItem('darkMode');
             const icon = document.querySelector('#themeBtn i');
@@ -2784,7 +4185,6 @@
             }
         }
 
-        // تبديل الوضع الليلي
         document.getElementById('themeBtn').addEventListener('click', function() {
             document.body.classList.toggle('dark-theme');
             const icon = this.querySelector('i');
@@ -2799,7 +4199,6 @@
             }
         });
 
-        // تبديل الصوت
         function toggleSound() {
             soundEnabled = !soundEnabled;
             localStorage.setItem('soundEnabled', soundEnabled);
@@ -2811,7 +4210,6 @@
             }
         }
 
-        // تحديث زر الصوت
         function updateSoundButton() {
             const soundBtn = document.getElementById('soundBtn');
             const icon = soundBtn.querySelector('i');
@@ -2830,7 +4228,6 @@
             }
         }
 
-        // تشغيل صوت
         function playSound(type) {
             if (!soundEnabled) return;
             
@@ -2841,7 +4238,7 @@
             }
         }
 
-        // التحقق من مفتاح API
+        // ==================== وظائف API ====================
         async function verifyAPIKey() {
             const apiKeyInput = document.getElementById('api-key').value.trim();
             
@@ -2902,7 +4299,7 @@
             }
         }
 
-        // التعامل مع رفع صورة
+        // ==================== وظائف رفع الملفات ====================
         async function handleImageUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -2937,11 +4334,10 @@
             reader.readAsDataURL(file);
             
             showSuccessMessage(currentLanguage === 'ar' ? 
-                'تم رفع الصورة بنجاح! قم بتوليد الأسئلة الآن.' : 
-                'Image uploaded successfully! Generate questions now.');
+                'تم رفع الصورة بنجاح!' : 
+                'Image uploaded successfully!');
         }
 
-        // إزالة الصورة
         function removeImage() {
             imageFile = null;
             document.getElementById('image-file').value = "";
@@ -2949,7 +4345,6 @@
             document.getElementById('image-preview-container').style.display = 'none';
         }
 
-        // التعامل مع رفع ملف PDF
         async function handlePDFUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -2959,7 +4354,6 @@
                 return;
             }
 
-            // تحديث: زيادة الحد الأقصى إلى 100MB
             if (file.size > 100 * 1024 * 1024) {
                 showError(currentLanguage === 'ar' ? 'حجم الملف كبير جداً. الحد الأقصى 100MB' : 'File too large. Maximum size: 100MB');
                 return;
@@ -2976,11 +4370,10 @@
             document.getElementById('pdf-details-section').classList.add('active');
             
             showSuccessMessage(currentLanguage === 'ar' ? 
-                'تم رفع الملف بنجاح! قم بتوليد الأسئلة الآن.' : 
-                'File uploaded successfully! Generate questions now.');
+                'تم رفع الملف بنجاح!' : 
+                'File uploaded successfully!');
         }
 
-        // إزالة ملف PDF
         function removePDF() {
             pdfFile = null;
             document.getElementById('pdf-file').value = "";
@@ -2991,111 +4384,260 @@
             totalQuestionsGenerated = 0;
         }
 
-        // الحصول على تفاصيل PDF المحددة
-        function getPDFDetails() {
-            const details = {
-                pages: {
-                    startPage: document.getElementById('start-page').value.trim(),
-                    endPage: document.getElementById('end-page').value.trim(),
-                    specificPages: document.getElementById('specific-pages').value.trim()
-                },
-                units: document.getElementById('units-list').value.trim(),
-                topics: document.getElementById('topics-list').value.trim()
-            };
+        async function handleSummaryUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const validTypes = ['application/pdf', 'text/plain', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/jpg', 'image/png'];
+            if (!validTypes.includes(file.type)) {
+                showError(currentLanguage === 'ar' ? 'الرجاء رفع ملف صالح (PDF, TXT, DOC, DOCX, JPG, PNG)' : 'Please upload valid file (PDF, TXT, DOC, DOCX, JPG, PNG)');
+                return;
+            }
+
+            if (file.size > 100 * 1024 * 1024) {
+                showError(currentLanguage === 'ar' ? 'حجم الملف كبير جداً. الحد الأقصى 100MB' : 'File too large. Maximum size: 100MB');
+                return;
+            }
+
+            summaryFile = file;
+
+            document.getElementById('summary-filename').textContent = file.name;
+            document.getElementById('summary-filesize').textContent = currentLanguage === 'ar' ? 
+                `الحجم: ${(file.size / 1024 / 1024).toFixed(2)} MB` : 
+                `Size: ${(file.size / 1024 / 1024).toFixed(2)} MB`;
             
-            return details;
+            document.getElementById('summary-preview').classList.add('active');
+            document.getElementById('summary-details-section').classList.add('active');
+            
+            showSuccessMessage(currentLanguage === 'ar' ? 
+                'تم رفع الملف بنجاح!' : 
+                'File uploaded successfully!');
         }
 
-        // توليد تعليمات تفاصيل PDF للذكاء الاصطناعي
+        function removeSummaryFile() {
+            summaryFile = null;
+            document.getElementById('summary-file').value = "";
+            document.getElementById('summary-preview').classList.remove('active');
+            document.getElementById('summary-details-section').classList.remove('active');
+        }
+
+        async function handleFlashcardsUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const validTypes = ['application/pdf', 'text/plain', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/jpg', 'image/png'];
+            if (!validTypes.includes(file.type)) {
+                showError(currentLanguage === 'ar' ? 'الرجاء رفع ملف صالح (PDF, TXT, DOC, DOCX, JPG, PNG)' : 'Please upload valid file (PDF, TXT, DOC, DOCX, JPG, PNG)');
+                return;
+            }
+
+            if (file.size > 100 * 1024 * 1024) {
+                showError(currentLanguage === 'ar' ? 'حجم الملف كبير جداً. الحد الأقصى 100MB' : 'File too large. Maximum size: 100MB');
+                return;
+            }
+
+            flashcardsFile = file;
+
+            document.getElementById('flashcards-filename').textContent = file.name;
+            document.getElementById('flashcards-filesize').textContent = currentLanguage === 'ar' ? 
+                `الحجم: ${(file.size / 1024 / 1024).toFixed(2)} MB` : 
+                `Size: ${(file.size / 1024 / 1024).toFixed(2)} MB`;
+            
+            document.getElementById('flashcards-preview').classList.add('active');
+            document.getElementById('flashcards-details-section').classList.add('active');
+            
+            showSuccessMessage(currentLanguage === 'ar' ? 
+                'تم رفع الملف بنجاح!' : 
+                'File uploaded successfully!');
+        }
+
+        function removeFlashcardsFile() {
+            flashcardsFile = null;
+            document.getElementById('flashcards-file').value = "";
+            document.getElementById('flashcards-preview').classList.remove('active');
+            document.getElementById('flashcards-details-section').classList.remove('active');
+        }
+
+        // ==================== وظائف تفاصيل PDF ====================
+        function getPDFDetails() {
+            const prefix = currentMethod === 'summarize' ? 'summary-' : 
+                          currentMethod === 'flashcards' ? 'flashcards-' : '';
+            
+            return {
+                pages: {
+                    startPage: document.getElementById(`${prefix}start-page`)?.value.trim() || '',
+                    endPage: document.getElementById(`${prefix}end-page`)?.value.trim() || '',
+                    specificPages: document.getElementById(`${prefix}specific-pages`)?.value.trim() || ''
+                },
+                units: document.getElementById(`${prefix}units-list`)?.value.trim() || '',
+                topics: document.getElementById(`${prefix}topics-list`)?.value.trim() || ''
+            };
+        }
+
+        function validatePDFDetails(details) {
+            const errors = [];
+            
+            if (details.pages.startPage && details.pages.endPage) {
+                const start = parseInt(details.pages.startPage);
+                const end = parseInt(details.pages.endPage);
+                
+                if (isNaN(start) || isNaN(end)) {
+                    errors.push(currentLanguage === 'ar' ? 
+                        'أرقام الصفحات غير صالحة' : 
+                        'Invalid page numbers');
+                } else if (start > end) {
+                    errors.push(currentLanguage === 'ar' ? 
+                        'الصفحة الأولى يجب أن تكون أقل من الصفحة الأخيرة' : 
+                        'Start page must be less than end page');
+                } else if (start < 1) {
+                    errors.push(currentLanguage === 'ar' ? 
+                        'الصفحة الأولى يجب أن تكون على الأقل 1' : 
+                        'Start page must be at least 1');
+                }
+            }
+            
+            if (details.pages.specificPages) {
+                const pagesRegex = /^[0-9\-, ]+$/;
+                if (!pagesRegex.test(details.pages.specificPages)) {
+                    errors.push(currentLanguage === 'ar' ? 
+                        'تنسيق الصفحات المحددة غير صالح' : 
+                        'Invalid specific pages format');
+                }
+            }
+            
+            return errors;
+        }
+
         function generatePDFDetailsInstructions(details, languageCode) {
             let instructions = '';
             
             if (languageCode === 'en') {
-                instructions = "Focus on the following specific content from the PDF:\n\n";
+                instructions = "IMPORTANT: You MUST focus ONLY on the following specified content. Ignore all other content.\n\n";
                 
                 // إضافة تعليمات الصفحات
                 if (details.pages.startPage || details.pages.endPage || details.pages.specificPages) {
-                    instructions += "PAGE RANGE:\n";
+                    instructions += "PAGE RANGE INSTRUCTIONS:\n";
+                    instructions += "You are REQUIRED to analyze ONLY these pages:\n";
+                    
                     if (details.pages.startPage && details.pages.endPage) {
-                        instructions += `- Analyze pages ${details.pages.startPage} to ${details.pages.endPage}\n`;
+                        instructions += `- STRICTLY analyze ONLY pages ${details.pages.startPage} to ${details.pages.endPage}\n`;
                     } else if (details.pages.startPage) {
-                        instructions += `- Start from page ${details.pages.startPage}\n`;
+                        instructions += `- Start from page ${details.pages.startPage} and include all pages after it\n`;
                     } else if (details.pages.endPage) {
-                        instructions += `- Analyze up to page ${details.pages.endPage}\n`;
+                        instructions += `- Analyze up to page ${details.pages.endPage} only\n`;
                     }
+                    
                     if (details.pages.specificPages) {
-                        instructions += `- Specifically analyze pages: ${details.pages.specificPages}\n`;
+                        instructions += `- Specifically analyze ONLY these exact pages: ${details.pages.specificPages}\n`;
                     }
-                    instructions += "\n";
+                    
+                    instructions += "- DO NOT analyze any content outside these specified pages\n";
+                    instructions += "- IGNORE all text, images, and information from other pages\n\n";
                 }
                 
                 // إضافة تعليمات الوحدات
                 if (details.units) {
-                    instructions += "SPECIFIC UNITS/CHAPTERS:\n";
+                    instructions += "SPECIFIC UNITS/CHAPTERS INSTRUCTIONS:\n";
+                    instructions += "You MUST focus ONLY on these specific units/chapters:\n";
+                    
                     const units = details.units.split('\n').filter(line => line.trim());
                     units.forEach(unit => {
                         instructions += `- ${unit.trim()}\n`;
                     });
-                    instructions += "\n";
+                    
+                    instructions += "- If a unit/chapter is NOT listed above, DO NOT include any content from it\n";
+                    instructions += "- Extract content ONLY from the specified units/chapters\n";
+                    instructions += "- Ignore all other units and chapters\n\n";
                 }
                 
                 // إضافة تعليمات المواضيع
                 if (details.topics) {
-                    instructions += "SPECIFIC TOPICS/CONCEPTS:\n";
+                    instructions += "SPECIFIC TOPICS/CONCEPTS INSTRUCTIONS:\n";
+                    instructions += "You MUST focus ONLY on these specific topics:\n";
+                    
                     const topics = details.topics.split('\n').filter(line => line.trim());
                     topics.forEach(topic => {
                         instructions += `- ${topic.trim()}\n`;
                     });
-                    instructions += "\n";
+                    
+                    instructions += "- DO NOT create content about any topics not listed above\n";
+                    instructions += "- Each item MUST relate directly to at least one of these topics\n";
+                    instructions += "- Filter out all unrelated concepts and information\n\n";
                 }
                 
-                instructions += "Generate questions based ONLY on the above specified content.";
+                instructions += "CRITICAL REQUIREMENTS:\n";
+                instructions += "1. Generate content ONLY from the specified content above\n";
+                instructions += "2. If no content is specified, analyze the ENTIRE document\n";
+                instructions += "3. DO NOT include content based on content outside the specified range\n";
+                instructions += "4. If you cannot find the specified content, state that clearly\n";
+                instructions += "5. Prioritize accuracy over quantity when content is limited\n";
+                
             } else {
-                instructions = "ركز على المحتوى المحدد التالي من ملف PDF:\n\n";
+                instructions = "هام جداً: يجب أن تركز فقط على المحتوى المحدد التالي. تجاهل جميع المحتويات الأخرى.\n\n";
                 
                 // إضافة تعليمات الصفحات
                 if (details.pages.startPage || details.pages.endPage || details.pages.specificPages) {
-                    instructions += "نطاق الصفحات:\n";
+                    instructions += "تعليمات نطاق الصفحات:\n";
+                    instructions += "يجب عليك تحليل هذه الصفحات فقط:\n";
+                    
                     if (details.pages.startPage && details.pages.endPage) {
-                        instructions += `- حلل الصفحات من ${details.pages.startPage} إلى ${details.pages.endPage}\n`;
+                        instructions += `- حلل صفحات ${details.pages.startPage} إلى ${details.pages.endPage} فقط\n`;
                     } else if (details.pages.startPage) {
-                        instructions += `- ابدأ من الصفحة ${details.pages.startPage}\n`;
+                        instructions += `- ابدأ من الصفحة ${details.pages.startPage} وتابع جميع الصفحات بعدها\n`;
                     } else if (details.pages.endPage) {
-                        instructions += `- حلل حتى الصفحة ${details.pages.endPage}\n`;
+                        instructions += `- حلل حتى الصفحة ${details.pages.endPage} فقط\n`;
                     }
+                    
                     if (details.pages.specificPages) {
-                        instructions += `- ركز تحديداً على الصفحات: ${details.pages.specificPages}\n`;
+                        instructions += `- ركز تحديداً على هذه الصفحات بالضبط: ${details.pages.specificPages}\n`;
                     }
-                    instructions += "\n";
+                    
+                    instructions += "- لا تحلل أي محتوى خارج هذه الصفحات المحددة\n";
+                    instructions += "- تجاهل كل النصوص والصور والمعلومات من الصفحات الأخرى\n\n";
                 }
                 
                 // إضافة تعليمات الوحدات
                 if (details.units) {
-                    instructions += "الوحدات/الفصول المحددة:\n";
+                    instructions += "تعليمات الوحدات/الفصول المحددة:\n";
+                    instructions += "يجب أن تركز فقط على هذه الوحدات/الفصول المحددة:\n";
+                    
                     const units = details.units.split('\n').filter(line => line.trim());
                     units.forEach(unit => {
                         instructions += `- ${unit.trim()}\n`;
                     });
-                    instructions += "\n";
+                    
+                    instructions += "- إذا لم تكن الوحدة/الفصل مدرجة أعلاه، لا تدرج أي محتوى منها\n";
+                    instructions += "- استخرج المحتوى فقط من الوحدات/الفصول المحددة\n";
+                    instructions += "- تجاهل جميع الوحدات والفصول الأخرى\n\n";
                 }
                 
                 // إضافة تعليمات المواضيع
                 if (details.topics) {
-                    instructions += "المواضيع/المفاهيم المحددة:\n";
+                    instructions += "تعليمات المواضيع/المفاهيم المحددة:\n";
+                    instructions += "يجب أن تركز فقط على هذه المواضيع المحددة:\n";
+                    
                     const topics = details.topics.split('\n').filter(line => line.trim());
                     topics.forEach(topic => {
                         instructions += `- ${topic.trim()}\n`;
                     });
-                    instructions += "\n";
+                    
+                    instructions += "- لا تنشئ محتوى عن أي مواضيع غير مدرجة أعلاه\n";
+                    instructions += "- يجب أن يرتبط كل عنصر مباشرة بواحد على الأقل من هذه المواضيع\n";
+                    instructions += "- استبعد جميع المفاهيم والمعلومات غير المرتبطة\n\n";
                 }
                 
-                instructions += "أنشئ الأسئلة بناءً على المحتوى المحدد أعلاه فقط.";
+                instructions += "متطلبات حاسمة:\n";
+                instructions += "1. أنشئ محتوى فقط من المحتوى المحدد أعلاه\n";
+                instructions += "2. إذا لم يتم تحديد محتوى، حلل المستند بالكامل\n";
+                instructions += "3. لا تدرج محتوى مبنياً على محتوى خارج النطاق المحدد\n";
+                instructions += "4. إذا لم تجد المحتوى المحدد، صرح بذلك بوضوح\n";
+                instructions += "5. ركز على الدقة بدلاً من الكمية عندما يكون المحتوى محدوداً\n";
             }
             
             return instructions;
         }
 
-        // دالة لعرض الأخطاء
+        // ==================== وظائف الرسائل ====================
         function showError(message) {
             const errorDiv = document.getElementById('error-message');
             errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
@@ -3106,7 +4648,6 @@
             }, 5000);
         }
 
-        // دالة لعرض رسائل النجاح
         function showSuccessMessage(message) {
             const successDiv = document.createElement('div');
             successDiv.className = 'success-message';
@@ -3120,159 +4661,8 @@
             }, 3000);
         }
 
-        // الحصول على التوجيهات بناءً على اللغة المختارة
-        function getLanguageInstructions(targetLanguage) {
-            if (targetLanguage === 'en') {
-                return {
-                    promptPrefix: "Please generate questions in English based on the provided content.",
-                    formatInstructions: "All questions, options, and explanations must be in English.",
-                    responseLanguage: "English",
-                    languageCode: "en"
-                };
-            } else {
-                return {
-                    promptPrefix: "يرجى إنشاء أسئلة باللغة العربية بناءً على المحتوى المقدم.",
-                    formatInstructions: "يجب أن تكون جميع الأسئلة والخيارات والشروح باللغة العربية.",
-                    responseLanguage: "Arabic",
-                    languageCode: "ar"
-                };
-            }
-        }
-
-        // تحويل الملفات إلى Base64
-        async function convertFileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result.split(',')[1]);
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
-        }
-
-        // الحصول على أنواع الأسئلة المختارة كنص
-        function getSelectedQuestionTypesText(languageCode) {
-            const selectedTypes = [];
-            
-            if (selectedQuestionTypes.multipleChoice) {
-                selectedTypes.push(languageCode === 'en' ? 'multiple choice' : 'اختيار متعدد');
-            }
-            if (selectedQuestionTypes.trueFalse) {
-                selectedTypes.push(languageCode === 'en' ? 'true/false' : 'صح/خطأ');
-            }
-            if (selectedQuestionTypes.fillBlank) {
-                selectedTypes.push(languageCode === 'en' ? 'fill in the blank' : 'املأ الفراغ');
-            }
-            
-            if (languageCode === 'en') {
-                return selectedTypes.join(', ');
-            } else {
-                return selectedTypes.join('، ');
-            }
-        }
-
-        // الحصول على نموذج JSON بناءً على أنواع الأسئلة المختارة - مُحسَّن لكفاءة أكبر
-        function getQuestionFormats(languageCode) {
-            const formats = [];
-            
-            if (selectedQuestionTypes.multipleChoice) {
-                if (languageCode === 'en') {
-                    formats.push(`{
-      "type": "multiple_choice",
-      "q": "Question text",
-      "options": ["Option A", "Option B", "Option C", "Option D"],
-      "answer": 0,
-      "explanations": {
-        "correct": "Brief explanation for correct option",
-        "option0": "Feedback for Option A - Why this is correct or incorrect",
-        "option1": "Feedback for Option B - Why this is correct or incorrect", 
-        "option2": "Feedback for Option C - Why this is correct or incorrect",
-        "option3": "Feedback for Option D - Why this is correct or incorrect"
-      }
-    }`);
-                } else {
-                    formats.push(`{
-      "type": "multiple_choice",
-      "q": "نص السؤال",
-      "options": ["الخيار أ", "الخيار ب", "الخيار ج", "الخيار د"],
-      "answer": 0,
-      "explanations": {
-        "correct": "شرح مختصر للخيار الصحيح",
-        "option0": "تغذية راجعة للخيار أ - لماذا هذا صحيح أو غير صحيح",
-        "option1": "تغذية راجعة للخيار ب - لماذا هذا صحيح أو غير صحيح",
-        "option2": "تغذية راجعة للخيار ج - لماذا هذا صحيح أو غير صحيح",
-        "option3": "تغذية راجعة للخيار د - لماذا هذا صحيح أو غير صحيح"
-      }
-    }`);
-                }
-            }
-            
-            if (selectedQuestionTypes.trueFalse) {
-                if (languageCode === 'en') {
-                    formats.push(`{
-      "type": "true_false",
-      "q": "Statement",
-      "options": ["True", "False"],
-      "answer": 0,
-      "explanations": {
-        "correct": "Brief explanation",
-        "option0": "Detailed feedback for True option",
-        "option1": "Detailed feedback for False option"
-      }
-    }`);
-                } else {
-                    formats.push(`{
-      "type": "true_false",
-      "q": "الجملة",
-      "options": ["صح", "خطأ"],
-      "answer": 0,
-      "explanations": {
-        "correct": "شرح مختصر",
-        "option0": "تغذية راجعة مفصلة لخيار صح",
-        "option1": "تغذية راجعة مفصلة لخيار خطأ"
-      }
-    }`);
-                }
-            }
-            
-            if (selectedQuestionTypes.fillBlank) {
-                if (languageCode === 'en') {
-                    formats.push(`{
-      "type": "fill_blank",
-      "q": "Complete: The capital of France is _____",
-      "answer": "Paris",
-      "explanations": {
-        "correct": "Paris is correct because it is the capital city of France",
-        "common_mistakes": ["London", "Berlin", "Madrid"],
-        "mistake_feedback": {
-          "London": "London is the capital of the United Kingdom, not France",
-          "Berlin": "Berlin is the capital of Germany, not France",
-          "Madrid": "Madrid is the capital of Spain, not France"
-        }
-      }
-    }`);
-                } else {
-                    formats.push(`{
-      "type": "fill_blank",
-      "q": "أكمل: عاصمة فرنسا هي _____",
-      "answer": "باريس",
-      "explanations": {
-        "correct": "باريس هي الإجابة الصحيحة لأنها عاصمة فرنسا",
-        "common_mistakes": ["لندن", "برلين", "مدريد"],
-        "mistake_feedback": {
-          "لندن": "لندن عاصمة بريطانيا وليست فرنسا",
-          "برلين": "برلين عاصمة ألمانيا وليست فرنسا",
-          "مدريد": "مدريد عاصمة إسبانيا وليست فرنسا"
-        }
-      }
-    }`);
-                }
-            }
-            
-            return formats;
-        }
-
-        // توليد الاختبار باستخدام الذكاء الاصطناعي - مُحسَّن للأداء
-        async function generateQuiz() {
+        // ==================== وظائف المحتوى ====================
+        async function generateContent() {
             if (!isAPIKeyValid) {
                 showError(currentLanguage === 'ar' ? 
                     'الرجاء التحقق من صحة مفتاح API أولاً' : 
@@ -3280,28 +4670,28 @@
                 return;
             }
 
-            let prompt = '';
-            let title = '';
-            let requestBody = {};
-            const languageInstructions = getLanguageInstructions(quizLanguage);
-            const selectedTypesText = getSelectedQuestionTypesText(languageInstructions.languageCode);
-            const questionFormats = getQuestionFormats(languageInstructions.languageCode);
+            // إعادة تعيين عدد المحاولات
+            retryCount = 0;
+            lastRequestTime = 0;
 
-            // احصل على عدد الأسئلة المطلوب
-            const numQuestions = currentMethod === 'manual' 
-                ? parseInt(document.getElementById('num-questions-manual').value)
-                : currentMethod === 'image'
-                ? parseInt(document.getElementById('num-questions-image').value)
-                : parseInt(document.getElementById('num-questions-pdf').value);
+            if (currentMethod === 'manual' || currentMethod === 'image' || currentMethod === 'pdf') {
+                await generateQuiz();
+            } else if (currentMethod === 'summarize') {
+                await generateSummary();
+            } else if (currentMethod === 'flashcards') {
+                await generateFlashcards();
+            }
+        }
 
-            // برومبت محسّن ومرن
-            const feedbackInstruction = languageInstructions.languageCode === 'en' 
-                ? `IMPORTANT: For each multiple choice question, provide detailed feedback for EACH of the 4 options. Explain why each option is correct or incorrect. For true/false questions, provide detailed feedback for both options. For fill in blank questions, provide feedback for common mistakes. This is CRITICAL for instant review functionality.`
-                : `مهم: لكل سؤال اختيار متعدد، قدم تغذية راجعة مفصلة لكل خيار من الخيارات الأربعة. اشرح لماذا كل خيار صحيح أو غير صحيح. لأسئلة صح/خطأ، قدم تغذية راجعة مفصلة لكلا الخيارين. لأسئلة املأ الفراغ، قدم تغذية راجعة للأخطاء الشائعة. هذا أمر حاسم لوظيفة المراجعة الفورية.`;
-
-            const reviewInstruction = languageInstructions.languageCode === 'en' 
-                ? `CRITICAL: The feedback for each option must be detailed and educational. For multiple choice questions, provide feedback for options 0-3 (all four options). Users will see instant review showing feedback for all options simultaneously.`
-                : `هام جداً: يجب أن تكون التغذية الراجعة لكل خيار مفصلة وتعليمية. لأسئلة الاختيار المتعدد، قدم تغذية راجعة للخيارات 0-3 (جميع الخيارات الأربعة). سيرى المستخدمون مراجعة فورية تعرض التغذية الراجعة لجميع الخيارات في وقت واحد.`;
+        async function generateQuiz() {
+            // التحقق من وجود الملفات المطلوبة
+            if ((currentMethod === 'image' && !imageFile) || 
+                (currentMethod === 'pdf' && !pdfFile)) {
+                showError(currentLanguage === 'ar' ? 
+                    'الرجاء رفع الملف المطلوب أولاً' : 
+                    'Please upload the required file first');
+                return;
+            }
 
             if (currentMethod === 'manual') {
                 const quizTitleInput = document.getElementById('quiz-title').value.trim();
@@ -3316,259 +4706,97 @@
                     showError(currentLanguage === 'ar' ? 'الرجاء إدخال تفاصيل الموضوع' : 'Please enter topic details');
                     return;
                 }
-
-                title = quizTitleInput;
-                
-                if (languageInstructions.languageCode === 'en') {
-                    prompt = `${languageInstructions.promptPrefix}
-
-Topic: ${quizTitleInput}
-Details: ${quizTopicInput}
-
-I need ${numQuestions} questions of the following types: ${selectedTypesText}.
-
-${feedbackInstruction}
-
-${reviewInstruction}
-
-Keep questions concise but ensure comprehensive feedback for all options. Generate diverse questions covering different aspects of the topic.
-
-${languageInstructions.formatInstructions}
-
-IMPORTANT: Generate exactly ${numQuestions} questions. Each multiple choice question MUST have feedback for all 4 options.
-
-Please follow this JSON format:
-
-{
-  "questions": [
-${questionFormats.join(',\n')}
-  ]
-}`;
-                } else {
-                    prompt = `${languageInstructions.promptPrefix}
-
-الموضوع: ${quizTitleInput}
-التفاصيل: ${quizTopicInput}
-
-أحتاج إلى ${numQuestions} أسئلة من الأنواع التالية: ${selectedTypesText}.
-
-${feedbackInstruction}
-
-${reviewInstruction}
-
-حافظ على الأسئلة موجزة ولكن تأكد من تقديم تغذية راجعة شاملة لجميع الخيارات. أنشئ أسئلة متنوعة تغطي جوانب مختلفة من الموضوع.
-
-${languageInstructions.formatInstructions}
-
-مهم: أنشئ بالضبط ${numQuestions} سؤالاً. يجب أن يكون لكل سؤال اختيار متعدد تغذية راجعة لجميع الخيارات الأربعة.
-
-الرجاء الالتزام بتنسيق JSON التالي:
-
-{
-  "questions": [
-${questionFormats.join(',\n')}
-  ]
-}`;
-                }
-
-                requestBody = {
-                    contents: [{
-                        parts: [{ text: prompt }]
-                    }],
-                    generationConfig: {
-                        temperature: 0.7,
-                        topK: 40,
-                        topP: 0.95,
-                        maxOutputTokens: 8192,
-                    }
-                };
-
-            } else if (currentMethod === 'image') {
-                if (!imageFile) {
-                    showError(currentLanguage === 'ar' ? 'الرجاء رفع صورة أولاً' : 'Please upload image first');
-                    return;
-                }
-
-                title = `${imageFile.name.replace(/\.[^/.]+$/, '')} - ${currentLanguage === 'ar' ? 'اختبار' : 'Quiz'}`;
-                
-                if (languageInstructions.languageCode === 'en') {
-                    prompt = `${languageInstructions.promptPrefix}
-
-I need ${numQuestions} questions based on the text in the provided image.
-
-Question types to include: ${selectedTypesText}
-
-${feedbackInstruction}
-
-${reviewInstruction}
-
-Extract key information from the image and create questions. Ensure comprehensive feedback for all options.
-
-${languageInstructions.formatInstructions}
-
-IMPORTANT: Generate exactly ${numQuestions} questions. Each multiple choice question MUST have feedback for all 4 options.
-
-Required JSON format:
-
-{
-  "questions": [
-${questionFormats.join(',\n')}
-  ]
-}`;
-                } else {
-                    prompt = `${languageInstructions.promptPrefix}
-
-أحتاج إلى ${numQuestions} أسئلة بناءً على النص في الصورة المرفوعة.
-
-أنواع الأسئلة المطلوبة: ${selectedTypesText}
-
-${feedbackInstruction}
-
-${reviewInstruction}
-
-استخرج المعلومات الرئيسية من الصورة وأنشئ أسئلة. تأكد من تقديم تغذية راجعة شاملة لجميع الخيارات.
-
-${languageInstructions.formatInstructions}
-
-مهم: أنشئ بالضبط ${numQuestions} سؤالاً. يجب أن يكون لكل سؤال اختيار متعدد تغذية راجعة لجميع الخيارات الأربعة.
-
-تنسيق JSON المطلوب:
-
-{
-  "questions": [
-${questionFormats.join(',\n')}
-  ]
-}`;
-                }
-
-                // تحويل الصورة إلى Base64
-                const imageBase64 = await convertFileToBase64(imageFile);
-
-                requestBody = {
-                    contents: [{
-                        parts: [
-                            { text: prompt },
-                            {
-                                inline_data: {
-                                    mime_type: imageFile.type,
-                                    data: imageBase64
-                                }
-                            }
-                        ]
-                    }],
-                    generationConfig: {
-                        temperature: 0.7,
-                        topK: 40,
-                        topP: 0.95,
-                        maxOutputTokens: 8192,
-                    }
-                };
-
-            } else if (currentMethod === 'pdf') {
-                if (!pdfFile) {
-                    showError(currentLanguage === 'ar' ? 'الرجاء رفع ملف PDF أولاً' : 'Please upload PDF file first');
-                    return;
-                }
-
-                title = `${pdfFile.name.replace('.pdf', '')} - ${currentLanguage === 'ar' ? 'اختبار' : 'Quiz'}`;
-                
-                // الحصول على تفاصيل PDF المحددة
-                const pdfDetails = getPDFDetails();
-                const pdfDetailsInstructions = generatePDFDetailsInstructions(pdfDetails, languageInstructions.languageCode);
-                
-                if (languageInstructions.languageCode === 'en') {
-                    prompt = `${languageInstructions.promptPrefix}
-
-I need ${numQuestions} questions based on the content of the PDF file.
-
-${pdfDetailsInstructions}
-
-Question types to include: ${selectedTypesText}
-
-${feedbackInstruction}
-
-${reviewInstruction}
-
-Extract key information from the specified content in the PDF and create questions. Ensure comprehensive feedback for all options.
-
-${languageInstructions.formatInstructions}
-
-IMPORTANT: Generate exactly ${numQuestions} questions. Each multiple choice question MUST have feedback for all 4 options.
-
-Required JSON format:
-
-{
-  "questions": [
-${questionFormats.join(',\n')}
-  ]
-}`;
-                } else {
-                    prompt = `${languageInstructions.promptPrefix}
-
-أحتاج إلى ${numQuestions} أسئلة بناءً على محتوى ملف PDF.
-
-${pdfDetailsInstructions}
-
-أنواع الأسئلة المطلوبة: ${selectedTypesText}
-
-${feedbackInstruction}
-
-${reviewInstruction}
-
-استخرج المعلومات الرئيسية من المحتوى المحدد في PDF وأنشئ أسئلة. تأكد من تقديم تغذية راجعة شاملة لجميع الخيارات.
-
-${languageInstructions.formatInstructions}
-
-مهم: أنشئ بالضبط ${numQuestions} سؤالاً. يجب أن يكون لكل سؤال اختيار متعدد تغذية راجعة لجميع الخيارات الأربعة.
-
-تنسيق JSON المطلوب:
-
-{
-  "questions": [
-${questionFormats.join(',\n')}
-  ]
-}`;
-                }
-
-                // تحويل PDF إلى Base64
-                const pdfBase64 = await convertFileToBase64(pdfFile);
-
-                requestBody = {
-                    contents: [{
-                        parts: [
-                            { text: prompt },
-                            {
-                                inline_data: {
-                                    mime_type: "application/pdf",
-                                    data: pdfBase64
-                                }
-                            }
-                        ]
-                    }],
-                    generationConfig: {
-                        temperature: 0.7,
-                        topK: 40,
-                        topP: 0.95,
-                        maxOutputTokens: 8192,
-                    }
-                };
             }
 
-            currentQuizTitle = title;
-            document.getElementById('main-title').textContent = currentQuizTitle;
-            document.getElementById('current-quiz-title').textContent = currentQuizTitle;
-
+            // الحصول على عدد الأسئلة المطلوب
+            const numQuestions = parseInt(document.getElementById(`num-questions-${currentMethod}`).value);
+            
+            // تحسين الأداء: تقليل حجم الاستجابة للأسئلة الكثيرة
+            const maxTokens = numQuestions > 20 ? 6144 : numQuestions > 15 ? 4096 : 2048;
+            
+            // إعداد واجهة التحميل
             document.getElementById('loading').style.display = 'block';
             document.getElementById('error-message').style.display = 'none';
-            
             document.getElementById('loading-details').textContent = currentLanguage === 'ar' ?
-                `جارٍ توليد ${numQuestions} سؤالاً باستخدام الذكاء الاصطناعي...` :
-                `Generating ${numQuestions} questions using AI...`;
+                `جارٍ توليد ${numQuestions} سؤالاً...` :
+                `Generating ${numQuestions} questions...`;
 
             try {
-                console.log(`Requesting ${numQuestions} questions...`);
+                let prompt = '';
+                let requestBody = {};
                 
-                const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
+                if (currentMethod === 'manual') {
+                    const quizTitle = document.getElementById('quiz-title').value.trim();
+                    const quizTopic = document.getElementById('quiz-topic').value.trim();
+                    
+                    prompt = generateQuizPrompt(quizTitle, quizTopic, numQuestions, contentLanguage);
+                    requestBody = {
+                        contents: [{
+                            parts: [{ text: prompt }]
+                        }],
+                        generationConfig: {
+                            temperature: 0.7,
+                            topK: 40,
+                            topP: 0.95,
+                            maxOutputTokens: maxTokens,
+                        }
+                    };
+                } else if (currentMethod === 'image') {
+                    const imageBase64 = await convertFileToBase64(imageFile);
+                    prompt = generateImageQuizPrompt(numQuestions, contentLanguage);
+                    requestBody = {
+                        contents: [{
+                            parts: [
+                                { text: prompt },
+                                {
+                                    inline_data: {
+                                        mime_type: imageFile.type,
+                                        data: imageBase64
+                                    }
+                                }
+                            ]
+                        }],
+                        generationConfig: {
+                            temperature: 0.7,
+                            topK: 40,
+                            topP: 0.95,
+                            maxOutputTokens: maxTokens,
+                        }
+                    };
+                } else if (currentMethod === 'pdf') {
+                    const pdfBase64 = await convertFileToBase64(pdfFile);
+                    const pdfDetails = getPDFDetails();
+                    const validationErrors = validatePDFDetails(pdfDetails);
+                    
+                    if (validationErrors.length > 0) {
+                        showError(validationErrors.join(', '));
+                        return;
+                    }
+                    
+                    prompt = generatePDFQuizPrompt(numQuestions, contentLanguage, pdfDetails);
+                    requestBody = {
+                        contents: [{
+                            parts: [
+                                { text: prompt },
+                                {
+                                    inline_data: {
+                                        mime_type: "application/pdf",
+                                        data: pdfBase64
+                                    }
+                                }
+                            ]
+                        }],
+                        generationConfig: {
+                            temperature: 0.7,
+                            topK: 40,
+                            topP: 0.95,
+                            maxOutputTokens: maxTokens,
+                        }
+                    };
+                }
+
+                // استخدام دالة makeAPIRequest الجديدة
+                const data = await makeAPIRequest(`${GEMINI_API_URL}?key=${apiKey}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -3576,25 +4804,12 @@ ${questionFormats.join(',\n')}
                     body: JSON.stringify(requestBody)
                 });
 
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    console.error('API Error:', response.status, errorText);
-                    throw new Error(`API Error: ${response.status} - ${errorText.substring(0, 100)}`);
-                }
-
-                const data = await response.json();
-                
-                if (!data.candidates || !data.candidates[0] || !data.candidates[0].content || !data.candidates[0].content.parts[0]) {
-                    throw new Error('Invalid API response - no content returned');
-                }
-
                 const responseText = data.candidates[0].content.parts[0].text;
-                console.log('API Response received, length:', responseText.length);
                 
-                // استخراج JSON من الاستجابة
-                const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+                // تحسين استخراج JSON من الاستجابة
+                const jsonMatch = extractJSONFromText(responseText);
                 if (!jsonMatch) {
-                    console.error('No JSON found in response');
+                    console.error("Full response:", responseText);
                     throw new Error(currentLanguage === 'ar' ? 
                         'تعذر استخراج البيانات من استجابة الذكاء الاصطناعي' : 
                         'Could not extract data from AI response');
@@ -3602,22 +4817,27 @@ ${questionFormats.join(',\n')}
 
                 let quizData;
                 try {
-                    quizData = JSON.parse(jsonMatch[0]);
-                } catch (parseError) {
-                    console.error('JSON Parse Error:', parseError);
-                    // حاول إصلاح بعض مشاكل JSON الشائعة
-                    const cleanedJson = jsonMatch[0]
-                        .replace(/'/g, '"')
-                        .replace(/(\w+):/g, '"$1":')
-                        .replace(/,\s*}/g, '}')
-                        .replace(/,\s*]/g, ']');
+                    quizData = JSON.parse(jsonMatch);
+                } catch (error) {
+                    console.error("JSON parsing error:", error);
+                    console.error("JSON string:", jsonMatch);
+                    
+                    // محاولة إصلاح JSON
+                    const cleanedJson = jsonMatch
+                        .replace(/'/g, '"') // استبدال علامات التنصيص المفردة
+                        .replace(/(\w+):/g, '"$1":') // إضافة علامات تنصيص للمفاتيح
+                        .replace(/,\s*}/g, '}') // إزالة الفواصل الزائدة قبل الأقواس
+                        .replace(/,\s*]/g, ']') // إزالة الفواصل الزائدة قبل الأقواس المعقوفة
+                        .replace(/\n/g, ' ') // إزالة الأسطر الجديدة
+                        .replace(/\s+/g, ' '); // إزالة المسافات الزائدة
                     
                     try {
                         quizData = JSON.parse(cleanedJson);
-                    } catch (secondError) {
+                    } catch (e) {
+                        console.error("Cleaned JSON parsing error:", e);
                         throw new Error(currentLanguage === 'ar' ? 
-                            'خطأ في تحليل استجابة الذكاء الاصطناعي' : 
-                            'Error parsing AI response');
+                            'خطأ في معالجة البيانات. حاول تقليل عدد الأسئلة.' : 
+                            'Data processing error. Try reducing the number of questions.');
                     }
                 }
                 
@@ -3627,28 +4847,36 @@ ${questionFormats.join(',\n')}
                         'No questions found in response');
                 }
 
-                questions = quizData.questions;
-                existingQuestions = questions;
-                totalQuestionsGenerated = questions.length;
-                
-                // إضافة ID إذا لم يكن موجوداً
-                questions = questions.map((q, index) => ({
+                // معالجة الأسئلة
+                questions = quizData.questions.map((q, index) => ({
                     ...q,
-                    id: q.id || index + 1
+                    id: q.id || index + 1,
+                    type: q.type || "multiple_choice"
                 }));
                 
-                console.log(`Generated ${questions.length} questions`);
-                
+                existingQuestions = questions;
+                totalQuestionsGenerated = questions.length;
                 userAnswers = Array(questions.length).fill(null);
                 answerLocked = Array(questions.length).fill(false);
                 shuffledQuestions = questions.map(q => shuffleOptions(q));
-                timeLeft = Math.max(questions.length * 60, 600); // دقيقة واحدة لكل سؤال على الأقل، مع حد أدنى 10 دقائق
+                timeLeft = Math.max(questions.length * 60, 600);
                 currentQuestionIndex = 0;
                 markedQuestions = [];
 
+                // إعداد العنوان
+                currentQuizTitle = currentMethod === 'manual' ? 
+                    document.getElementById('quiz-title').value.trim() :
+                    (currentMethod === 'image' ? imageFile.name.replace(/\.[^/.]+$/, '') : 
+                     pdfFile.name.replace('.pdf', '')) + (currentLanguage === 'ar' ? ' - اختبار' : ' - Quiz');
+                
+                document.getElementById('main-title').textContent = currentQuizTitle;
+                document.getElementById('current-quiz-title').textContent = currentQuizTitle;
+
+                // إخفاء قسم الإعداد وإظهار قسم الاختبار
                 document.getElementById('setup-section').style.display = 'none';
                 document.getElementById('quiz-section').style.display = 'block';
 
+                // بدء المؤقت وتحميل الاختبار
                 clearInterval(timerInterval);
                 startTimer();
                 loadQuiz();
@@ -3659,34 +4887,981 @@ ${questionFormats.join(',\n')}
 
             } catch (error) {
                 console.error('Error in generateQuiz:', error);
-                
-                // رسائل خطأ أكثر وضوحاً
-                if (error.message.includes('429')) {
-                    showError(currentLanguage === 'ar' ? 
-                        'تم تجاوز حد طلبات API. حاول مرة أخرى لاحقاً.' : 
-                        'API rate limit exceeded. Try again later.');
-                } else if (error.message.includes('500') || error.message.includes('503')) {
-                    showError(currentLanguage === 'ar' ? 
-                        'خادم Google غير متوفر حالياً. حاول مرة أخرى لاحقاً.' : 
-                        'Google server is unavailable. Try again later.');
-                } else if (error.message.includes('400')) {
-                    showError(currentLanguage === 'ar' ? 
-                        'طلب غير صالح. قد يكون محتوى الملف كبيراً جداً.' : 
-                        'Bad request. File content may be too large.');
-                } else {
-                    showError(currentLanguage === 'ar' ? 
-                        `حدث خطأ: ${error.message}` : 
-                        `Error: ${error.message}`);
-                }
+                showError(currentLanguage === 'ar' ? 
+                    `حدث خطأ: ${error.message}` : 
+                    `Error: ${error.message}`);
             } finally {
                 document.getElementById('loading').style.display = 'none';
             }
         }
 
-        // دالة لترتيب الخيارات بشكل عشوائي
+        async function generateSummary() {
+            if (!summaryFile) {
+                showError(currentLanguage === 'ar' ? 
+                    'الرجاء رفع ملف للتلخيص أولاً' : 
+                    'Please upload a file for summarization first');
+                return;
+            }
+
+            // إعداد واجهة التحميل
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('error-message').style.display = 'none';
+            document.getElementById('loading-details').textContent = currentLanguage === 'ar' ?
+                'جارٍ إنشاء الملخص...' :
+                'Creating summary...';
+
+            try {
+                const fileBase64 = await convertFileToBase64(summaryFile);
+                const pdfDetails = getPDFDetails();
+                const validationErrors = validatePDFDetails(pdfDetails);
+                
+                if (validationErrors.length > 0) {
+                    showError(validationErrors.join(', '));
+                    return;
+                }
+                
+                const prompt = generateSummaryPrompt(contentLanguage, summaryType, pdfDetails);
+                const mimeType = summaryFile.type === 'application/pdf' ? 'application/pdf' : 
+                                summaryFile.type.startsWith('image/') ? summaryFile.type : 'text/plain';
+                
+                const maxTokens = summaryType === 'detailed' ? 4096 : 2048;
+                
+                const requestBody = {
+                    contents: [{
+                        parts: [
+                            { text: prompt },
+                            {
+                                inline_data: {
+                                    mime_type: mimeType,
+                                    data: fileBase64
+                                }
+                            }
+                        ]
+                    }],
+                    generationConfig: {
+                        temperature: 0.7,
+                        topK: 40,
+                        topP: 0.95,
+                        maxOutputTokens: maxTokens,
+                    }
+                };
+
+                // استخدام دالة makeAPIRequest الجديدة
+                const data = await makeAPIRequest(`${GEMINI_API_URL}?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                const summaryText = data.candidates[0].content.parts[0].text;
+                
+                // إظهار الملخص
+                document.getElementById('setup-section').style.display = 'none';
+                document.getElementById('summary-section').style.display = 'block';
+                document.getElementById('summary-content').innerHTML = formatSummary(summaryText, contentLanguage);
+
+                showSuccessMessage(currentLanguage === 'ar' ?
+                    'تم إنشاء الملخص بنجاح!' :
+                    'Summary created successfully!');
+
+            } catch (error) {
+                console.error('Error in generateSummary:', error);
+                showError(currentLanguage === 'ar' ? 
+                    `حدث خطأ: ${error.message}` : 
+                    `Error: ${error.message}`);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        async function generateFlashcards() {
+            if (!flashcardsFile) {
+                showError(currentLanguage === 'ar' ? 
+                    'الرجاء رفع ملف للبطاقات التعليمية أولاً' : 
+                    'Please upload a file for flashcards first');
+                return;
+            }
+
+            // إعداد واجهة التحميل
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('error-message').style.display = 'none';
+            document.getElementById('loading-details').textContent = currentLanguage === 'ar' ?
+                'جارٍ إنشاء البطاقات التعليمية...' :
+                'Creating flashcards...';
+
+            try {
+                const numFlashcards = parseInt(document.getElementById('num-flashcards').value);
+                const difficulty = document.getElementById('flashcard-difficulty').value;
+                const fileBase64 = await convertFileToBase64(flashcardsFile);
+                const pdfDetails = getPDFDetails();
+                const validationErrors = validatePDFDetails(pdfDetails);
+                
+                if (validationErrors.length > 0) {
+                    showError(validationErrors.join(', '));
+                    return;
+                }
+                
+                const prompt = generateFlashcardsPrompt(numFlashcards, contentLanguage, flashcardType, difficulty, pdfDetails);
+                const mimeType = flashcardsFile.type === 'application/pdf' ? 'application/pdf' : 
+                                flashcardsFile.type.startsWith('image/') ? flashcardsFile.type : 'text/plain';
+                
+                const requestBody = {
+                    contents: [{
+                        parts: [
+                            { text: prompt },
+                            {
+                                inline_data: {
+                                    mime_type: mimeType,
+                                    data: fileBase64
+                                }
+                            }
+                        ]
+                    }],
+                    generationConfig: {
+                        temperature: 0.7,
+                        topK: 40,
+                        topP: 0.95,
+                        maxOutputTokens: 4096,
+                    }
+                };
+
+                // استخدام دالة makeAPIRequest الجديدة
+                const data = await makeAPIRequest(`${GEMINI_API_URL}?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                const responseText = data.candidates[0].content.parts[0].text;
+                
+                // استخراج JSON من الاستجابة
+                const jsonMatch = extractJSONFromText(responseText);
+                if (!jsonMatch) {
+                    throw new Error(currentLanguage === 'ar' ? 
+                        'تعذر استخراج البيانات من استجابة الذكاء الاصطناعي' : 
+                        'Could not extract data from AI response');
+                }
+
+                let flashcardsData;
+                try {
+                    flashcardsData = JSON.parse(jsonMatch);
+                } catch (error) {
+                    const cleanedJson = jsonMatch
+                        .replace(/```json\n?|\n?```/g, '')
+                        .replace(/'/g, '"')
+                        .replace(/(\w+):/g, '"$1":')
+                        .replace(/,\s*}/g, '}')
+                        .replace(/,\s*]/g, ']')
+                        .replace(/\n/g, ' ')
+                        .replace(/\s+/g, ' ');
+                    
+                    flashcardsData = JSON.parse(cleanedJson);
+                }
+                
+                if (!flashcardsData.flashcards || !Array.isArray(flashcardsData.flashcards)) {
+                    throw new Error(currentLanguage === 'ar' ? 
+                        'لم يتم العثور على بطاقات في الاستجابة' : 
+                        'No flashcards found in response');
+                }
+
+                // معالجة البطاقات
+                flashcards = flashcardsData.flashcards.map((card, index) => ({
+                    ...card,
+                    id: card.id || index + 1,
+                    mastered: false,
+                    needsReview: false,
+                    category: card.category || "general",
+                    difficulty: card.difficulty || "medium"
+                }));
+                
+                currentFlashcardIndex = 0;
+                masteredFlashcards.clear();
+                reviewFlashcards.clear();
+
+                // إظهار قسم البطاقات التعليمية
+                document.getElementById('setup-section').style.display = 'none';
+                document.getElementById('flashcards-section-main').style.display = 'block';
+                
+                // تحميل البطاقة الأولى
+                loadFlashcard(currentFlashcardIndex);
+                updateFlashcardStats();
+                updateNavigationDots();
+
+                showSuccessMessage(currentLanguage === 'ar' ?
+                    `تم إنشاء ${flashcards.length} بطاقة تعليمية بنجاح!` :
+                    `Successfully created ${flashcards.length} flashcards!`);
+
+            } catch (error) {
+                console.error('Error in generateFlashcards:', error);
+                showError(currentLanguage === 'ar' ? 
+                    `حدث خطأ: ${error.message}` : 
+                    `Error: ${error.message}`);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        // دالة مساعدة لاستخراج JSON من النص
+        function extractJSONFromText(text) {
+            // محاولة العثور على JSON في النص
+            const jsonPatterns = [
+                /\{[\s\S]*"flashcards"[\s\S]*\}/,
+                /\{[\s\S]*"questions"[\s\S]*\}/,
+                /\{[\s\S]*\}/,
+                /\[[\s\S]*\]/
+            ];
+            
+            for (const pattern of jsonPatterns) {
+                const match = text.match(pattern);
+                if (match) {
+                    return match[0];
+                }
+            }
+            
+            // إذا لم يتم العثور، محاولة العثور على جزء JSON
+            const startIndex = text.indexOf('{');
+            const endIndex = text.lastIndexOf('}');
+            
+            if (startIndex !== -1 && endIndex !== -1 && endIndex > startIndex) {
+                return text.substring(startIndex, endIndex + 1);
+            }
+            
+            return null;
+        }
+
+        // ==================== وظائف توليد النصوص ====================
+        function generateQuizPrompt(title, topic, numQuestions, language) {
+            const selectedTypesText = getSelectedQuestionTypesText(language);
+            const questionFormats = getQuestionFormats(language);
+            
+            if (language === 'en') {
+                return `Please generate exactly ${numQuestions} questions about: "${title}"
+                
+Topic details: ${topic}
+
+Question types to include: ${selectedTypesText}
+
+IMPORTANT: 
+- Keep the response minimal and focused
+- Use very brief explanations (max 10-15 words)
+- Generate concise questions and options
+- Ensure JSON is valid and properly formatted
+
+CRITICAL: For large question sets (more than 15 questions):
+- Use minimal text for explanations
+- Keep options short
+- Prioritize clarity over verbosity
+
+Please follow this JSON format EXACTLY:
+
+{
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "q": "Brief question text?",
+      "options": ["A", "B", "C", "D"],
+      "answer": 0,
+      "explanations": {
+        "correct": "Very brief explanation",
+        "option0": "Short feedback A",
+        "option1": "Short feedback B", 
+        "option2": "Short feedback C",
+        "option3": "Short feedback D"
+      }
+    }
+  ]
+}`;
+            } else {
+                return `يرجى إنشاء بالضبط ${numQuestions} سؤالاً حول: "${title}"
+                
+تفاصيل الموضوع: ${topic}
+
+أنواع الأسئلة المطلوبة: ${selectedTypesText}
+
+هام جداً:
+- حافظ على الاستجابة مركزة ومختصرة
+- استخدم شروحات موجزة جداً (10-15 كلمة كحد أقصى)
+- أنشئ أسئلة وخيارات مركزة
+- تأكد من أن JSON صالح ومنسق بشكل صحيح
+
+مهم جداً: لمجموعات الأسئلة الكبيرة (أكثر من 15 سؤال):
+- استخدم نصاً محدوداً للشروحات
+- حافظ على الخيارات قصيرة
+- ركز على الوضوح بدلاً من التفصيل المفرط
+
+الرجاء الالتزام بتنسيق JSON التالي بالضبط:
+
+{
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "q": "نص سؤال موجز؟",
+      "options": ["أ", "ب", "ج", "د"],
+      "answer": 0,
+      "explanations": {
+        "correct": "شرح موجز جداً",
+        "option0": "تغذية راجعة قصيرة أ",
+        "option1": "تغذية راجعة قصيرة ب",
+        "option2": "تغذية راجعة قصيرة ج",
+        "option3": "تغذية راجعة قصيرة د"
+      }
+    }
+  ]
+}`;
+            }
+        }
+
+        function generateImageQuizPrompt(numQuestions, language) {
+            const selectedTypesText = getSelectedQuestionTypesText(language);
+            const questionFormats = getQuestionFormats(language);
+            
+            if (language === 'en') {
+                return `Please generate exactly ${numQuestions} questions based on the text in the provided image.
+
+Question types to include: ${selectedTypesText}
+
+Extract key information from the image and create clear, concise questions.
+Keep JSON response minimal and focused.
+
+CRITICAL: For large question sets (more than 15 questions):
+- Use minimal text for explanations
+- Keep options short
+- Extract only essential information from image
+
+Please follow this JSON format EXACTLY:
+
+{
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "q": "Brief question?",
+      "options": ["A", "B", "C", "D"],
+      "answer": 0,
+      "explanations": {
+        "correct": "Very brief",
+        "option0": "Short",
+        "option1": "Short", 
+        "option2": "Short",
+        "option3": "Short"
+      }
+    }
+  ]
+}`;
+            } else {
+                return `يرجى إنشاء بالضبط ${numQuestions} سؤالاً بناءً على النص في الصورة المرفوعة.
+
+أنواع الأسئلة المطلوبة: ${selectedTypesText}
+
+استخرج المعلومات الرئيسية من الصورة وأنشئ أسئلة واضحة ومركزة.
+حافظ على استجابة JSON بسيطة ومركزة.
+
+مهم جداً: لمجموعات الأسئلة الكبيرة (أكثر من 15 سؤال):
+- استخدم نصاً محدوداً للشروحات
+- حافظ على الخيارات قصيرة
+- استخرج فقط المعلومات الأساسية من الصورة
+
+الرجاء الالتزام بتنسيق JSON التالي بالضبط:
+
+{
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "q": "سؤال موجز؟",
+      "options": ["أ", "ب", "ج", "د"],
+      "answer": 0,
+      "explanations": {
+        "correct": "موجز جداً",
+        "option0": "قصير",
+        "option1": "قصير",
+        "option2": "قصير",
+        "option3": "قصير"
+      }
+    }
+  ]
+}`;
+            }
+        }
+
+        function generatePDFQuizPrompt(numQuestions, language, pdfDetails) {
+            const selectedTypesText = getSelectedQuestionTypesText(language);
+            const pdfDetailsInstructions = generatePDFDetailsInstructions(pdfDetails, language);
+            
+            if (language === 'en') {
+                return `Please generate exactly ${numQuestions} questions based on the content of the PDF file.
+
+${pdfDetailsInstructions}
+
+Question types to include: ${selectedTypesText}
+
+Generate clear, concise questions that accurately reflect ONLY the specified content.
+Keep explanations brief and JSON response minimal.
+
+CRITICAL: For large question sets (more than 15 questions):
+- Use minimal text for explanations
+- Keep options short
+- Focus on key concepts only
+
+Please follow this JSON format EXACTLY:
+
+{
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "q": "Brief question?",
+      "options": ["A", "B", "C", "D"],
+      "answer": 0,
+      "explanations": {
+        "correct": "Very brief",
+        "option0": "Short",
+        "option1": "Short", 
+        "option2": "Short",
+        "option3": "Short"
+      }
+    }
+  ]
+}`;
+            } else {
+                return `يرجى إنشاء بالضبط ${numQuestions} سؤالاً بناءً على محتوى ملف PDF.
+
+${pdfDetailsInstructions}
+
+أنواع الأسئلة المطلوبة: ${selectedTypesText}
+
+أنشئ أسئلة واضحة ومركزة تعكس بدقة المحتوى المحدد فقط.
+حافظ على الشروحات موجزة واستجابة JSON بسيطة.
+
+مهم جداً: لمجموعات الأسئلة الكبيرة (أكثر من 15 سؤال):
+- استخدم نصاً محدوداً للشروحات
+- حافظ على الخيارات قصيرة
+- ركز على المفاهيم الأساسية فقط
+
+الرجاء الالتزام بتنسيق JSON التالي بالضبط:
+
+{
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "q": "سؤال موجز؟",
+      "options": ["أ", "ب", "ج", "د"],
+      "answer": 0,
+      "explanations": {
+        "correct": "موجز جداً",
+        "option0": "قصير",
+        "option1": "قصير",
+        "option2": "قصير",
+        "option3": "قصير"
+      }
+    }
+  ]
+}`;
+            }
+        }
+
+        function generateSummaryPrompt(language, type, pdfDetails) {
+            const summaryLength = document.getElementById('summary-length').value;
+            const pdfDetailsInstructions = generatePDFDetailsInstructions(pdfDetails, language);
+            
+            let lengthInstruction = '';
+            if (summaryLength === 'short') {
+                lengthInstruction = language === 'en' ? 
+                    "Keep the summary brief, focusing only on the most important points (3-5 key points maximum)." :
+                    "حافظ على الملخص موجزاً، وركز فقط على النقاط الأهم (3-5 نقاط رئيسية كحد أقصى).";
+            } else if (summaryLength === 'long') {
+                lengthInstruction = language === 'en' ?
+                    "Provide a comprehensive and detailed summary covering all important aspects with hierarchical structure (chapters, sections, subsections)." :
+                    "قدم ملخصاً شاملاً ومفصلاً يغطي جميع الجوانب المهمة مع هيكل هرمي (فصول، أقسام، أقسام فرعية).";
+            } else {
+                lengthInstruction = language === 'en' ?
+                    "Provide a balanced summary that covers the main points with clear hierarchy without being too brief or too detailed." :
+                    "قدم ملخصاً متوازناً يغطي النقاط الرئيسية مع هيكل واضح دون أن يكون موجزاً جداً أو مفصلاً جداً.";
+            }
+            
+            if (type === 'detailed') {
+                if (language === 'en') {
+                    return `Please provide a comprehensive hierarchical summary of the document.
+
+${pdfDetailsInstructions}
+
+${lengthInstruction}
+
+CRITICAL: Structure the summary hierarchically:
+1. Main Title
+2. Chapters/Sections
+3. Subsections within each chapter
+4. Key points under each subsection
+5. Important concepts, definitions, and notes
+
+Formatting requirements:
+- Use clear hierarchical structure
+- Highlight key concepts
+- Include important definitions
+- Add notes for critical information
+- Make it easy to read and navigate`;
+                } else {
+                    return `يرجى تقديم ملخص هرمي شاملاً للمستند.
+
+${pdfDetailsInstructions}
+
+${lengthInstruction}
+
+مهم جداً: قم بتنظيم الملخص بشكل هرمي:
+1. عنوان رئيسي
+2. فصول/أقسام
+3. أقسام فرعية داخل كل فصل
+4. نقاط رئيسية تحت كل قسم فرعي
+5. مفاهيم وتعريفات وملاحظات مهمة
+
+متطلبات التنسيق:
+- استخدم هيكلاً هرمياً واضحاً
+- سلط الضوء على المفاهيم الأساسية
+- أدرج التعريفات المهمة
+- أضف ملاحظات للمعلومات الحاسمة
+- اجعله سهل القراءة والتنقل`;
+                }
+            } else {
+                if (language === 'en') {
+                    return `Please provide a quick hierarchical summary of the document.
+
+${pdfDetailsInstructions}
+
+${lengthInstruction}
+
+Focus only on:
+1. Most important chapters
+2. Key sections within chapters
+3. Essential points within sections
+
+Structure hierarchically with clear levels.`;
+                } else {
+                    return `يرجى تقديم ملخص هرمي سريع للمستند.
+
+${pdfDetailsInstructions}
+
+${lengthInstruction}
+
+ركز فقط على:
+1. الفصول الأهم
+2. الأقسام الرئيسية داخل الفصول
+3. النقاط الأساسية داخل الأقسام
+
+قم بتنظيمها هرمياً بمستويات واضحة.`;
+                }
+            }
+        }
+
+        function generateFlashcardsPrompt(numFlashcards, language, type, difficulty, pdfDetails) {
+            const pdfDetailsInstructions = generatePDFDetailsInstructions(pdfDetails, language);
+            
+            let typeInstruction = '';
+            if (type === 'concepts') {
+                typeInstruction = language === 'en' ?
+                    "Focus on key concepts, definitions, and important terms. Front: concept/term, Back: definition/explanation." :
+                    "ركز على المفاهيم الأساسية والتعريفات والمصطلحات المهمة. الوجه: المفهوم/المصطلح، الظهر: التعريف/الشرح.";
+            } else {
+                typeInstruction = language === 'en' ?
+                    "Focus on Q&A format. Front: question, Back: answer with brief explanation." :
+                    "ركز على صيغة سؤال وجواب. الوجه: السؤال، الظهر: الإجابة مع شرح موجز.";
+            }
+            
+            let difficultyInstruction = '';
+            if (difficulty === 'easy') {
+                difficultyInstruction = language === 'en' ?
+                    "Focus on basic concepts and definitions suitable for beginners." :
+                    "ركز على المفاهيم الأساسية والتعريفات المناسبة للمبتدئين.";
+            } else if (difficulty === 'hard') {
+                difficultyInstruction = language === 'en' ?
+                    "Focus on advanced concepts, complex relationships, and detailed explanations." :
+                    "ركز على المفاهيم المتقدمة، والعلاقات المعقدة، والشروحات المفصلة.";
+            } else if (difficulty === 'mixed') {
+                difficultyInstruction = language === 'en' ?
+                    "Include a mix of easy, medium, and hard flashcards." :
+                    "اشمل مزيجاً من البطاقات التعليمية السهلة والمتوسطة والصعبة.";
+            } else {
+                difficultyInstruction = language === 'en' ?
+                    "Focus on concepts suitable for intermediate learners." :
+                    "ركز على المفاهيم المناسبة للمتعلمين المتوسطين.";
+            }
+            
+            if (language === 'en') {
+                return `Create exactly ${numFlashcards} educational flashcards based on the document content.
+
+${pdfDetailsInstructions}
+
+${typeInstruction}
+
+${difficultyInstruction}
+
+IMPORTANT: Return ONLY valid JSON. Do not include any other text.
+The JSON MUST have this exact structure:
+
+{
+  "flashcards": [
+    {
+      "front": "Question or concept",
+      "back": "Answer or explanation",
+      "category": "concepts",
+      "difficulty": "medium"
+    }
+  ]
+}
+
+CRITICAL: Ensure the JSON is valid. Use double quotes for all keys and string values.
+Generate exactly ${numFlashcards} flashcards.`;
+            } else {
+                return `أنشئ بالضبط ${numFlashcards} بطاقة تعليمية بناءً على محتوى المستند.
+
+${pdfDetailsInstructions}
+
+${typeInstruction}
+
+${difficultyInstruction}
+
+مهم جداً: أعد فقط JSON صالحاً. لا تدرج أي نص آخر.
+يجب أن يكون هيكل JSON بالضبط كما يلي:
+
+{
+  "flashcards": [
+    {
+      "front": "السؤال أو المفهوم",
+      "back": "الإجابة أو الشرح",
+      "category": "مفاهيم",
+      "difficulty": "متوسط"
+    }
+  ]
+}
+
+مهم: تأكد من صحة JSON. استخدم علامات تنصيص مزدوجة لجميع المفاتيح والقيم النصية.
+أنشئ بالضبط ${numFlashcards} بطاقة تعليمية.`;
+            }
+        }
+
+        function getSelectedQuestionTypesText(language) {
+            const selectedTypes = [];
+            
+            if (selectedQuestionTypes.multipleChoice) {
+                selectedTypes.push(language === 'en' ? 'multiple choice' : 'اختيار متعدد');
+            }
+            if (selectedQuestionTypes.trueFalse) {
+                selectedTypes.push(language === 'en' ? 'true/false' : 'صح/خطأ');
+            }
+            if (selectedQuestionTypes.fillBlank) {
+                selectedTypes.push(language === 'en' ? 'fill in the blank' : 'املأ الفراغ');
+            }
+            
+            if (language === 'en') {
+                return selectedTypes.join(', ');
+            } else {
+                return selectedTypes.join('، ');
+            }
+        }
+
+        function getQuestionFormats(language) {
+            const formats = [];
+            
+            if (selectedQuestionTypes.multipleChoice) {
+                if (language === 'en') {
+                    formats.push(`{
+      "type": "multiple_choice",
+      "q": "Brief question?",
+      "options": ["A", "B", "C", "D"],
+      "answer": 0,
+      "explanations": {
+        "correct": "Very brief explanation",
+        "option0": "Short feedback A",
+        "option1": "Short feedback B", 
+        "option2": "Short feedback C",
+        "option3": "Short feedback D"
+      }
+    }`);
+                } else {
+                    formats.push(`{
+      "type": "multiple_choice",
+      "q": "سؤال موجز؟",
+      "options": ["أ", "ب", "ج", "د"],
+      "answer": 0,
+      "explanations": {
+        "correct": "شرح موجز جداً",
+        "option0": "تغذية راجعة قصيرة أ",
+        "option1": "تغذية راجعة قصيرة ب",
+        "option2": "تغذية راجعة قصيرة ج",
+        "option3": "تغذية راجعة قصيرة د"
+      }
+    }`);
+                }
+            }
+            
+            if (selectedQuestionTypes.trueFalse) {
+                if (language === 'en') {
+                    formats.push(`{
+      "type": "true_false",
+      "q": "Statement",
+      "options": ["True", "False"],
+      "answer": 0,
+      "explanations": {
+        "correct": "Very brief explanation",
+        "option0": "Short feedback True",
+        "option1": "Short feedback False"
+      }
+    }`);
+                } else {
+                    formats.push(`{
+      "type": "true_false",
+      "q": "الجملة",
+      "options": ["صح", "خطأ"],
+      "answer": 0,
+      "explanations": {
+        "correct": "شرح موجز جداً",
+        "option0": "تغذية راجعة قصيرة صح",
+        "option1": "تغذية راجعة قصيرة خطأ"
+      }
+    }`);
+                }
+            }
+            
+            if (selectedQuestionTypes.fillBlank) {
+                if (language === 'en') {
+                    formats.push(`{
+      "type": "fill_blank",
+      "q": "Complete: The capital of France is _____",
+      "answer": "Paris",
+      "explanations": {
+        "correct": "Brief explanation",
+        "common_mistakes": ["London", "Berlin"]
+      }
+    }`);
+                } else {
+                    formats.push(`{
+      "type": "fill_blank",
+      "q": "أكمل: عاصمة فرنسا هي _____",
+      "answer": "باريس",
+      "explanations": {
+        "correct": "شرح موجز",
+        "common_mistakes": ["لندن", "برلين"]
+      }
+    }`);
+                }
+            }
+            
+            return formats;
+        }
+
+        function formatSummary(summaryText, language) {
+            // تحويل النص إلى تنسيق HTML هرمي
+            let formattedText = '<div class="summary-hierarchy">';
+            
+            // إضافة عنوان رئيسي
+            formattedText += `<h1 class="summary-main-title">
+                <i class="fas fa-book"></i>
+                ${currentLanguage === 'ar' ? 'ملخص المحتوى' : 'Content Summary'}
+            </h1>`;
+            
+            // تقسيم النص إلى أقسام
+            const lines = summaryText.split('\n').filter(line => line.trim());
+            
+            let currentChapter = null;
+            let currentSection = null;
+            let currentSubsection = null;
+            let inPointsList = false;
+            let currentPoints = [];
+            
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+                
+                // الكشف عن الفصول الرئيسية (مستوى 1)
+                if (line.match(/^(الفصل|القسم|الجزء|Chapter|Part|Section)[\s:]+[١-٩0-9IVX]/i) || 
+                    line.match(/^[IVX]+\.\s+(.+)$/) ||
+                    line.match(/^[١-٩]+\.\s+(.+)$/) ||
+                    (line.length < 100 && (line.includes(':') || line.endsWith(':')))) {
+                    
+                    // إنهاء القسم السابق إذا كان موجوداً
+                    if (currentSection && currentPoints.length > 0) {
+                        formattedText += '<ul class="summary-points">';
+                        currentPoints.forEach(point => {
+                            formattedText += `<li class="summary-point">${point}</li>`;
+                        });
+                        formattedText += '</ul>';
+                        currentPoints = [];
+                    }
+                    
+                    if (currentSection) {
+                        formattedText += '</div>'; // إغلاق القسم
+                        currentSection = null;
+                    }
+                    
+                    if (currentChapter) {
+                        formattedText += '</div>'; // إغلاق الفصل
+                    }
+                    
+                    const title = line.replace(/^(الفصل|القسم|الجزء|Chapter|Part|Section)[\s:]+/i, '')
+                                     .replace(/^[IVX]+\.\s+/, '')
+                                     .replace(/^[١-٩]+\.\s+/, '')
+                                     .replace(/:$/, '')
+                                     .trim();
+                    
+                    currentChapter = title;
+                    formattedText += `<div class="summary-chapter">
+                        <h2 class="summary-chapter-title">
+                            <i class="fas fa-bookmark"></i>
+                            ${title}
+                        </h2>`;
+                }
+                // الكشف عن الأقسام الفرعية (مستوى 2)
+                else if (line.match(/^[A-Z]\.\s+(.+)$/) || 
+                        line.match(/^[أ-ي]\.\s+(.+)$/) ||
+                        (line.length < 80 && line.includes(':'))) {
+                    
+                    // إنهاء القائمة السابقة إذا كانت موجودة
+                    if (currentPoints.length > 0) {
+                        formattedText += '<ul class="summary-points">';
+                        currentPoints.forEach(point => {
+                            formattedText += `<li class="summary-point">${point}</li>`;
+                        });
+                        formattedText += '</ul>';
+                        currentPoints = [];
+                    }
+                    
+                    if (currentSection) {
+                        formattedText += '</div>'; // إغلاق القسم السابق
+                    }
+                    
+                    const sectionTitle = line.replace(/^[A-Z]\.\s+/, '')
+                                           .replace(/^[أ-ي]\.\s+/, '')
+                                           .replace(/:$/, '')
+                                           .trim();
+                    
+                    currentSection = sectionTitle;
+                    formattedText += `<div class="summary-section">
+                        <h3 class="summary-section-title">
+                            <i class="fas fa-cube"></i>
+                            ${sectionTitle}
+                        </h3>`;
+                }
+                // الكشف عن الأقسام الفرعية من المستوى الثالث
+                else if (line.match(/^[0-9]+\.[0-9]+\s+(.+)$/) || 
+                        line.match(/^[١-٩]+\.[١-٩]+\s+(.+)$/) ||
+                        (line.length < 60 && line.includes('-'))) {
+                    
+                    if (currentPoints.length > 0) {
+                        formattedText += '<ul class="summary-points">';
+                        currentPoints.forEach(point => {
+                            formattedText += `<li class="summary-point">${point}</li>`;
+                        });
+                        formattedText += '</ul>';
+                        currentPoints = [];
+                    }
+                    
+                    const subsectionTitle = line.replace(/^[0-9]+\.[0-9]+\s+/, '')
+                                              .replace(/^[١-٩]+\.[١-٩]+\s+/, '')
+                                              .trim();
+                    
+                    currentSubsection = subsectionTitle;
+                    formattedText += `<div class="summary-subsection">
+                        <h4 class="summary-subsection-title">
+                            <i class="fas fa-circle"></i>
+                            ${subsectionTitle}
+                        </h4>`;
+                }
+                // الكشف عن النقاط الرئيسية
+                else if (line.match(/^[•\-]\s+(.+)$/) || 
+                        line.match(/^[٠-٩]+\)\s+(.+)$/) ||
+                        line.match(/^[0-9]+\)\s+(.+)$/)) {
+                    
+                    const point = line.replace(/^[•\-]\s+/, '')
+                                    .replace(/^[٠-٩]+\)\s+/, '')
+                                    .replace(/^[0-9]+\)\s+/, '')
+                                    .trim();
+                    
+                    currentPoints.push(point);
+                }
+                // الكشف عن المفاهيم الأساسية
+                else if (line.match(/^(مفهوم|تعريف|ملاحظة|هام|Concept|Definition|Note|Important)[\s:]/i)) {
+                    
+                    if (currentPoints.length > 0) {
+                        formattedText += '<ul class="summary-points">';
+                        currentPoints.forEach(point => {
+                            formattedText += `<li class="summary-point">${point}</li>`;
+                        });
+                        formattedText += '</ul>';
+                        currentPoints = [];
+                    }
+                    
+                    const content = line.replace(/^(مفهوم|تعريف|ملاحظة|هام|Concept|Definition|Note|Important)[\s:]+/i, '').trim();
+                    
+                    if (line.match(/^مفهوم|^Concept/i)) {
+                        formattedText += `<div class="summary-key-concept">
+                            <strong><i class="fas fa-lightbulb"></i> ${currentLanguage === 'ar' ? 'مفهوم أساسي:' : 'Key Concept:'}</strong> ${content}
+                        </div>`;
+                    } else if (line.match(/^تعريف|^Definition/i)) {
+                        formattedText += `<div class="summary-definition">
+                            <strong><i class="fas fa-book"></i> ${currentLanguage === 'ar' ? 'تعريف:' : 'Definition:'}</strong> ${content}
+                        </div>`;
+                    } else if (line.match(/^ملاحظة|^Note/i)) {
+                        formattedText += `<div class="summary-note">
+                            <strong><i class="fas fa-sticky-note"></i> ${currentLanguage === 'ar' ? 'ملاحظة:' : 'Note:'}</strong> ${content}
+                        </div>`;
+                    } else if (line.match(/^هام|^Important/i)) {
+                        formattedText += `<div class="summary-important">
+                            <strong><i class="fas fa-exclamation-circle"></i> ${currentLanguage === 'ar' ? 'هام:' : 'Important:'}</strong> ${content}
+                        </div>`;
+                    }
+                }
+                // النص العادي (فقرات)
+                else if (line.length > 20) {
+                    if (currentPoints.length > 0) {
+                        formattedText += '<ul class="summary-points">';
+                        currentPoints.forEach(point => {
+                            formattedText += `<li class="summary-point">${point}</li>`;
+                        });
+                        formattedText += '</ul>';
+                        currentPoints = [];
+                    }
+                    
+                    formattedText += `<p class="summary-paragraph">${line}</p>`;
+                }
+            }
+            
+            // إنهاء أي قائمة متبقية
+            if (currentPoints.length > 0) {
+                formattedText += '<ul class="summary-points">';
+                currentPoints.forEach(point => {
+                    formattedText += `<li class="summary-point">${point}</li>`;
+                });
+                formattedText += '</ul>';
+            }
+            
+            // إغلاق الأقسام المفتوحة
+            if (currentSubsection) {
+                formattedText += '</div>';
+            }
+            if (currentSection) {
+                formattedText += '</div>';
+            }
+            if (currentChapter) {
+                formattedText += '</div>';
+            }
+            
+            formattedText += '</div>';
+            
+            return formattedText;
+        }
+
+        // ==================== وظائف مساعدة ====================
+        async function convertFileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result.split(',')[1]);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
         function shuffleOptions(question) {
             if (question.type === 'fill_blank') {
-                return question; // لا تحتاج أسئلة املأ الفراغ إلى خلط
+                return question;
             }
             
             const options = [...question.options];
@@ -3701,7 +5876,6 @@ ${questionFormats.join(',\n')}
             const shuffledOptions = shuffledIndices.map(idx => options[idx]);
             const newAnswer = shuffledIndices.indexOf(answer);
             
-            // إعادة ترتيب الشروح وفقاً للترتيب الجديد
             const shuffledExplanations = { ...question.explanations };
             if (shuffledExplanations.option0 || shuffledExplanations.option1 || 
                 shuffledExplanations.option2 || shuffledExplanations.option3) {
@@ -3719,7 +5893,7 @@ ${questionFormats.join(',\n')}
             };
         }
 
-        // بدء المؤقت
+        // ==================== وظائف الاختبار ====================
         function startTimer() {
             timerInterval = setInterval(() => {
                 timeLeft--;
@@ -3732,7 +5906,6 @@ ${questionFormats.join(',\n')}
             }, 1000);
         }
 
-        // تحديث عرض المؤقت
         function updateTimerDisplay() {
             const minutes = Math.floor(timeLeft / 60);
             const seconds = timeLeft % 60;
@@ -3746,10 +5919,9 @@ ${questionFormats.join(',\n')}
             }
         }
 
-        // تحميل الاختبار
         function loadQuiz() {
             const quizDiv = document.getElementById("quiz");
-
+            
             if (shuffledQuestions.length === 0) {
                 shuffledQuestions = questions.map(q => shuffleOptions(q));
             }
@@ -3757,28 +5929,26 @@ ${questionFormats.join(',\n')}
             const question = shuffledQuestions[currentQuestionIndex];
             const isLocked = answerLocked[currentQuestionIndex];
 
-            const questionLanguage = detectTextLanguage(question.q);
-            
-            let questionNumberText = questionLanguage === 'en' 
+            let questionNumberText = currentLanguage === 'en' 
                 ? `Question ${currentQuestionIndex + 1} of ${questions.length}`
                 : `السؤال ${currentQuestionIndex + 1} من ${questions.length}`;
                 
-            let lockedText = questionLanguage === 'en' ? 'Locked' : 'مقفل';
-            let markedText = questionLanguage === 'en' ? 'Flagged' : 'معلمة';
+            let lockedText = currentLanguage === 'en' ? 'Locked' : 'مقفل';
+            let markedText = currentLanguage === 'en' ? 'Flagged' : 'معلمة';
             
-            let totalQuestionsText = questionLanguage === 'en' ? 'Total Questions' : 'إجمالي الأسئلة';
-            let answeredText = questionLanguage === 'en' ? 'Answered' : 'تم الإجابة';
-            let flaggedText = questionLanguage === 'en' ? 'Flagged' : 'معلمة';
-            let instantReviewText = questionLanguage === 'en' ? 'Instant Review' : 'مراجعة فورية';
+            let totalQuestionsText = currentLanguage === 'en' ? 'Total Questions' : 'إجمالي الأسئلة';
+            let answeredText = currentLanguage === 'en' ? 'Answered' : 'تم الإجابة';
+            let flaggedText = currentLanguage === 'en' ? 'Flagged' : 'معلمة';
+            let instantReviewText = currentLanguage === 'en' ? 'Instant Review' : 'مراجعة فورية';
 
             let html = `
             <div class="question-box">
                 <div class="question-number">
                     <i class="fas fa-question-circle"></i>
                     ${questionNumberText}
-                    ${question.type === 'multiple_choice' ? `<span class="category-badge">${questionLanguage === 'en' ? 'Multiple Choice' : 'اختيار متعدد'}</span>` : ''}
-                    ${question.type === 'true_false' ? `<span class="category-badge">${questionLanguage === 'en' ? 'True/False' : 'صح/خطأ'}</span>` : ''}
-                    ${question.type === 'fill_blank' ? `<span class="category-badge">${questionLanguage === 'en' ? 'Fill in Blank' : 'املأ الفراغ'}</span>` : ''}
+                    ${question.type === 'multiple_choice' ? `<span class="category-badge">${currentLanguage === 'en' ? 'Multiple Choice' : 'اختيار متعدد'}</span>` : ''}
+                    ${question.type === 'true_false' ? `<span class="category-badge">${currentLanguage === 'en' ? 'True/False' : 'صح/خطأ'}</span>` : ''}
+                    ${question.type === 'fill_blank' ? `<span class="category-badge">${currentLanguage === 'en' ? 'Fill in Blank' : 'املأ الفراغ'}</span>` : ''}
                     ${isLocked ? `<span style="color: var(--accent); margin-right: 10px;"><i class="fas fa-lock"></i> ${lockedText}</span>` : ''}
                     ${markedQuestions.includes(currentQuestionIndex) ? `<span style="background: var(--tertiary-gradient); color: white; padding: 5px 10px; border-radius: 10px; font-size: 0.8rem; margin-right: 10px;"><i class="fas fa-flag"></i> ${markedText}</span>` : ''}
                 </div>
@@ -3787,8 +5957,55 @@ ${questionFormats.join(',\n')}
                     <span><i class="fas fa-layer-group"></i> ${totalQuestionsText}: ${questions.length}</span>
                     <span><i class="fas fa-question"></i> ${answeredText}: ${userAnswers.filter(a => a !== null).length}</span>
                     <span><i class="fas fa-flag"></i> ${flaggedText}: ${markedQuestions.length}</span>
-                </div>
-                
+                </div>`;
+
+            // إضافة معلومات المحتوى المحدد لملفات PDF
+            if (currentMethod === 'pdf') {
+                const pdfDetails = getPDFDetails();
+                const hasSpecifiedContent = pdfDetails.pages.startPage || 
+                                           pdfDetails.pages.endPage || 
+                                           pdfDetails.pages.specificPages || 
+                                           pdfDetails.units || 
+                                           pdfDetails.topics;
+
+                if (hasSpecifiedContent) {
+                    let contentInfo = '';
+                    
+                    if (currentLanguage === 'en') {
+                        contentInfo = '<div class="source-info">';
+                        contentInfo += '<i class="fas fa-filter"></i> <strong>Content Filter Applied:</strong> ';
+                        
+                        if (pdfDetails.pages.startPage || pdfDetails.pages.endPage || pdfDetails.pages.specificPages) {
+                            contentInfo += 'Specific pages';
+                        }
+                        if (pdfDetails.units) {
+                            contentInfo += (contentInfo.includes('pages') ? ', ' : '') + 'Specific units';
+                        }
+                        if (pdfDetails.topics) {
+                            contentInfo += (contentInfo.includes('units') ? ', ' : '') + 'Specific topics';
+                        }
+                        contentInfo += '</div>';
+                    } else {
+                        contentInfo = '<div class="source-info">';
+                        contentInfo += '<i class="fas fa-filter"></i> <strong>تم تطبيق تصفية المحتوى:</strong> ';
+                        
+                        if (pdfDetails.pages.startPage || pdfDetails.pages.endPage || pdfDetails.pages.specificPages) {
+                            contentInfo += 'صفحات محددة';
+                        }
+                        if (pdfDetails.units) {
+                            contentInfo += (contentInfo.includes('محددة') ? '، ' : '') + 'وحدات محددة';
+                        }
+                        if (pdfDetails.topics) {
+                            contentInfo += (contentInfo.includes('محددة') ? '، ' : '') + 'مواضيع محددة';
+                        }
+                        contentInfo += '</div>';
+                    }
+                    
+                    html += contentInfo;
+                }
+            }
+
+            html += `
                 <div class="question-text">${question.q}</div>
             `;
 
@@ -3826,13 +6043,12 @@ ${questionFormats.join(',\n')}
                 
                 html += `</div>`;
             } else {
-                // سؤال املأ الفراغ
                 html += `
                 <div class="options">
                     <label style="flex-direction: column; align-items: flex-start;">
-                        <span style="margin-bottom: 10px; font-weight: bold;">${questionLanguage === 'en' ? 'Your Answer:' : 'إجابتك:'}</span>
+                        <span style="margin-bottom: 10px; font-weight: bold;">${currentLanguage === 'en' ? 'Your Answer:' : 'إجابتك:'}</span>
                         <input type="text" id="fillBlankAnswer" class="input-field" style="width: 100%;" 
-                               placeholder="${questionLanguage === 'en' ? 'Type your answer here...' : 'اكتب إجابتك هنا...'}" 
+                               placeholder="${currentLanguage === 'en' ? 'Type your answer here...' : 'اكتب إجابتك هنا...'}" 
                                ${isLocked ? 'disabled' : ''}
                                value="${userAnswers[currentQuestionIndex] || ''}"
                                onchange="selectFillBlankAnswer(this.value)">
@@ -3882,7 +6098,7 @@ ${questionFormats.join(',\n')}
 
             let previousText, nextText, previousIcon, nextIcon;
             
-            if (questionLanguage === 'en') {
+            if (currentLanguage === 'en') {
                 previousText = 'Previous';
                 nextText = 'Next';
                 previousIcon = 'fa-arrow-left';
@@ -3914,7 +6130,7 @@ ${questionFormats.join(',\n')}
             progress.style.width = questions.length > 0 ? `${((currentQuestionIndex + 1) / questions.length) * 100}%` : '0%';
 
             // تحديث معلومات الاختبار
-            let quizInfoText = questionLanguage === 'en'
+            let quizInfoText = currentLanguage === 'en'
                 ? `Question ${currentQuestionIndex + 1} of ${questions.length} | Answered: ${userAnswers.filter(a => a !== null).length} | Flagged: ${markedQuestions.length}`
                 : `السؤال ${currentQuestionIndex + 1} من ${questions.length} | تم الإجابة: ${userAnswers.filter(a => a !== null).length} | معلمة: ${markedQuestions.length}`;
             
@@ -3923,12 +6139,12 @@ ${questionFormats.join(',\n')}
             // تحديث زر وضع العلامة
             const markBtn = document.getElementById('mark-review-btn');
             if (markedQuestions.includes(currentQuestionIndex)) {
-                markBtn.innerHTML = questionLanguage === 'en'
+                markBtn.innerHTML = currentLanguage === 'en'
                     ? '<i class="fas fa-flag"></i> Remove Flag'
                     : '<i class="fas fa-flag"></i> إزالة العلامة';
                 markBtn.style.background = 'var(--tertiary-gradient)';
             } else {
-                markBtn.innerHTML = questionLanguage === 'en'
+                markBtn.innerHTML = currentLanguage === 'en'
                     ? '<i class="fas fa-flag"></i> Mark for Review'
                     : '<i class="fas fa-flag"></i> وضع علامة';
                 markBtn.style.background = 'var(--secondary-gradient)';
@@ -3939,34 +6155,15 @@ ${questionFormats.join(',\n')}
                 showExplanation();
             }
             
-            // التحقق إذا كان هذا آخر سؤال وتمت الإجابة عليه
-            checkIfLastQuestionAnswered();
-            
             // إظهار المراجعة الفورية إذا تمت الإجابة
             if (answerLocked[currentQuestionIndex] && question.type !== 'fill_blank') {
-                document.getElementById(`instant-review-${currentQuestionIndex}`).classList.add('show');
+                const instantReviewDiv = document.getElementById(`instant-review-${currentQuestionIndex}`);
+                if (instantReviewDiv) {
+                    instantReviewDiv.classList.add('show');
+                }
             }
         }
 
-        // عرض المراجعة الفورية
-        function showInstantReview(questionIndex) {
-            const reviewContent = document.getElementById(`review-content-${questionIndex}`);
-            const reviewContainer = document.getElementById(`instant-review-${questionIndex}`);
-            
-            if (reviewContent.style.display === 'none') {
-                reviewContent.style.display = 'block';
-                reviewContainer.querySelector('button').innerHTML = currentLanguage === 'ar' ? 
-                    '<i class="fas fa-eye-slash"></i> إخفاء المراجعة الفورية' : 
-                    '<i class="fas fa-eye-slash"></i> Hide Instant Review';
-            } else {
-                reviewContent.style.display = 'none';
-                reviewContainer.querySelector('button').innerHTML = currentLanguage === 'ar' ? 
-                    '<i class="fas fa-eye"></i> عرض المراجعة الفورية لجميع الخيارات' : 
-                    '<i class="fas fa-eye"></i> Show Instant Review for All Options';
-            }
-        }
-
-        // اختيار إجابة
         function selectAnswer(answerIndex) {
             if (answerLocked[currentQuestionIndex]) {
                 return;
@@ -4012,7 +6209,6 @@ ${questionFormats.join(',\n')}
             checkIfLastQuestionAnswered();
         }
 
-        // اختيار إجابة لسؤال املأ الفراغ
         function selectFillBlankAnswer(value) {
             if (answerLocked[currentQuestionIndex]) {
                 return;
@@ -4023,7 +6219,6 @@ ${questionFormats.join(',\n')}
 
             document.getElementById('fillBlankAnswer').disabled = true;
             
-            // التحقق من الإجابة الصحيحة وتشغيل الصوت المناسب
             const question = shuffledQuestions[currentQuestionIndex];
             const userAnswerStr = value.toString().toLowerCase().trim();
             const correctAnswerStr = question.answer.toString().toLowerCase().trim();
@@ -4039,14 +6234,12 @@ ${questionFormats.join(',\n')}
             checkIfLastQuestionAnswered();
         }
 
-        // التحقق مما إذا كان آخر سؤال تمت الإجابة عليه
         function checkIfLastQuestionAnswered() {
             const allAnswered = userAnswers.every(answer => answer !== null);
             const lastQuestionIndex = questions.length - 1;
             const isLastQuestion = currentQuestionIndex === lastQuestionIndex;
             const lastQuestionAnswered = userAnswers[lastQuestionIndex] !== null;
             
-            // إذا كان هذا هو السؤال الأخير وتمت الإجابة عليه، إنهاء الاختبار تلقائياً
             if (isLastQuestion && lastQuestionAnswered) {
                 setTimeout(() => {
                     if (currentLanguage === 'ar') {
@@ -4062,7 +6255,6 @@ ${questionFormats.join(',\n')}
             }
         }
 
-        // عرض الشرح
         function showExplanation() {
             const question = shuffledQuestions[currentQuestionIndex];
             const explanationDiv = document.getElementById("explanation");
@@ -4071,23 +6263,19 @@ ${questionFormats.join(',\n')}
             if (userAnswer !== null) {
                 explanationDiv.style.display = "block";
 
-                const questionLanguage = detectTextLanguage(question.q);
-                
-                let correctText = questionLanguage === 'en' ? 'Correct answer!' : 'إجابة صحيحة!';
-                let wrongText = questionLanguage === 'en' ? 'Wrong answer' : 'إجابة خاطئة';
-                let correctAnswerText = questionLanguage === 'en' ? 'Correct answer' : 'الإجابة الصحيحة';
-                let explanationText = questionLanguage === 'en' ? 'Feedback' : 'التغذية الراجعة';
-                let yourAnswerText = questionLanguage === 'en' ? 'Your answer' : 'إجابتك';
+                let correctText = currentLanguage === 'en' ? 'Correct answer!' : 'إجابة صحيحة!';
+                let wrongText = currentLanguage === 'en' ? 'Wrong answer' : 'إجابة خاطئة';
+                let correctAnswerText = currentLanguage === 'en' ? 'Correct answer' : 'الإجابة الصحيحة';
+                let explanationText = currentLanguage === 'en' ? 'Feedback' : 'التغذية الراجعة';
+                let yourAnswerText = currentLanguage === 'en' ? 'Your answer' : 'إجابتك';
 
                 let resultHTML = "";
                 let isCorrect = false;
 
                 if (question.type === 'fill_blank') {
-                    // مقارنة نصية لأسئلة املأ الفراغ
                     const userAnswerStr = userAnswer.toString().toLowerCase().trim();
                     const correctAnswerStr = question.answer.toString().toLowerCase().trim();
                     
-                    // مقارنة مرنة للنصوص
                     isCorrect = userAnswerStr === correctAnswerStr || 
                                Math.abs(userAnswerStr.length - correctAnswerStr.length) < 3;
                     
@@ -4100,7 +6288,6 @@ ${questionFormats.join(',\n')}
                         `;
                     }
                     
-                    // عرض التغذية الراجعة المناسبة
                     if (isCorrect && question.explanations && question.explanations.correct) {
                         resultHTML += `
                         <div style="margin-top: 15px; padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 8px;">
@@ -4109,7 +6296,6 @@ ${questionFormats.join(',\n')}
                         </div>
                         `;
                     } else if (!isCorrect && question.explanations && question.explanations.mistake_feedback) {
-                        // البحث عن تغذية راجعة للخطأ المحدد
                         const userAnswerLower = userAnswer.toString().toLowerCase().trim();
                         let foundFeedback = '';
                         
@@ -4147,14 +6333,12 @@ ${questionFormats.join(',\n')}
                         `;
                     }
                     
-                    // عرض التغذية الراجعة لجميع الخيارات
                     if (question.explanations) {
                         resultHTML += `
                         <div style="margin-top: 15px;">
                             <strong>📚 ${explanationText}:</strong><br><br>
                         `;
                         
-                        // التغذية الراجعة للخيار الصحيح
                         if (question.explanations.correct) {
                             resultHTML += `
                             <div style="padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 8px; margin-bottom: 8px;">
@@ -4163,14 +6347,13 @@ ${questionFormats.join(',\n')}
                             `;
                         }
                         
-                        // التغذية الراجعة للخيار الذي اختاره المستخدم
-                        const userChoiceText = questionLanguage === 'en' ? 'Your choice' : 'اختيارك';
+                        const userChoiceText = currentLanguage === 'en' ? 'Your choice' : 'اختيارك';
                         if (question.explanations[`option${userAnswer}`]) {
                             const bgColor = isCorrect ? 'rgba(76, 175, 80, 0.1)' : 'rgba(239, 68, 68, 0.1)';
                             const icon = isCorrect ? '✅' : '❌';
                             resultHTML += `
                             <div style="padding: 10px; background: ${bgColor}; border-radius: 8px; margin-bottom: 8px;">
-                                <strong>${icon} ${yourAnswerText}:</strong> ${question.explanations[`option${userAnswer}`]}
+                                <strong>${icon} ${userChoiceText}:</strong> ${question.explanations[`option${userAnswer}`]}
                             </div>
                             `;
                         }
@@ -4183,20 +6366,17 @@ ${questionFormats.join(',\n')}
             }
         }
 
-        // الانتقال إلى السؤال التالي
         function nextQuestion() {
             if (currentQuestionIndex < questions.length - 1) {
                 currentQuestionIndex++;
                 loadQuiz();
             } else {
-                // إذا كان هذا هو السؤال الأخير، التحقق مما إذا تمت الإجابة عليه
                 if (userAnswers[currentQuestionIndex] !== null) {
                     finishQuiz();
                 }
             }
         }
 
-        // الانتقال إلى السؤال السابق
         function previousQuestion() {
             if (currentQuestionIndex > 0) {
                 currentQuestionIndex--;
@@ -4204,102 +6384,211 @@ ${questionFormats.join(',\n')}
             }
         }
 
-        // اكتشاف لغة النص
-        function detectTextLanguage(text) {
-            if (!text) return quizLanguage === 'en' ? 'en' : 'ar';
+        function showInstantReview(questionIndex) {
+            const reviewContent = document.getElementById(`review-content-${questionIndex}`);
+            const reviewContainer = document.getElementById(`instant-review-${questionIndex}`);
             
-            const arabicChars = text.match(/[؀-ۿ]/g) || [];
-            const englishChars = text.match(/[a-zA-Z]/g) || [];
-            
-            if (englishChars.length > arabicChars.length) {
-                return 'en';
-            }
-            return 'ar';
-        }
-
-        // فتح نافذة قائمة الأسئلة
-        function openQuestionsModal() {
-            const grid = document.getElementById('questions-grid-modal');
-            grid.innerHTML = '';
-
-            questions.forEach((question, index) => {
-                const btn = document.createElement('div');
-                btn.className = `question-status-grid-modal ${index === currentQuestionIndex ? 'current' : ''} ${userAnswers[index] !== null ? 'answered' : ''} ${markedQuestions.includes(index) ? 'flagged' : ''}`;
-                btn.innerHTML = `<span>${index + 1}</span>`;
-                btn.onclick = () => {
-                    currentQuestionIndex = index;
-                    loadQuiz();
-                    closeQuestionsModal();
-                };
-                grid.appendChild(btn);
-            });
-
-            document.getElementById('questionsModal').style.display = 'block';
-        }
-
-        function closeQuestionsModal() {
-            document.getElementById('questionsModal').style.display = 'none';
-        }
-
-        // وضع علامة للمراجعة
-        function toggleMarkForReview() {
-            const index = markedQuestions.indexOf(currentQuestionIndex);
-            const btn = document.getElementById('mark-review-btn');
-
-            if (index === -1) {
-                markedQuestions.push(currentQuestionIndex);
-                btn.innerHTML = currentLanguage === 'ar' ? 
-                    '<i class="fas fa-flag"></i> إزالة العلامة' : 
-                    '<i class="fas fa-flag"></i> Remove Flag';
-                btn.style.background = 'var(--tertiary-gradient)';
+            if (reviewContent.style.display === 'none') {
+                reviewContent.style.display = 'block';
+                reviewContainer.querySelector('button').innerHTML = currentLanguage === 'ar' ? 
+                    '<i class="fas fa-eye-slash"></i> إخفاء المراجعة الفورية' : 
+                    '<i class="fas fa-eye-slash"></i> Hide Instant Review';
             } else {
-                markedQuestions.splice(index, 1);
-                btn.innerHTML = currentLanguage === 'ar' ? 
-                    '<i class="fas fa-flag"></i> وضع علامة' : 
-                    '<i class="fas fa-flag"></i> Mark for Review';
-                btn.style.background = 'var(--secondary-gradient)';
+                reviewContent.style.display = 'none';
+                reviewContainer.querySelector('button').innerHTML = currentLanguage === 'ar' ? 
+                    '<i class="fas fa-eye"></i> عرض المراجعة الفورية لجميع الخيارات' : 
+                    '<i class="fas fa-eye"></i> Show Instant Review for All Options';
             }
-            
-            loadQuiz();
         }
 
-        // فتح نافذة الدرجات الحالية
-        function openCurrentScoreModal() {
+        // ==================== وظائف البطاقات التعليمية ====================
+        function loadFlashcard(index) {
+            if (flashcards.length === 0) return;
+            
+            const card = flashcards[index];
+            const flashcardElement = document.getElementById('flashcard');
+            
+            // إعادة البطاقة إلى وضعها الطبيعي
+            flashcardElement.classList.remove('flipped');
+            
+            // تحديث محتوى الوجه
+            document.getElementById('flashcard-front-content').innerHTML = card.front;
+            document.getElementById('flashcard-back-content').innerHTML = card.back;
+            document.getElementById('flashcard-index').textContent = index + 1;
+            document.getElementById('flashcard-back-index').textContent = index + 1;
+            
+            // تحديث التصنيف
+            const categoryText = currentLanguage === 'en' ? 
+                card.category.charAt(0).toUpperCase() + card.category.slice(1) :
+                getArabicCategory(card.category);
+            document.getElementById('flashcard-category').textContent = categoryText;
+            document.getElementById('flashcard-back-category').textContent = categoryText;
+            
+            // تحديث مستوى الإتقان
+            const masteryElement = document.getElementById('mastery-level');
+            let masteryText = '';
+            let masteryClass = '';
+            
+            if (masteredFlashcards.has(index)) {
+                masteryText = currentLanguage === 'en' ? 'Mastered' : 'تم إتقانها';
+                masteryClass = 'mastery-expert';
+            } else if (reviewFlashcards.has(index)) {
+                masteryText = currentLanguage === 'en' ? 'Needs Review' : 'تحتاج مراجعة';
+                masteryClass = 'mastery-intermediate';
+            } else {
+                masteryText = currentLanguage === 'en' ? 'Beginner' : 'مبتدئ';
+                masteryClass = 'mastery-beginner';
+            }
+            
+            masteryElement.textContent = masteryText;
+            masteryElement.className = `mastery-level ${masteryClass}`;
+            
+            // تحديث مؤشرات التنقل
+            document.getElementById('current-card').textContent = index + 1;
+            
+            // تحديث شريط التقدم
+            const progress = (index / flashcards.length) * 100;
+            document.getElementById('flashcard-progress').style.width = `${progress}%`;
+            document.getElementById('progress-text').textContent = currentLanguage === 'en' ? 
+                `Progress: ${Math.round(progress)}%` : `التقدم: ${Math.round(progress)}%`;
+            
+            // تحديث زر التنقل السابق/التالي
+            document.getElementById('prev-card-btn').disabled = index === 0;
+            document.getElementById('next-card-btn').disabled = index === flashcards.length - 1;
+        }
+
+        function flipCard() {
+            const flashcard = document.getElementById('flashcard');
+            flashcard.classList.toggle('flipped');
+            playSound('flip');
+        }
+
+        function nextCard() {
+            if (currentFlashcardIndex < flashcards.length - 1) {
+                currentFlashcardIndex++;
+                loadFlashcard(currentFlashcardIndex);
+                updateNavigationDots();
+            }
+        }
+
+        function previousCard() {
+            if (currentFlashcardIndex > 0) {
+                currentFlashcardIndex--;
+                loadFlashcard(currentFlashcardIndex);
+                updateNavigationDots();
+            }
+        }
+
+        function markAsMastered(event) {
+            event.stopPropagation();
+            
+            if (masteredFlashcards.has(currentFlashcardIndex)) {
+                masteredFlashcards.delete(currentFlashcardIndex);
+            } else {
+                masteredFlashcards.add(currentFlashcardIndex);
+                reviewFlashcards.delete(currentFlashcardIndex);
+            }
+            
+            loadFlashcard(currentFlashcardIndex);
+            updateFlashcardStats();
+            updateNavigationDots();
+        }
+
+        function markForReview(event) {
+            event.stopPropagation();
+            
+            if (reviewFlashcards.has(currentFlashcardIndex)) {
+                reviewFlashcards.delete(currentFlashcardIndex);
+            } else {
+                reviewFlashcards.add(currentFlashcardIndex);
+                masteredFlashcards.delete(currentFlashcardIndex);
+            }
+            
+            loadFlashcard(currentFlashcardIndex);
+            updateFlashcardStats();
+            updateNavigationDots();
+        }
+
+        function updateFlashcardStats() {
+            const masteredCount = masteredFlashcards.size;
+            const reviewCount = reviewFlashcards.size;
+            const masteryPercentage = flashcards.length > 0 ? 
+                Math.round((masteredCount / flashcards.length) * 100) : 0;
+            
+            document.getElementById('mastered-cards').textContent = masteredCount;
+            document.getElementById('review-cards').textContent = reviewCount;
+            document.getElementById('mastery-percentage').textContent = `${masteryPercentage}%`;
+        }
+
+        function updateNavigationDots() {
+            const dotsContainer = document.getElementById('flashcard-dots');
+            dotsContainer.innerHTML = '';
+            
+            for (let i = 0; i < flashcards.length; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'nav-dot';
+                if (i === currentFlashcardIndex) {
+                    dot.classList.add('active');
+                }
+                
+                if (masteredFlashcards.has(i)) {
+                    dot.style.background = 'var(--secondary)';
+                } else if (reviewFlashcards.has(i)) {
+                    dot.style.background = 'var(--tertiary)';
+                }
+                
+                dot.onclick = () => {
+                    currentFlashcardIndex = i;
+                    loadFlashcard(currentFlashcardIndex);
+                    updateNavigationDots();
+                };
+                
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        function getArabicCategory(category) {
+            switch(category) {
+                case 'concepts': return 'مفاهيم';
+                case 'definitions': return 'تعريفات';
+                case 'qa': return 'سؤال وجواب';
+                default: return 'عام';
+            }
+        }
+
+        function restartFlashcards() {
+            currentFlashcardIndex = 0;
+            masteredFlashcards.clear();
+            reviewFlashcards.clear();
+            loadFlashcard(currentFlashcardIndex);
+            updateFlashcardStats();
+            updateNavigationDots();
+        }
+
+        // ==================== وظائف النتائج ====================
+        function finishQuiz() {
+            clearInterval(timerInterval);
+
             const score = calculateScore();
             const answeredCount = userAnswers.filter(answer => answer !== null).length;
-            const totalQuestions = questions.length;
-            const percentage = totalQuestions > 0 ? ((score.correct / totalQuestions) * 100).toFixed(2) : 0;
+
+            document.getElementById("result-box").style.display = "block";
             
-            const circle = document.getElementById('score-circle-fill');
-            const text = document.getElementById('score-percentage');
-            const circumference = 440;
-            const offset = circumference - (percentage / 100) * circumference;
+            let resultText = currentLanguage === 'en' ? 'Result' : 'النتيجة';
+            let percentageText = currentLanguage === 'en' ? 'Percentage' : 'النسبة';
+            let evaluationText = currentLanguage === 'en' ? 'Evaluation' : 'التقييم';
             
-            circle.style.strokeDashoffset = offset;
-            text.textContent = `${percentage}%`;
-            
-            let scoreText = currentLanguage === 'ar' ? 'الدرجة' : 'Score';
-            let correctText = currentLanguage === 'ar' ? 'الصحيحة' : 'Correct';
-            let progressText = currentLanguage === 'ar' ? 'التقدم' : 'Progress';
-            let totalText = currentLanguage === 'ar' ? 'الإجمالي' : 'Total';
-            
-            document.getElementById('current-score-details').innerHTML = 
-                `<strong>${scoreText}:</strong> ${score.correct} ${currentLanguage === 'ar' ? 'من' : 'of'} ${totalQuestions}`;
-            document.getElementById('current-correct-details').innerHTML = 
-                `<strong>${correctText}:</strong> ${score.correct}`;
-            document.getElementById('current-progress-details').innerHTML = 
-                `<strong>${progressText}:</strong> ${answeredCount} ${currentLanguage === 'ar' ? 'من' : 'of'} ${totalQuestions}`;
-            document.getElementById('current-batch-details').innerHTML = 
-                `<strong>${totalText}:</strong> ${totalQuestionsGenerated}`;
-            
-            document.getElementById('currentScoreModal').style.display = 'block';
+            document.getElementById("result").innerHTML = `${score.evaluationIcon} ${resultText}: ${score.correct} ${currentLanguage === 'en' ? 'of' : 'من'} ${score.total}`;
+            document.getElementById("percentage").innerHTML = `${percentageText}: ${score.percentage}%`;
+            document.getElementById("evaluation").innerHTML = `${evaluationText}: ${score.evaluation}`;
+
+            document.getElementById("quiz").style.display = "none";
+            document.getElementById("quiz-section").style.display = "none";
+
+            document.getElementById('advanced-results').style.display = 'block';
+            updateAdvancedStats(score);
         }
 
-        function closeCurrentScoreModal() {
-            document.getElementById('currentScoreModal').style.display = 'none';
-        }
-
-        // حساب الدرجات
         function calculateScore() {
             let totalCorrect = 0;
             
@@ -4307,7 +6596,6 @@ ${questionFormats.join(',\n')}
                 const question = shuffledQuestions[index];
                 
                 if (question.type === 'fill_blank') {
-                    // مقارنة نصية لأسئلة املأ الفراغ
                     if (answer) {
                         const userAnswerStr = answer.toString().toLowerCase().trim();
                         const correctAnswerStr = question.answer.toString().toLowerCase().trim();
@@ -4375,43 +6663,17 @@ ${questionFormats.join(',\n')}
             };
         }
 
-        // إنهاء الاختبار
-        function finishQuiz() {
-            clearInterval(timerInterval);
-
-            const score = calculateScore();
-            const answeredCount = userAnswers.filter(answer => answer !== null).length;
-
-            document.getElementById("result-box").style.display = "block";
-            
-            let resultText = currentLanguage === 'ar' ? 'النتيجة' : 'Result';
-            let percentageText = currentLanguage === 'ar' ? 'النسبة' : 'Percentage';
-            let evaluationText = currentLanguage === 'ar' ? 'التقييم' : 'Evaluation';
-            
-            document.getElementById("result").innerHTML = `${score.evaluationIcon} ${resultText}: ${score.correct} ${currentLanguage === 'ar' ? 'من' : 'of'} ${score.total}`;
-            document.getElementById("percentage").innerHTML = `${percentageText}: ${score.percentage}%`;
-            document.getElementById("evaluation").innerHTML = `${evaluationText}: ${score.evaluation}`;
-
-            document.getElementById("quiz").style.display = "none";
-            document.getElementById("quiz-section").style.display = "none";
-
-            document.getElementById('advanced-results').style.display = 'block';
-            
-            updateAdvancedStats(score);
-        }
-
-        // تحديث الإحصائيات المتقدمة
         function updateAdvancedStats(score) {
             const statsContainer = document.getElementById('stats-overview');
             const answeredCount = userAnswers.filter(answer => answer !== null).length;
             const unansweredCount = questions.length - answeredCount;
             const markedCount = markedQuestions.length;
             
-            let scoreText = currentLanguage === 'ar' ? 'الدرجة' : 'Score';
-            let percentageText = currentLanguage === 'ar' ? 'النسبة' : 'Percentage';
-            let answeredText = currentLanguage === 'ar' ? 'تم الإجابة' : 'Answered';
-            let unansweredText = currentLanguage === 'ar' ? 'لم تتم الإجابة' : 'Unanswered';
-            let flaggedText = currentLanguage === 'ar' ? 'معلمة' : 'Flagged';
+            let scoreText = currentLanguage === 'en' ? 'Score' : 'الدرجة';
+            let percentageText = currentLanguage === 'en' ? 'Percentage' : 'النسبة';
+            let answeredText = currentLanguage === 'en' ? 'Answered' : 'تم الإجابة';
+            let unansweredText = currentLanguage === 'en' ? 'Unanswered' : 'لم تتم الإجابة';
+            let flaggedText = currentLanguage === 'en' ? 'Flagged' : 'معلمة';
             
             statsContainer.innerHTML = `
                 <div class="stat-card">
@@ -4437,8 +6699,9 @@ ${questionFormats.join(',\n')}
             `;
         }
 
-        // الرجوع إلى الإعدادات
+        // ==================== وظائف التنقل ====================
         function backToSetup() {
+            // إعادة تعيين جميع المتغيرات
             questions = [];
             userAnswers = [];
             answerLocked = [];
@@ -4448,30 +6711,45 @@ ${questionFormats.join(',\n')}
             existingQuestions = [];
             currentBatch = 1;
             totalQuestionsGenerated = 0;
+            flashcards = [];
+            currentFlashcardIndex = 0;
+            masteredFlashcards.clear();
+            reviewFlashcards.clear();
+            retryCount = 0;
+            lastRequestTime = 0;
             
-            if (pdfFile) {
-                removePDF();
-            }
+            // إزالة الملفات
+            if (pdfFile) removePDF();
+            if (imageFile) removeImage();
+            if (summaryFile) removeSummaryFile();
+            if (flashcardsFile) removeFlashcardsFile();
             
-            if (imageFile) {
-                removeImage();
-            }
-            
+            // إعادة تعيين الواجهة
             document.getElementById('result-box').style.display = 'none';
             document.getElementById('advanced-results').style.display = 'none';
             document.getElementById('setup-section').style.display = 'block';
             document.getElementById('quiz-section').style.display = 'none';
+            document.getElementById('summary-section').style.display = 'none';
+            document.getElementById('flashcards-section-main').style.display = 'none';
             
+            // إعادة تعيين الحقول
             document.getElementById('quiz-title').value = '';
             document.getElementById('quiz-topic').value = '';
-            document.getElementById('start-page').value = '';
-            document.getElementById('end-page').value = '';
-            document.getElementById('specific-pages').value = '';
-            document.getElementById('units-list').value = '';
-            document.getElementById('topics-list').value = '';
+            document.getElementById('api-key').value = '';
+            
+            // إعادة تعيين تفاصيل PDF
+            const inputs = ['start-page', 'end-page', 'specific-pages', 'units-list', 'topics-list',
+                          'summary-start-page', 'summary-end-page', 'summary-specific-pages', 
+                          'summary-units-list', 'summary-topics-list',
+                          'flashcards-start-page', 'flashcards-end-page', 'flashcards-specific-pages',
+                          'flashcards-units-list', 'flashcards-topics-list'];
+            
+            inputs.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) element.value = '';
+            });
         }
 
-        // إعادة تشغيل الاختبار
         function restartQuiz() {
             userAnswers = Array(questions.length).fill(null);
             answerLocked = Array(questions.length).fill(false);
@@ -4490,10 +6768,148 @@ ${questionFormats.join(',\n')}
             loadQuiz();
         }
 
-        // التهيئة الأولية
+        // ==================== وظائف النوافذ المنبثقة ====================
+        function openQuestionsModal() {
+            const grid = document.getElementById('questions-grid-modal');
+            grid.innerHTML = '';
+
+            questions.forEach((question, index) => {
+                const btn = document.createElement('div');
+                btn.className = `question-status-grid-modal ${index === currentQuestionIndex ? 'current' : ''} ${userAnswers[index] !== null ? 'answered' : ''} ${markedQuestions.includes(index) ? 'flagged' : ''}`;
+                btn.innerHTML = `<span>${index + 1}</span>`;
+                btn.onclick = () => {
+                    currentQuestionIndex = index;
+                    loadQuiz();
+                    closeQuestionsModal();
+                };
+                grid.appendChild(btn);
+            });
+
+            document.getElementById('questionsModal').style.display = 'block';
+        }
+
+        function closeQuestionsModal() {
+            document.getElementById('questionsModal').style.display = 'none';
+        }
+
+        function toggleMarkForReview() {
+            const index = markedQuestions.indexOf(currentQuestionIndex);
+            const btn = document.getElementById('mark-review-btn');
+
+            if (index === -1) {
+                markedQuestions.push(currentQuestionIndex);
+                btn.innerHTML = currentLanguage === 'ar' ? 
+                    '<i class="fas fa-flag"></i> إزالة العلامة' : 
+                    '<i class="fas fa-flag"></i> Remove Flag';
+                btn.style.background = 'var(--tertiary-gradient)';
+            } else {
+                markedQuestions.splice(index, 1);
+                btn.innerHTML = currentLanguage === 'ar' ? 
+                    '<i class="fas fa-flag"></i> وضع علامة' : 
+                    '<i class="fas fa-flag"></i> Mark for Review';
+                btn.style.background = 'var(--secondary-gradient)';
+            }
+            
+            loadQuiz();
+        }
+
+        function openCurrentScoreModal() {
+            const score = calculateScore();
+            const answeredCount = userAnswers.filter(answer => answer !== null).length;
+            const totalQuestions = questions.length;
+            const percentage = totalQuestions > 0 ? ((score.correct / totalQuestions) * 100).toFixed(2) : 0;
+            
+            const circle = document.getElementById('score-circle-fill');
+            const text = document.getElementById('score-percentage');
+            const circumference = 440;
+            const offset = circumference - (percentage / 100) * circumference;
+            
+            circle.style.strokeDashoffset = offset;
+            text.textContent = `${percentage}%`;
+            
+            let scoreText = currentLanguage === 'ar' ? 'الدرجة' : 'Score';
+            let correctText = currentLanguage === 'ar' ? 'الصحيحة' : 'Correct';
+            let progressText = currentLanguage === 'ar' ? 'التقدم' : 'Progress';
+            let totalText = currentLanguage === 'ar' ? 'الإجمالي' : 'Total';
+            
+            document.getElementById('current-score-details').innerHTML = 
+                `<strong>${scoreText}:</strong> ${score.correct} ${currentLanguage === 'ar' ? 'من' : 'of'} ${totalQuestions}`;
+            document.getElementById('current-correct-details').innerHTML = 
+                `<strong>${correctText}:</strong> ${score.correct}`;
+            document.getElementById('current-progress-details').innerHTML = 
+                `<strong>${progressText}:</strong> ${answeredCount} ${currentLanguage === 'ar' ? 'من' : 'of'} ${totalQuestions}`;
+            document.getElementById('current-batch-details').innerHTML = 
+                `<strong>${totalText}:</strong> ${totalQuestionsGenerated}`;
+            
+            document.getElementById('currentScoreModal').style.display = 'block';
+        }
+
+        function closeCurrentScoreModal() {
+            document.getElementById('currentScoreModal').style.display = 'none';
+        }
+
+        // ==================== وظائف التحميل ====================
+        function downloadSummary() {
+            const summaryContent = document.getElementById('summary-content').innerText;
+            const blob = new Blob([summaryContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `summary_${new Date().getTime()}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function downloadFlashcards() {
+            const flashcardsData = {
+                flashcards: flashcards,
+                stats: {
+                    total: flashcards.length,
+                    mastered: masteredFlashcards.size,
+                    needsReview: reviewFlashcards.size,
+                    masteryPercentage: Math.round((masteredFlashcards.size / flashcards.length) * 100)
+                }
+            };
+            
+            const blob = new Blob([JSON.stringify(flashcardsData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `flashcards_${new Date().getTime()}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.innerText;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const copyBtn = document.getElementById(`copy-${elementId}-btn`);
+                const originalText = copyBtn.innerHTML;
+                copyBtn.innerHTML = currentLanguage === 'ar' ? 
+                    '<i class="fas fa-check"></i> تم النسخ!' : 
+                    '<i class="fas fa-check"></i> Copied!';
+                copyBtn.classList.add('copied');
+                
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalText;
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+
+        // ==================== التهيئة الأولية ====================
         window.onload = function() {
             checkDarkModePreference();
             
+            // إعداد مناطق السحب والإفلات
             const dropZones = document.querySelectorAll('.file-upload-label');
             
             dropZones.forEach(dropZone => {
@@ -4509,6 +6925,7 @@ ${questionFormats.join(',\n')}
                 });
             });
 
+            // إعداد حقل API key
             document.getElementById('api-key').addEventListener('input', function() {
                 if (this.value.trim()) {
                     this.style.borderColor = 'var(--secondary)';
@@ -4521,7 +6938,7 @@ ${questionFormats.join(',\n')}
             document.getElementById('wrongSound').src = "https://www.soundjay.com/buttons/button-3.mp3";
         }
 
-        // إغلاق النوافذ المنبثقة
+        // إغلاق النوافذ المنبثقة عند النقر خارجها
         window.onclick = function(event) {
             const currentScoreModal = document.getElementById('currentScoreModal');
             const questionsModal = document.getElementById('questionsModal');
